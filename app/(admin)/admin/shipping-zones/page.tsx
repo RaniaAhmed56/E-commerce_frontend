@@ -62,8 +62,9 @@ export default function AdminShippingZones() {
       await loadZones();
       setError("");
       setTimeout(() => setSuccess(""), 3000);
-    } catch (err: any) {
-      setError(err?.data?.governorate?.[0] || err?.data?.fee?.[0] || "حدث خطأ");
+    } catch (err: unknown) {
+      const errObj = err as { data?: Record<string, any> };
+      setError(errObj?.data?.governorate?.[0] || errObj?.data?.fee?.[0] || "حدث خطأ");
       console.error(err);
     } finally {
       setSubmitting(false);

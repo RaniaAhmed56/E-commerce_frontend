@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { useParams, useRouter } from "next/navigation";
 import {
   Package, Heart, ShoppingCart, Check,
@@ -22,7 +23,6 @@ export default function ProductDetailPage() {
   const { addToCart } = useCart();
   const { isInWishlist, addToWishlist, removeFromWishlist } = useWishlist();
   const router = useRouter();
-  const { isAuthenticated, loading: authLoading } = useAuth();
 
   const [product,         setProduct]         = useState<Product | null>(null);
   const [variants,        setVariants]        = useState<ProductVariant[]>([]);
@@ -34,10 +34,7 @@ export default function ProductDetailPage() {
   const [qty,   setQty]   = useState(1);
   const [added, setAdded] = useState(false);
 
-  useEffect(() => {
-    if (!authLoading && !isAuthenticated)
-      router.replace("/login?next=" + encodeURIComponent(`/product/${id}`));
-  }, [authLoading, isAuthenticated, id]);
+  // Product page is public — no auth redirect needed
 
   useEffect(() => {
     let ok = true;
@@ -79,8 +76,9 @@ export default function ProductDetailPage() {
       if (mainSrc) list.push({ src: mainSrc, label: "الرئيسية" });
       // Then each variant's image
       variants.forEach((v, vi) => {
-        if (v.image && !list.some(x => x.src === v.image)) {
-          list.push({ src: v.image, label: v.color, colorHex: v.color_hex, variantIdx: vi });
+        const imgSrc = v.image && v.image.trim() ? v.image : mainSrc;
+        if (imgSrc && !list.some(x => x.src === imgSrc && x.variantIdx !== undefined)) {
+          list.push({ src: imgSrc, label: v.color, colorHex: v.color_hex, variantIdx: vi });
         }
       });
     } else {
@@ -173,6 +171,7 @@ export default function ProductDetailPage() {
           <div>
             {/* Big image */}
             <div style={{ position: "relative", background: "#f5f3ee", borderRadius: 20, overflow: "hidden", aspectRatio: "3/4", marginBottom: 16 }}>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={currentImg}
                 alt={product.name}
@@ -222,6 +221,7 @@ export default function ProductDetailPage() {
                         style={{ padding: 0, background: "none", border: "none", cursor: "pointer", display: "flex", flexDirection: "column", alignItems: "center", gap: 6 }}>
                         {/* Thumb image */}
                         <div style={{ width: 72, height: 72, borderRadius: 12, overflow: "hidden", border: `2.5px solid ${isActive ? "#0f172a" : "#e5e7eb"}`, transition: "all .22s", transform: isActive ? "scale(1.06)" : "scale(1)", boxShadow: isActive ? "0 4px 16px rgba(0,0,0,0.18)" : "none" }}>
+                          {/* eslint-disable-next-line @next/next/no-img-element */}
                           <img src={img.src} alt={img.label} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
                         </div>
                         {/* Color name under variant thumbs */}
@@ -303,6 +303,7 @@ export default function ProductDetailPage() {
                   {/* Variant image preview beside name */}
                   {selectedVariant?.image && (
                     <div style={{ display: "flex", alignItems: "center", gap: 10, marginTop: 12, padding: "10px 14px", background: "#f8fafc", borderRadius: 10, border: "1px solid #f1f5f9" }}>
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img src={selectedVariant.image} alt={selectedVariant.color} style={{ width: 44, height: 44, borderRadius: 8, objectFit: "cover", border: "2px solid #e2e8f0" }} />
                       <div>
                         <p style={{ fontSize: 13, fontWeight: 700, color: "#0f172a", margin: "0 0 2px" }}>{selectedVariant.color}</p>

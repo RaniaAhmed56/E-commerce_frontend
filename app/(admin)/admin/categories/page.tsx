@@ -17,7 +17,7 @@ export default function AdminCategories() {
 
   useEffect(() => {
     categoriesApi.list()
-      .then(data => setCategories(Array.isArray(data)?data:(data as any).results??[]))
+      .then(data => setCategories(Array.isArray(data)?data:(data as { results: Category[] }).results??))
       .catch(()=>{})
       .finally(()=>setLoading(false));
   }, []);
@@ -31,8 +31,9 @@ export default function AdminCategories() {
       setCategories(prev=>[...prev, c]);
       setNewCat({ name:"", name_ar:"", slug:"" });
       setShowAdd(false);
-    } catch (err:any) {
-      alert(Object.values(err?.data??{}).flat().join(" ")||"حدث خطأ");
+    } catch (err: unknown) {
+      const errObj = err as { data?: Record<string, any> };
+      alert(Object.values(errObj?.data??{}).flat().join(" ")||"حدث خطأ");
     } finally { setSaving(false); }
   };
 

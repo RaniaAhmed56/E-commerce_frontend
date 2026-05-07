@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { useAuth } from "@/src/context/AuthContext";
 import { useWishlist } from "@/src/context/WishlistContext";
 import { useRouter } from "next/navigation";
@@ -9,7 +10,7 @@ import {
   Camera, ArrowRight, Loader2, AlertCircle, Tag,
   ShoppingBag, Clock, Truck, CheckCircle, XCircle, Copy, Gift, Trash2,
 } from "lucide-react";
-import { ordersApi, couponsApi, wishlistApi, type Order, type ActiveCoupon } from "@/src/lib/api";
+import { ordersApi, couponsApi, type Order, type ActiveCoupon } from "@/src/lib/api";
 
 // ── helpers ──────────────────────────────────────────
 const STATUS_MAP: Record<string, { label: string; color: string; bg: string; Icon: any }> = {
@@ -31,7 +32,9 @@ function OrdersTab() {
   useEffect(() => {
     ordersApi.myOrders()
       .then(data => {
-        const list = Array.isArray(data) ? data : (data as any)?.results ?? [];
+        console.log("Orders API response:", data);
+        const list = Array.isArray(data) ? data : (data as { results: Order[] })?.results ?? [];
+        console.log("Processed orders list:", list);
         setOrders(list);
       })
       .catch(err => {
@@ -61,6 +64,7 @@ function OrdersTab() {
       <p style={{ fontSize: 16, fontWeight: 700, color: "rgba(255,255,255,0.45)", margin: "0 0 8px" }}>لا توجد طلبات بعد</p>
       <p style={{ fontSize: 13, color: "rgba(255,255,255,0.25)", margin: "0 0 24px" }}>ابدئي التسوق واحصلي على أول طلب!</p>
       <Link href="/shop" className="btn-gold" style={{ display: "inline-flex", fontSize: 13 }}>تسوق الآن <ArrowRight size={15} /></Link>
+      <p style={{ fontSize: 10, color: "rgba(255,255,255,0.15)", marginTop: 20 }}>({orders.length} طلبات محملة)</p>
     </div>
   );
 
@@ -87,7 +91,10 @@ function OrdersTab() {
               {order.items?.slice(0, 3).map(item => (
                 <div key={item.id} style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 9 }}>
                   {item.image
-                    ? <img src={item.image} alt={item.name} style={{ width: 44, height: 44, borderRadius: 8, objectFit: "cover" }} />
+                    ? <>
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img src={item.image} alt={item.name} style={{ width: 44, height: 44, borderRadius: 8, objectFit: "cover" }} />
+                    </>
                     : <div style={{ width: 44, height: 44, borderRadius: 8, background: "rgba(255,255,255,0.06)", display: "flex", alignItems: "center", justifyContent: "center" }}><ShoppingBag size={18} style={{ color: "rgba(255,255,255,0.2)" }} /></div>
                   }
                   <div style={{ flex: 1, minWidth: 0 }}>
@@ -201,6 +208,7 @@ function WishlistTab() {
         <div key={item.id} style={{ background: "rgba(255,255,255,0.04)", border: "1.5px solid rgba(255,255,255,0.08)", borderRadius: 14, overflow: "hidden", position: "relative" }}>
           <Link href={`/product/${item.id}`} style={{ textDecoration: "none", display: "block" }}>
             <div style={{ aspectRatio: "3/4", overflow: "hidden", background: "rgba(255,255,255,0.06)" }}>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src={item.image || "/images/placeholder.png"} alt={item.name}
                 style={{ width: "100%", height: "100%", objectFit: "cover", transition: "transform 0.3s" }}
                 onMouseEnter={e => (e.currentTarget as HTMLImageElement).style.transform = "scale(1.06)"}
@@ -242,7 +250,7 @@ export default function ProfilePage() {
     first_name: "", last_name: "", email: "", phone: "", address: "", city: "", country: "مصر",
   });
 
-  useEffect(() => { if (!authLoading && !isAuthenticated) router.push("/login"); }, [authLoading, isAuthenticated]);
+  useEffect(() => { if (!authLoading && !isAuthenticated) router.push("/login"); }, [authLoading, isAuthenticated, router]);
   useEffect(() => {
     if (user) setForm({ first_name: user.first_name || "", last_name: user.last_name || "", email: user.email || "", phone: user.phone || "", address: user.address || "", city: user.city || "", country: user.country || "مصر" });
   }, [user]);

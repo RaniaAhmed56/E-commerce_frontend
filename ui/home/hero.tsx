@@ -5,7 +5,7 @@ import Link from "next/link";
 export default function Hero() {
   return (
     <>
-      <section className="hero-section">
+      <section className="hero-section" style={{ position: "relative" }}>
         <Image fill src="/images/site-banner.jpg" alt="بلانكو" priority style={{ objectFit: "cover", objectPosition: "center top" }} sizes="100vw" />
 
         {/* Overlays */}

@@ -252,7 +252,7 @@ export const categoriesApi = {
 // ── Orders ────────────────────────────────────────
 export const ordersApi = {
   create: (data: CreateOrderPayload) =>
-    request<Order>("/orders/", { method: "POST", body: JSON.stringify(data) }),
+    request<Order>("/orders/", { method: "POST", body: JSON.stringify(data) }, true),  // ✅ send auth token
   myOrders: () => request<Order[]>("/orders/my/", {}, true),  // ✅ endpoint الصح لليوزر العادي
   adminList: (params: Record<string, string> = {}) => {
     const qs = new URLSearchParams(params).toString();
@@ -509,8 +509,10 @@ export interface ProductVariant {
 }
 
 export const variantsApi = {
+  // Requires auth — admin only
   getByProduct: (productId: number) =>
-    request<ProductVariant[]>(`/products/${productId}/variants/`),
+    request<ProductVariant[]>(`/products/${productId}/variants/`, {}, true),
+  // Admin only — JSON body with base64 images handled by backend
   update: (productId: number, variants: any[]) =>
     request(`/products/${productId}/variants/update/`, {
       method: "POST",

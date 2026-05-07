@@ -5,7 +5,7 @@
  * - Converts relative paths to full URLs pointing to backend media folder
  */
 export function normalizeImageUrl(url: string | null | undefined): string {
-  if (!url) return "";
+  if (!url) return "/images/placeholder.svg";
 
   // Already an absolute URL
   if (url.startsWith("http://") || url.startsWith("https://")) {
