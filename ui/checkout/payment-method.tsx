@@ -18,21 +18,21 @@ import {
   Loader2,
 } from "lucide-react";
 
-// ── رقم الواتساب بتاع المحل ─────────────────────────────────────────────────
+// ── WhatsApp Number بتاع المحل ─────────────────────────────────────────────────
 const STORE_WA = process.env.NEXT_PUBLIC_WA_NUMBER ?? "201000000000";
 
-// ── PayBump API — غيّري الـ URL ده بالـ API الحقيقي من شركة PayBump ──────────
-// لما تاخدي الـ API key من PayBump، حطيه في .env.local:
+// ── PayBump API — غيّري الـ URL ده بالـ API الحقيقي EGPن شركة PayBump ──────────
+// لما تاخدي الـ API key EGPن PayBump، حطيه في .env.local:
 // NEXT_PUBLIC_PAYBUMP_API_URL=https://api.paybump.io/v1/payment
 // NEXT_PUBLIC_PAYBUMP_API_KEY=your_key_here
 const PAYBUMP_API_URL = process.env.NEXT_PUBLIC_PAYBUMP_API_URL ?? "https://api.paybump.io/v1/payment";
 const PAYBUMP_API_KEY = process.env.NEXT_PUBLIC_PAYBUMP_API_KEY ?? "YOUR_PAYBUMP_KEY";
 
-// ── بيانات طرق الدفع الأونلاين — الأدمين يعدّل هنا ──────────────────────────
+// ── بيانات Methods Checkout الأونلاين — الأدمين يعدّل هنا ──────────────────────────
 const ONLINE_ACCOUNTS = {
-  vodafone: { number: "010XXXXXXXX",        label: "رقم Vodafone Cash" },
-  instapay: { number: "blanko@instapay",    label: "معرّف InstaPay"   },
-  bank:     { number: "1234567890123456",   label: "رقم الحساب البنكي", bankName: "بنك مصر", accountName: "Blanko Fashion House" },
+  vodafone: { number: "010XXXXXXXX",        label: "Number Vodafone Cash" },
+  instapay: { number: "blanko@instapay",    label: "identifier InstaPay"   },
+  bank:     { number: "1234567890123456",   label: "Number الحساب البنكي", bankName: "بنك Egypt", accountName: "Blanko Fashion House" },
 };
 
 type OnlineMethod = "vodafone" | "instapay" | "bank" | "paybump" | "";
@@ -63,7 +63,7 @@ export default function PaymentMethod({
 
   const [mode,         setMode]         = useState<"deposit" | "online" | "">("");
   const [onlineMethod, setOnlineMethod] = useState<OnlineMethod>("");
-  // خانة الرقم الذي سيتم التحويل منه (يكتبه اليوزر)
+  // خانة الNumber الذي سيDone الtransfer EGPنه (يكتبه اليوزر)
   const [senderNumber, setSenderNumber] = useState("");
   const [couponCode,   setCouponCode]   = useState("");
   const [couponMsg,    setCouponMsg]    = useState<{ valid: boolean; text: string; amount?: string } | null>(null);
@@ -198,16 +198,16 @@ export default function PaymentMethod({
         ).join('\n');
         
         const msg =
-          `طلب جديد من متجر BLANKO 🛍️\n` +
-          `رقم الطلب: #${String(order.id).padStart(4, "0")}\n` +
-          `الاسم: ${payload.first_name} ${payload.last_name}\n` +
+          `طلب جديد EGPن EGPتجر BLANKO 🛍️\n` +
+          `Order #: #${String(order.id).padStart(4, "0")}\n` +
+          `Name: ${payload.first_name} ${payload.last_name}\n` +
           `الموبايل: ${payload.phone}\n` +
-          `المحافظة: ${payload.city}\n` +
-          `العنوان: ${payload.address}\n\n` +
-          `📦 المنتجات:\n${productsList}\n\n` +
-          `${appliedCoupon ? `كوبون خصم: ${appliedCoupon.code}\n` : ""}` +
-          `رسوم الشحن: ${shippingFee.toLocaleString("en-US")} LE\n` +
-          `الإجمالي: ${total.toLocaleString("en-US")} LE`;
+          `Governorate: ${payload.city}\n` +
+          `Address: ${payload.address}\n\n` +
+          `📦 الProductات:\n${productsList}\n\n` +
+          `${appliedCoupon ? `Discount Coupon: ${appliedCoupon.code}\n` : ""}` +
+          `Shipping: ${shippingFee.toLocaleString("en-US")} LE\n` +
+          `الTotal: ${total.toLocaleString("en-US")} LE`;
         window.open(`https://wa.me/${STORE_WA}?text=${encodeURIComponent(msg)}`, "_blank");
       }
 
@@ -219,24 +219,24 @@ export default function PaymentMethod({
         
         let paymentDetails = "";
         if (onlineMethod === "vodafone") {
-          paymentDetails = `طريقة الدفع: Vodafone Cash\nرقم التحويل: ${ONLINE_ACCOUNTS.vodafone.number}\nرقم المرسل: ${senderNumber}`;
+          paymentDetails = `طريقة Checkout: Vodafone Cash\nNumber الtransfer: ${ONLINE_ACCOUNTS.vodafone.number}\nNumber المرسل: ${senderNumber}`;
         } else if (onlineMethod === "instapay") {
-          paymentDetails = `طريقة الدفع: InstaPay\nمعرّف التحويل: ${ONLINE_ACCOUNTS.instapay.number}\nحساب المرسل: ${senderNumber}`;
+          paymentDetails = `طريقة Checkout: InstaPay\nidentifier الtransfer: ${ONLINE_ACCOUNTS.instapay.number}\nحساب المرسل: ${senderNumber}`;
         } else if (onlineMethod === "bank") {
-          paymentDetails = `طريقة الدفع: تحويل بنكي\nالبنك: ${ONLINE_ACCOUNTS.bank.bankName}\nرقم الحساب: ${ONLINE_ACCOUNTS.bank.number}\nاسم الحساب: ${ONLINE_ACCOUNTS.bank.accountName}\nالحساب المرسل: ${senderNumber}`;
+          paymentDetails = `طريقة Checkout: Bank Transfer\nالبنك: ${ONLINE_ACCOUNTS.bank.bankName}\nNumber الحساب: ${ONLINE_ACCOUNTS.bank.number}\nاسم الحساب: ${ONLINE_ACCOUNTS.bank.accountName}\nالحساب المرسل: ${senderNumber}`;
         }
 
         const msg =
-          `طلب جديد من متجر BLANKO 🛍️\n` +
-          `رقم الطلب: #${String(order.id).padStart(4, "0")}\n` +
-          `الاسم: ${payload.first_name} ${payload.last_name}\n` +
+          `طلب جديد EGPن EGPتجر BLANKO 🛍️\n` +
+          `Order #: #${String(order.id).padStart(4, "0")}\n` +
+          `Name: ${payload.first_name} ${payload.last_name}\n` +
           `الموبايل: ${payload.phone}\n` +
-          `المحافظة: ${payload.city}\n` +
-          `العنوان: ${payload.address}\n\n` +
-          `📦 المنتجات:\n${productsList}\n\n` +
-          `${appliedCoupon ? `كوبون خصم: ${appliedCoupon.code}\n` : ""}` +
-          `رسوم الشحن: ${shippingFee.toLocaleString("ar-EG")} LE\n` +
-          `الإجمالي: ${total.toLocaleString("ar-EG")} LE\n\n` +
+          `Governorate: ${payload.city}\n` +
+          `Address: ${payload.address}\n\n` +
+          `📦 الProductات:\n${productsList}\n\n` +
+          `${appliedCoupon ? `Discount Coupon: ${appliedCoupon.code}\n` : ""}` +
+          `Shipping: ${shippingFee.toLocaleString("ar-EG")} LE\n` +
+          `الTotal: ${total.toLocaleString("ar-EG")} LE\n\n` +
           paymentDetails;
         window.open(`https://wa.me/${STORE_WA}?text=${encodeURIComponent(msg)}`, "_blank");
       }
@@ -245,7 +245,7 @@ export default function PaymentMethod({
       setOrderPlaced(true);
       setStep(2);
     } catch {
-      alert("حدث خطأ أثناء إتمام الطلب. تأكد من تشغيل الـ backend.");
+      alert("حدث Error أثناء إDoneام الطلب. تأكد EGPن تشغيل الـ backend.");
     } finally {
       setPlacing(false);
     }
@@ -258,13 +258,13 @@ export default function PaymentMethod({
   const dV: React.CSSProperties = { margin: "0 0 5px", color: "#fcd34d", fontSize: 17, fontWeight: 800, letterSpacing: "0.06em" };
   const dS: React.CSSProperties = { margin: 0, color: "rgba(255,255,255,0.38)", fontSize: 12 };
 
-  // ── خانة رقم المُرسِل — تظهر لكل طريقة أونلاين ─────────────────────────
+  // ── خانة Number المُرسِل — appear for each طريقة أونلاين ─────────────────────────
   const SenderInput = ({ placeholder }: { placeholder: string }) => {
     const inputRef = useRef<HTMLInputElement>(null);
     
     return (
       <div style={{ marginTop: 14 }}>
-        <p style={{ ...dP, marginBottom: 6 }}>رقمك / حسابك اللي هتتحول منه:</p>
+        <p style={{ ...dP, marginBottom: 6 }}>Numberك / حسابك اللي هتتحول EGPنه:</p>
         <div 
           style={{ position: "relative", cursor: "text" }}
           onClick={() => {
@@ -325,10 +325,10 @@ export default function PaymentMethod({
       color: "#e40000",
       details: (
         <>
-          <p style={dP}>حوّل المبلغ إلى رقم Vodafone Cash:</p>
+          <p style={dP}>حوّل Amount إلى Number Vodafone Cash:</p>
           <p style={dV}>{ONLINE_ACCOUNTS.vodafone.number}</p>
-          <p style={dS}>بعد التحويل أرسل صورة الإيصال على الواتساب.</p>
-          <SenderInput placeholder="رقم موبايلك على فودافون كاش" />
+          <p style={dS}>بعد الtransfer أرسل Imagesة الإيصال على الواتساب.</p>
+          <SenderInput placeholder="Number EGPوبايلك على Vodafone Cash" />
         </>
       ),
     },
@@ -341,23 +341,23 @@ export default function PaymentMethod({
         <>
           <p style={dP}>حوّل عبر InstaPay إلى:</p>
           <p style={dV}>{ONLINE_ACCOUNTS.instapay.number}</p>
-          <p style={dS}>سيتم مراجعة الدفع وتأكيد طلبك.</p>
-          <SenderInput placeholder="معرّف InstaPay بتاعك" />
+          <p style={dS}>سيDone EGPراجعة Checkout وتأكيد طلبك.</p>
+          <SenderInput placeholder="identifier InstaPay بتاعك" />
         </>
       ),
     },
     {
       id: "bank" as OnlineMethod,
       Icon: Building2,
-      label: "تحويل بنكي",
+      label: "Bank Transfer",
       color: "#0ea5e9",
       details: (
         <>
           <p style={dP}>البنك: {ONLINE_ACCOUNTS.bank.bankName}</p>
           <p style={dV}>{ONLINE_ACCOUNTS.bank.number}</p>
           <p style={{ ...dS, marginBottom: 4 }}>اسم الحساب: {ONLINE_ACCOUNTS.bank.accountName}</p>
-          <p style={dS}>أرسل صورة التحويل على الواتساب لتأكيد الطلب.</p>
-          <SenderInput placeholder="رقم حسابك البنكي أو اسمك" />
+          <p style={dS}>أرسل Imagesة الtransfer على الواتساب لConfirm Order.</p>
+          <SenderInput placeholder="Number حسابك البنكي أو اسمك" />
         </>
       ),
     },
@@ -375,7 +375,7 @@ export default function PaymentMethod({
           marginBottom: 22,
         }}
       >
-        طريقة الدفع
+        طريقة Checkout
       </h3>
 
       {/* ── اختيار deposit / online ─────────────────────────────────────── */}
@@ -403,7 +403,7 @@ export default function PaymentMethod({
           </div>
           <div>
             <p style={{ fontSize: 13, fontWeight: 700, margin: "0 0 2px", color: mode === "deposit" ? "#ffffff" : "rgba(255,255,255,0.55)" }}>
-              الدفع عند الاستلام
+              Checkout عند الاستلام
             </p>
             <p style={{ fontSize: 11, color: "rgba(255,255,255,0.3)", margin: 0, lineHeight: 1.4 }}>عبر واتساب المحل</p>
           </div>
@@ -432,7 +432,7 @@ export default function PaymentMethod({
           </div>
           <div>
             <p style={{ fontSize: 13, fontWeight: 700, margin: "0 0 2px", color: mode === "online" ? "#ffffff" : "rgba(255,255,255,0.55)" }}>
-              الدفع الأونلاين
+              Checkout الأونلاين
             </p>
             <p style={{ fontSize: 11, color: "rgba(255,255,255,0.3)", margin: 0, lineHeight: 1.4 }}>Vodafone · InstaPay · بنك</p>
           </div>
@@ -457,7 +457,7 @@ export default function PaymentMethod({
                 واتساب المحل: {STORE_WA}
               </p>
               <p style={{ fontSize: 13, color: "rgba(255,255,255,0.55)", margin: 0, lineHeight: 1.7 }}>
-                بعد تأكيد الطلب هيتفتح واتساب تلقائياً للتواصل مع المحل وترتيب التسليم والدفع.
+                بعد Confirm Order هيتفتح واتساب تلقائياً للتواصل EGPع المحل وترتيب التسليم وCheckout.
               </p>
             </div>
           </div>
@@ -520,7 +520,7 @@ export default function PaymentMethod({
         </div>
       )}
 
-      {/* ── كوبون الخصم ──────────────────────────────────────────────────── */}
+      {/* ── كوبون Discount ──────────────────────────────────────────────────── */}
       <div style={{ marginBottom: 22 }}>
         <p
           style={{
@@ -528,7 +528,7 @@ export default function PaymentMethod({
             textTransform: "uppercase", color: "rgba(255,255,255,0.4)", marginBottom: 10,
           }}
         >
-          كوبون الخصم (اختياري)
+          كوبون Discount (optional)
         </p>
         {appliedCoupon ? (
           // Show applied coupon with clear button
@@ -598,7 +598,7 @@ export default function PaymentMethod({
         )}
       </div>
 
-      {/* ── ملخص الأسعار ─────────────────────────────────────────────────── */}
+      {/* ── EGPلخص الأسعار ─────────────────────────────────────────────────── */}
       <div
         style={{
           padding: "14px 18px",
@@ -610,17 +610,17 @@ export default function PaymentMethod({
         }}
       >
         <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 7, color: "rgba(255,255,255,0.55)" }}>
-          <span>المنتجات</span><span>{subtotal.toLocaleString("en-US")} LE</span>
+          <span>الProductات</span><span>{subtotal.toLocaleString("en-US")} LE</span>
         </div>
         <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 7, color: "rgba(255,255,255,0.55)" }}>
-          <span>رسوم الشحن</span>
+          <span>Shipping</span>
           <span style={{ color: shippingFee === 0 ? "#34d399" : "rgba(255,255,255,0.55)" }}>
-            {shippingFee === 0 ? "مجاني 🎉" : `${shippingFee.toLocaleString("en-US")} LE`}
+            {shippingFee === 0 ? "Free 🎉" : `${shippingFee.toLocaleString("en-US")} LE`}
           </span>
         </div>
         {discount > 0 && (
           <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 7, color: "#34d399" }}>
-            <span>خصم الكوبون</span><span>- {discount.toLocaleString("en-US")} LE</span>
+            <span>Discount الكوبون</span><span>- {discount.toLocaleString("en-US")} LE</span>
           </div>
         )}
         <div
@@ -630,7 +630,7 @@ export default function PaymentMethod({
             fontSize: 15, color: "#fcd34d",
           }}
         >
-          <span>الإجمالي</span><span>{total.toLocaleString("en-US")} LE</span>
+          <span>الTotal</span><span>{total.toLocaleString("en-US")} LE</span>
         </div>
       </div>
 
@@ -652,11 +652,11 @@ export default function PaymentMethod({
         }}
       >
         {placing ? (
-          <><Loader2 size={15} style={{ animation: "spin 1s linear infinite" }} /> جارٍ إتمام الطلب...</>
+          <><Loader2 size={15} style={{ animation: "spin 1s linear infinite" }} /> Loading إDoneام الطلب...</>
         ) : mode === "deposit" ? (
-          <><MessageCircle size={15} /> تأكيد والتواصل عبر واتساب</>
+          <><MessageCircle size={15} /> تأكيد والChat on WhatsApp</>
         ) : (
-          <><ArrowRight size={15} /> تأكيد الطلب — {total.toLocaleString("en-US")} LE</>
+          <><ArrowRight size={15} /> Confirm Order — {total.toLocaleString("en-US")} LE</>
         )}
       </button>
 

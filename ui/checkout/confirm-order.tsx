@@ -27,16 +27,16 @@ export default function ConfirmOrder({
     const number = 1097182681; 
 
     const productsMessage = cart.map(item => 
-      `المنتج: ${item.name}\nالمقاس: ${item.size}\nاللون: ${item.color}\nالكمية: ${item.quantity}\nالسعر: ${item.price} ج.م\n`
+      `الEGPنتج: ${item.name}\nSize: ${item.size}\nColor: ${item.color}\nQuantity: ${item.quantity}\nالPrice: ${item.price} EGP\n`
     ).join('\n');
 
     const message = `
-      طلب جديد من متجر BLANKO
+      Order جديد EGPن EGPتجر BLANKO
 
       ${productsMessage}
-        الاسم: ${name}
-        الموبايل: ${phone}
-        المحافظة: ${city}
+        الاسEGP: ${name}
+        الEGPوبايل: ${phone}
+        Governorate: ${city}
       `;
 
     const url =
@@ -48,7 +48,7 @@ export default function ConfirmOrder({
     // اظهار Popup
     setShowPopup(true);
 
-    // فتح WhatsApp بعد 2.5 ثانية
+    // opening WhatsApp بعد 2.5 ثانية
     const timer = setTimeout(() => {
         window.open(url, "_blank");
         setShowPopup(false);
@@ -64,18 +64,18 @@ export default function ConfirmOrder({
       {/* <div className="bg-white w-full max-w-lg rounded-2xl shadow-lg p-8">
 
         <h1 className="text-2xl font-semibold mb-6 text-center">
-          تأكيد الطلب
+          Confirm Order
         </h1>
 
         <div className="space-y-3 text-sm text-gray-700">
 
-          <p><span className="font-semibold">الاسم:</span> {name}</p>
-          <p><span className="font-semibold">الموبايل:</span> {phone}</p>
-          <p><span className="font-semibold">المحافظة:</span> {city}</p>
+          <p><span className="font-semibold">الاسEGP:</span> {name}</p>
+          <p><span className="font-semibold">الEGPوبايل:</span> {phone}</p>
+          <p><span className="font-semibold">Governorate:</span> {city}</p>
 
-          {product && <p><span className="font-semibold">المنتج:</span> {product}</p>}
-          {size && <p><span className="font-semibold">المقاس:</span> {size}</p>}
-          {color && <p><span className="font-semibold">اللون:</span> {color}</p>}
+          {product && <p><span className="font-semibold">الEGPنتج:</span> {product}</p>}
+          {size && <p><span className="font-semibold">Size:</span> {size}</p>}
+          {color && <p><span className="font-semibold">Color:</span> {color}</p>}
 
         </div>
 
@@ -84,8 +84,8 @@ export default function ConfirmOrder({
       {showPopup && (
         <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
           <div className="bg-white p-6 rounded-xl text-center shadow-xl animate-fadeIn">
-            <h2 className="text-lg font-semibold mb-2">تم استلام طلبك</h2>
-            <p className="text-gray-600">يتم الآن فتح واتساب لتأكيد الطلب</p>
+            <h2 className="text-lg font-semibold mb-2">تEGP استلاEGP Orderك</h2>
+            <p className="text-gray-600">processing الآن opening WhatsApp لConfirm Order</p>
           </div>
         </div>
       )}

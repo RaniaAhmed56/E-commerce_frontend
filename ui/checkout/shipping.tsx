@@ -31,7 +31,7 @@ export default function Shipping({
 }) {
   const [zones, setZones] = useState<ShippingZone[]>(enabledZones);
 
-  // جيب الـ zones من الـ backend
+  // جيب الـ zones EGPن الـ backend
   useEffect(() => {
     fetchShippingZones().then(setZones);
   }, []);
@@ -74,7 +74,7 @@ export default function Shipping({
           fontFamily: "var(--font-cormorant,Georgia,serif)", fontSize: "1.6rem",
           fontWeight: 800, color: "#ffffff", margin: 0,
         }}>
-          معلومات الشحن
+          Shipping Info
         </h2>
       </div>
 
@@ -82,58 +82,58 @@ export default function Shipping({
       <div className="shipping-grid" style={{ marginBottom: 36 }}>
 
         <div>
-          <L c="الاسم الأول" />
+          <L c="First Name" />
           <div style={{ position: "relative" }}>
             <User size={14} style={iconStyle} />
             <input type="text" value={shipping.firstName}
               onChange={e => setShipping({ ...shipping, firstName: e.target.value })}
-              placeholder="الاسم الأول" className="input-field" style={{ paddingRight: 42 }} />
+              placeholder="First Name" className="input-field" style={{ paddingRight: 42 }} />
           </div>
         </div>
 
         <div>
-          <L c="اسم العائلة" />
+          <L c="Last Name" />
           <div style={{ position: "relative" }}>
             <User size={14} style={iconStyle} />
             <input type="text" value={shipping.lastName}
               onChange={e => setShipping({ ...shipping, lastName: e.target.value })}
-              placeholder="اسم العائلة" className="input-field" style={{ paddingRight: 42 }} />
+              placeholder="Last Name" className="input-field" style={{ paddingRight: 42 }} />
           </div>
         </div>
 
         <div style={{ gridColumn: "span 2" }}>
-          <L c="البريد الإلكتروني" />
+          <L c="Email" />
           <div style={{ position: "relative" }}>
             <Mail size={14} style={iconStyle} />
             <input type="email" value={shipping.email}
               onChange={e => setShipping({ ...shipping, email: e.target.value })}
-              placeholder="البريد الإلكتروني (اختياري)" className="input-field" style={{ paddingRight: 42 }} />
+              placeholder="Email (optional)" className="input-field" style={{ paddingRight: 42 }} />
           </div>
         </div>
 
         <div style={{ gridColumn: "span 2" }}>
-          <L c="رقم الهاتف" />
+          <L c="Phone" />
           <div style={{ position: "relative" }}>
             <Phone size={14} style={iconStyle} />
             <input type="tel" value={shipping.phone}
               onChange={e => setShipping({ ...shipping, phone: e.target.value })}
-              placeholder="رقم الهاتف" className="input-field" style={{ paddingRight: 42 }} />
+              placeholder="Phone" className="input-field" style={{ paddingRight: 42 }} />
           </div>
         </div>
 
         <div style={{ gridColumn: "span 2" }}>
-          <L c="العنوان بالتفصيل" />
+          <L c="Full Address" />
           <div style={{ position: "relative" }}>
             <MapPin size={14} style={iconStyle} />
             <input type="text" value={shipping.address}
               onChange={e => setShipping({ ...shipping, address: e.target.value })}
-              placeholder="الشارع، الحي، رقم المبنى..." className="input-field" style={{ paddingRight: 42 }} />
+              placeholder="Street, area, building number..." className="input-field" style={{ paddingRight: 42 }} />
           </div>
         </div>
 
-        {/* ── المحافظة — select يجيب من الـ backend ── */}
+        {/* ── Governorate — select يجيب EGPن الـ backend ── */}
         <div style={{ gridColumn: "span 2" }}>
-          <L c="المحافظة" />
+          <L c="Governorate" />
           <div style={{ position: "relative" }}>
             <MapPin size={14} style={iconStyle} />
             <select
@@ -142,10 +142,10 @@ export default function Shipping({
               className="input-field"
               style={{ paddingRight: 42, appearance: "none", WebkitAppearance: "none", cursor: "pointer" }}
             >
-              <option value="" disabled>اختر المحافظة...</option>
+              <option value="" disabled>Select Governorate...</option>
               {zones.map(zone => (
                 <option key={zone.governorate} value={zone.governorate}>
-                  {zone.governorate} — {zone.fee} ج.م
+                  {zone.governorate} — {zone.fee} EGP
                 </option>
               ))}
             </select>
@@ -155,7 +155,7 @@ export default function Shipping({
             }}>▾</div>
           </div>
 
-          {/* بادج سعر الشحن */}
+          {/* بادج Price الشحن */}
           {shipping.city && (
             <div style={{
               marginTop: 10, display: "inline-flex", alignItems: "center", gap: 7,
@@ -164,19 +164,19 @@ export default function Shipping({
             }}>
               <Package size={13} style={{ color: "#f59e0b" }} strokeWidth={2} />
               <span style={{ fontSize: 12, color: "#fcd34d", fontWeight: 700 }}>
-                رسوم الشحن إلى {shipping.city}: <span style={{ fontSize: 14 }}>{shippingFee} ج.م</span>
+                Shipping to {shipping.city}: <span style={{ fontSize: 14 }}>{shippingFee} EGP</span>
               </span>
             </div>
           )}
         </div>
 
         <div>
-          <L c="الرمز البريدي" />
+          <L c="ZIP Code" />
           <div style={{ position: "relative" }}>
             <MapPin size={14} style={iconStyle} />
             <input type="text" value={shipping.zip}
               onChange={e => setShipping({ ...shipping, zip: e.target.value })}
-              placeholder="الرمز البريدي (اختياري)" className="input-field" style={{ paddingRight: 42 }} />
+              placeholder="ZIP Code (optional)" className="input-field" style={{ paddingRight: 42 }} />
           </div>
         </div>
 

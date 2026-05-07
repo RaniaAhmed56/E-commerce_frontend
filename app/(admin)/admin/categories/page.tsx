@@ -33,7 +33,7 @@ export default function AdminCategories() {
       setShowAdd(false);
     } catch (err: unknown) {
       const errObj = err as { data?: Record<string, any> };
-      alert(Object.values(errObj?.data??{}).flat().join(" ")||"حدث خطأ");
+      alert(Object.values(errObj?.data??{}).flat().join(" ")||"حدث Error");
     } finally { setSaving(false); }
   };
 
@@ -43,16 +43,16 @@ export default function AdminCategories() {
       const updated = await categoriesApi.update(id, { name:editName });
       setCategories(prev=>prev.map(c=>c.id===id?{...c,name:updated.name}:c));
       setEditingId(null);
-    } catch { alert("حدث خطأ"); }
+    } catch { alert("حدث Error"); }
     finally { setSaving(false); }
   };
 
   const deleteCategory = async (id:number, name:string) => {
-    if (!confirm(`حذف تصنيف "${name}"؟`)) return;
+    if (!confirm(`Delete تصنيف "${name}"؟`)) return;
     try {
       await categoriesApi.delete(id);
       setCategories(prev=>prev.filter(c=>c.id!==id));
-    } catch { alert("لا يمكن حذف التصنيف — قد يحتوي على منتجات"); }
+    } catch { alert("لا يمكن Delete Category — قد يحتوي على EGPنتجات"); }
   };
 
   return (
@@ -60,24 +60,24 @@ export default function AdminCategories() {
       <div>
         <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start", marginBottom:22, flexWrap:"wrap", gap:12 }}>
           <div>
-            <p className="section-tag" style={{ marginBottom:8 }}>إدارة</p>
-            <h2 style={{ color:"#ffffff", margin:"0 0 4px", fontSize:"clamp(1.4rem,3vw,2rem)" }}>التصنيفات</h2>
+            <p className="section-tag" style={{ marginBottom:8 }}>Management</p>
+            <h2 style={{ color:"#ffffff", margin:"0 0 4px", fontSize:"clamp(1.4rem,3vw,2rem)" }}>Categoryات</h2>
             <p style={{ color:"rgba(255,255,255,0.38)", fontSize:13, margin:0 }}>{categories.length} تصنيف</p>
           </div>
           <button onClick={()=>setShowAdd(!showAdd)} className="btn-admin">
-            <Plus size={15} strokeWidth={2.5}/> إضافة تصنيف
+            <Plus size={15} strokeWidth={2.5}/> Add Category
           </button>
         </div>
 
         {/* Add form */}
         {showAdd && (
           <div className="admin-card animate-fade-in" style={{ marginBottom:18 }}>
-            <h3 style={{ color:"#ffffff", fontSize:"1.05rem", fontWeight:700, marginBottom:16, marginTop:0 }}>تصنيف جديد</h3>
+            <h3 style={{ color:"#ffffff", fontSize:"1.05rem", fontWeight:700, marginBottom:16, marginTop:0 }}>Category جديد</h3>
             <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr 1fr", gap:14, marginBottom:16 }}>
               {[
-                { k:"name", l:"الاسم بالإنجليزية", p:"Women" },
-                { k:"name_ar", l:"الاسم بالعربية", p:"نساء" },
-                { k:"slug", l:"الـ Slug (اختياري)", p:"women" },
+                { k:"name", l:"Name بالإنجليزية", p:"Women" },
+                { k:"name_ar", l:"Name بالعربية", p:"Women" },
+                { k:"slug", l:"الـ Slug (optional)", p:"women" },
               ].map(f => (
                 <div key={f.k}>
                   <label style={{ display:"block", fontSize:10, fontWeight:800, letterSpacing:"0.2em", textTransform:"uppercase" as const, color:"rgba(255,255,255,0.4)", marginBottom:8 }}>{f.l}</label>
@@ -89,9 +89,9 @@ export default function AdminCategories() {
             </div>
             <div style={{ display:"flex", gap:10, flexWrap:"wrap" }}>
               <button onClick={addCategory} disabled={saving} className="btn-admin">
-                {saving?<><Loader2 size={13} style={{animation:"spin 1s linear infinite"}}/> جارٍ الإضافة...</>:"حفظ التصنيف"}
+                {saving?<><Loader2 size={13} style={{animation:"spin 1s linear infinite"}}/> Loading Add...</>:"Save Category"}
               </button>
-              <button onClick={()=>setShowAdd(false)} className="btn-admin-ghost">إلغاء</button>
+              <button onClick={()=>setShowAdd(false)} className="btn-admin-ghost">Cancel</button>
             </div>
           </div>
         )}
@@ -117,16 +117,16 @@ export default function AdminCategories() {
                       onKeyDown={e=>e.key==="Enter"&&saveEdit(cat.id)}/>
                     <div style={{ display:"flex", gap:7 }}>
                       <button onClick={()=>saveEdit(cat.id)} disabled={saving} className="btn-admin" style={{padding:"7px 14px", fontSize:12}}>
-                        {saving?<Loader2 size={12} style={{animation:"spin 1s linear infinite"}}/>:<Check size={12}/>} حفظ
+                        {saving?<Loader2 size={12} style={{animation:"spin 1s linear infinite"}}/>:<Check size={12}/>} Save
                       </button>
-                      <button onClick={()=>setEditingId(null)} className="btn-admin-ghost" style={{padding:"7px 14px", fontSize:12}}>إلغاء</button>
+                      <button onClick={()=>setEditingId(null)} className="btn-admin-ghost" style={{padding:"7px 14px", fontSize:12}}>Cancel</button>
                     </div>
                   </div>
                 ) : (
                   <>
                     <h3 style={{ color:"#ffffff", fontSize:"1.2rem", fontWeight:700, margin:"0 0 3px" }}>{cat.name_ar||cat.name}</h3>
                     <p style={{ fontSize:14, color:catColors[i%4], fontWeight:700, margin:"0 0 4px" }}>{cat.name}</p>
-                    <p style={{ fontSize:13, color:"rgba(255,255,255,0.4)", margin:"0 0 16px" }}>{cat.count} منتج</p>
+                    <p style={{ fontSize:13, color:"rgba(255,255,255,0.4)", margin:"0 0 16px" }}>{cat.count} EGPنتج</p>
                     <div style={{ height:4, background:"rgba(255,255,255,0.07)", borderRadius:2, marginBottom:18, overflow:"hidden" }}>
                       <div style={{ height:"100%", background:catColors[i%4], borderRadius:2, width:`${Math.min((cat.count/20)*100,100)}%`, transition:"width 0.5s" }}/>
                     </div>
@@ -139,7 +139,7 @@ export default function AdminCategories() {
                       style={{ flex:1, display:"flex", alignItems:"center", justifyContent:"center", gap:6, padding:"8px 12px", borderRadius:50, background:"rgba(255,255,255,0.06)", border:"1.5px solid rgba(255,255,255,0.1)", color:"rgba(255,255,255,0.55)", fontSize:12, fontWeight:600, cursor:"pointer", transition:"all 0.2s" }}
                       onMouseEnter={e=>{(e.currentTarget as HTMLButtonElement).style.background="rgba(245,158,11,0.12)";(e.currentTarget as HTMLButtonElement).style.color="#f59e0b"}}
                       onMouseLeave={e=>{(e.currentTarget as HTMLButtonElement).style.background="rgba(255,255,255,0.06)";(e.currentTarget as HTMLButtonElement).style.color="rgba(255,255,255,0.55)"}}>
-                      <Edit size={12}/> تعديل
+                      <Edit size={12}/> Edit
                     </button>
                     <button onClick={()=>deleteCategory(cat.id, cat.name)}
                       style={{ width:36, height:36, display:"flex", alignItems:"center", justifyContent:"center", borderRadius:50, background:"rgba(239,68,68,0.08)", border:"1.5px solid rgba(239,68,68,0.18)", color:"#f87171", cursor:"pointer", transition:"all 0.2s" }}

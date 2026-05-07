@@ -4,10 +4,10 @@ import { Navbar } from "@/ui/components/Navbar";
 export default function StoreLayout({ children }: { children: React.ReactNode }) {
   return (
     /*
-      - display:flex + flexDirection:column عشان الـ footer يبقى في الآخر
+      - display:flex + flexDirection:column عشان الـ footer يبقى في الLast
       - background:#ffffff للمحتوى
-      - margin:0 و padding:0 على الـ body ده موجود في globals
-      - الـ Navbar عنده position:sticky top:0 فمش محتاج أي padding هنا
+      - margin:0 و padding:0 على الـ body ده EGPوجود في globals
+      - الـ Navbar عنده position:sticky top:0 فمش EGPحتاج أي padding هنا
     */
     <div style={{
       minHeight: "100vh",

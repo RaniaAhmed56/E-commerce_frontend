@@ -34,7 +34,7 @@ export function Navbar() {
     <>
       {/* Announcement */}
       <div className="nav-announce">
-        <p>✦ شحن مجاني على الطلبات فوق 7,500 ج.م ✦ عروض الموسم — خصم حتى 50%</p>
+        <p>✦ Free Shipping on orders above EGP 1,000 ✦ Season Sale — Up to 50% Off</p>
       </div>
 
       <nav className={`nav-bar${scrolled ? " scrolled" : ""}`}>
@@ -51,27 +51,27 @@ export function Navbar() {
 
             {/* Desktop Nav links */}
             <div className="nav-links">
-              {[{href:"/",l:"الرئيسية"},{href:"/shop",l:"المتجر"},{href:"/about-us",l:"من نحن"},{href:"/contact-us",l:"تواصل معنا"}].map(({href,l}) => (
+              {[{href:"/",l:"Home"},{href:"/shop",l:"Shop"},{href:"/about-us",l:"About Us"},{href:"/contact-us",l:"Contact"}].map(({href,l}) => (
                 <Link key={href} href={href} className={`nav-link${isActive(href)?" active":""}`}>{l}</Link>
               ))}
             </div>
 
             {/* Icons */}
             <div className="nav-icons">
-              <button onClick={()=>setSearch(!search)} className="nav-icon-btn" aria-label="بحث">
+              <button onClick={()=>setSearch(!search)} className="nav-icon-btn" aria-label="Search">
                 <Search size={19} strokeWidth={2}/>
               </button>
-              <Link href="/wishlist" className="nav-icon-btn" style={{textDecoration:"none"}} aria-label="المفضلة">
+              <Link href="/wishlist" className="nav-icon-btn" style={{textDecoration:"none"}} aria-label="Wishlist">
                 <Heart size={19} strokeWidth={2}/>
               </Link>
-              <Link href="/cart" className="nav-icon-btn" style={{textDecoration:"none",position:"relative"}} aria-label="السلة">
+              <Link href="/cart" className="nav-icon-btn" style={{textDecoration:"none",position:"relative"}} aria-label="Cart">
                 <ShoppingCart size={19} strokeWidth={2}/>
                 {getCartCount()>0 && <span className="nav-cart-badge">{getCartCount()}</span>}
               </Link>
 
               {/* User dropdown */}
               <div className="nav-user-wrap" style={{position:"relative"}}>
-                <button onClick={()=>setUserOpen(!userOpen)} className={`nav-icon-btn${isAuthenticated?" authenticated":""}`} aria-label="الحساب">
+                <button onClick={()=>setUserOpen(!userOpen)} className={`nav-icon-btn${isAuthenticated?" authenticated":""}`} aria-label="Account">
                   <User size={18} strokeWidth={2}/>
                 </button>
                 {userOpen && (
@@ -79,15 +79,15 @@ export function Navbar() {
                     <div style={{height:3,background:"linear-gradient(90deg,#f59e0b,#d97706)"}}/>
                     {isAuthenticated ? (
                       <>
-                        {[{href:"/profile",l:"ملفي الشخصي"},{href:"/orders",l:"طلباتي"},{href:"/wishlist",l:"المفضلة"},...(isAdmin?[{href:"/admin",l:"⚙ لوحة التحكم"}]:[])].map(item=>(
+                        {[{href:"/profile",l:"My Profile"},{href:"/orders",l:"My Orders"},{href:"/wishlist",l:"Wishlist"},...(isAdmin?[{href:"/admin",l:"⚙ Dashboard Control"}]:[])].map(item=>(
                           <Link key={item.href} href={item.href} className="nav-dropdown-link">{item.l}</Link>
                         ))}
-                        <button onClick={logout} className="nav-dropdown-logout">تسجيل الخروج</button>
+                        <button onClick={logout} className="nav-dropdown-logout">Sign Out</button>
                       </>
                     ) : (
                       <>
-                        <Link href="/login"    className="nav-dropdown-link">تسجيل الدخول</Link>
-                        <Link href="/register" className="nav-dropdown-link" style={{color:"#d97706"}}>إنشاء حساب</Link>
+                        <Link href="/login"    className="nav-dropdown-link">تسجيل Login</Link>
+                        <Link href="/register" className="nav-dropdown-link" style={{color:"#d97706"}}>Create Account</Link>
                       </>
                     )}
                   </div>
@@ -95,7 +95,7 @@ export function Navbar() {
               </div>
 
               {/* Hamburger */}
-              <button className="nav-hamburger" onClick={()=>setMobile(!mobile)} aria-label="القائمة">
+              <button className="nav-hamburger" onClick={()=>setMobile(!mobile)} aria-label="Menu">
                 {mobile ? <X size={22} strokeWidth={2}/> : <Menu size={22} strokeWidth={2}/>}
               </button>
             </div>
@@ -106,7 +106,7 @@ export function Navbar() {
             <div className="nav-search-bar animate-fade-in">
               <div style={{position:"relative",maxWidth:560,margin:"0 auto"}}>
                 <Search style={{position:"absolute",right:18,top:"50%",transform:"translateY(-50%)",color:"#94a3b8"}} size={17}/>
-                <input autoFocus type="text" placeholder="ابحثي عن منتجاتك..." className="nav-search-input"/>
+                <input autoFocus type="text" placeholder="Search about your products..." className="nav-search-input"/>
               </div>
             </div>
           )}
@@ -115,21 +115,21 @@ export function Navbar() {
         {/* Mobile menu — REVEAL (slide down, not popup) */}
         <div className={`nav-mobile-menu${mobile?" open":""}`}>
           <div className="nav-mobile-inner">
-            {[{href:"/",l:"الرئيسية"},{href:"/shop",l:"المتجر"},{href:"/about-us",l:"من نحن"},{href:"/contact-us",l:"تواصل معنا"}].map(({href,l}) => (
+            {[{href:"/",l:"Home"},{href:"/shop",l:"Shop"},{href:"/about-us",l:"About Us"},{href:"/contact-us",l:"Contact"}].map(({href,l}) => (
               <Link key={href} href={href} className={`nav-mobile-link${isActive(href)?" active":""}`}>{l}</Link>
             ))}
 
             {isAuthenticated ? (
               <div className="nav-mobile-section">
-                {[{href:"/profile",l:"ملفي الشخصي"},{href:"/orders",l:"طلباتي"},{href:"/wishlist",l:"المفضلة"},...(isAdmin?[{href:"/admin",l:"⚙ لوحة التحكم"}]:[])].map(item=>(
+                {[{href:"/profile",l:"My Profile"},{href:"/orders",l:"My Orders"},{href:"/wishlist",l:"Wishlist"},...(isAdmin?[{href:"/admin",l:"⚙ Dashboard Control"}]:[])].map(item=>(
                   <Link key={item.href} href={item.href} className="nav-mobile-link">{item.l}</Link>
                 ))}
-                <button onClick={logout} className="nav-mobile-logout">تسجيل الخروج</button>
+                <button onClick={logout} className="nav-mobile-logout">Sign Out</button>
               </div>
             ) : (
               <div className="nav-mobile-auth">
-                <Link href="/login"    className="nav-mobile-btn-outline">تسجيل الدخول</Link>
-                <Link href="/register" className="nav-mobile-btn-gold">إنشاء حساب</Link>
+                <Link href="/login"    className="nav-mobile-btn-outline">تسجيل Login</Link>
+                <Link href="/register" className="nav-mobile-btn-gold">Create Account</Link>
               </div>
             )}
           </div>

@@ -8,10 +8,10 @@ import Image from "next/image";
 import Link from "next/link";
 
 const statusLabel: Record<string,string> = { 
-  processing:"قيد المعالجة", 
-  shipping:"في الطريق", 
-  delivered:"تم التسليم", 
-  cancelled:"ملغي" 
+  processing:"Processing", 
+  shipping:"Shipped", 
+  delivered:"Delivered", 
+  cancelled:"Cancelled" 
 };
 
 const statusColors: Record<string,string> = {
@@ -57,7 +57,7 @@ export default function OrderDetailsPage() {
   if (!order) {
     return (
       <div style={{ padding: "40px", textAlign: "center" }}>
-        <h2 style={{ color: "#ffffff", marginBottom: "16px" }}>الطلب غير موجود</h2>
+        <h2 style={{ color: "#ffffff", marginBottom: "16px" }}>الطلب غير EGPوجود</h2>
         <Link href="/admin/orders" className="btn-gold">
           العودة للطلبات
         </Link>
@@ -97,7 +97,7 @@ export default function OrderDetailsPage() {
           </Link>
           <div>
             <h1 style={{ color: "#ffffff", fontSize: "24px", fontWeight: "700", margin: 0 }}>
-              تفاصيل الطلب #{String(order.id).padStart(4, "0")}
+              Order Details #{String(order.id).padStart(4, "0")}
             </h1>
             <p style={{ color: "rgba(255,255,255,0.6)", margin: "4px 0 0" }}>
               {new Date(order.created_at).toLocaleDateString("ar-EG", { 
@@ -132,13 +132,13 @@ export default function OrderDetailsPage() {
           <div className="admin-card">
             <h2 style={{ color: "#ffffff", fontSize: "18px", fontWeight: "700", marginBottom: "20px", display: "flex", alignItems: "center", gap: "8px" }}>
               <User size={18} />
-              معلومات العميل
+              Customer Info
             </h2>
             <div style={{ display: "grid", gap: "16px" }}>
               <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
                 <User size={16} style={{ color: "rgba(255,255,255,0.4)" }} />
                 <div>
-                  <p style={{ color: "rgba(255,255,255,0.6)", fontSize: "12px", margin: "0 0 2px" }}>الاسم</p>
+                  <p style={{ color: "rgba(255,255,255,0.6)", fontSize: "12px", margin: "0 0 2px" }}>Name</p>
                   <p style={{ color: "#ffffff", fontSize: "14px", fontWeight: "600", margin: 0 }}>
                     {order.customer_name}
                   </p>
@@ -148,7 +148,7 @@ export default function OrderDetailsPage() {
               <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
                 <Phone size={16} style={{ color: "rgba(255,255,255,0.4)" }} />
                 <div>
-                  <p style={{ color: "rgba(255,255,255,0.6)", fontSize: "12px", margin: "0 0 2px" }}>رقم الهاتف</p>
+                  <p style={{ color: "rgba(255,255,255,0.6)", fontSize: "12px", margin: "0 0 2px" }}>Phone</p>
                   <p style={{ color: "#ffffff", fontSize: "14px", fontWeight: "600", margin: 0 }}>
                     {order.phone}
                   </p>
@@ -159,7 +159,7 @@ export default function OrderDetailsPage() {
                 <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
                   <CreditCard size={16} style={{ color: "rgba(255,255,255,0.4)" }} />
                   <div>
-                    <p style={{ color: "rgba(255,255,255,0.6)", fontSize: "12px", margin: "0 0 2px" }}>البريد الإلكتروني</p>
+                    <p style={{ color: "rgba(255,255,255,0.6)", fontSize: "12px", margin: "0 0 2px" }}>Email</p>
                     <p style={{ color: "#ffffff", fontSize: "14px", fontWeight: "600", margin: 0 }}>
                       {order.email}
                     </p>
@@ -170,7 +170,7 @@ export default function OrderDetailsPage() {
               <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
                 <MapPin size={16} style={{ color: "rgba(255,255,255,0.4)" }} />
                 <div>
-                  <p style={{ color: "rgba(255,255,255,0.6)", fontSize: "12px", margin: "0 0 2px" }}>العنوان</p>
+                  <p style={{ color: "rgba(255,255,255,0.6)", fontSize: "12px", margin: "0 0 2px" }}>Address</p>
                   <p style={{ color: "#ffffff", fontSize: "14px", fontWeight: "600", margin: 0 }}>
                     {order.address}, {order.city}
                   </p>
@@ -180,12 +180,12 @@ export default function OrderDetailsPage() {
               <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
                 <Package size={16} style={{ color: "rgba(255,255,255,0.4)" }} />
                 <div>
-                  <p style={{ color: "rgba(255,255,255,0.6)", fontSize: "12px", margin: "0 0 2px" }}>طريقة الدفع</p>
+                  <p style={{ color: "rgba(255,255,255,0.6)", fontSize: "12px", margin: "0 0 2px" }}>طريقة Checkout</p>
                   <p style={{ color: "#ffffff", fontSize: "14px", fontWeight: "600", margin: 0 }}>
-                    {order.payment_method === "deposit" ? "الدفع عند الاستلام" : 
+                    {order.payment_method === "deposit" ? "Checkout عند الاستلام" : 
                      order.payment_method === "vodafone" ? "Vodafone Cash" :
                      order.payment_method === "instapay" ? "InstaPay" :
-                     order.payment_method === "bank" ? "تحويل بنكي" : order.payment_method}
+                     order.payment_method === "bank" ? "Bank Transfer" : order.payment_method}
                   </p>
                 </div>
               </div>
@@ -196,7 +196,7 @@ export default function OrderDetailsPage() {
           <div className="admin-card">
             <h2 style={{ color: "#ffffff", fontSize: "18px", fontWeight: "700", marginBottom: "20px", display: "flex", alignItems: "center", gap: "8px" }}>
               <Package size={18} />
-              المنتجات ({items.length})
+              الProductات ({items.length})
             </h2>
             <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
               {items.map((item, index) => (
@@ -280,19 +280,19 @@ export default function OrderDetailsPage() {
         <div style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
           <div className="admin-card">
             <h2 style={{ color: "#ffffff", fontSize: "18px", fontWeight: "700", marginBottom: "20px" }}>
-              ملخص الطلب
+              Order Summary
             </h2>
             
             <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                <span style={{ color: "rgba(255,255,255,0.6)", fontSize: "14px" }}>الإجمالي الجزئي</span>
+                <span style={{ color: "rgba(255,255,255,0.6)", fontSize: "14px" }}>الTotal الجزئي</span>
                 <span style={{ color: "#ffffff", fontSize: "14px", fontWeight: "600" }}>
                   {subtotal.toFixed(2)} LE
                 </span>
               </div>
 
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                <span style={{ color: "rgba(255,255,255,0.6)", fontSize: "14px" }}>رسوم الشحن</span>
+                <span style={{ color: "rgba(255,255,255,0.6)", fontSize: "14px" }}>Shipping</span>
                 <span style={{ color: shippingFee === 0 ? "#34d399" : "#ffffff", fontSize: "14px", fontWeight: "600" }}>
                   {shippingFee === 0 ? "مجاني" : `${shippingFee.toFixed(2)} LE`}
                 </span>
@@ -320,7 +320,7 @@ export default function OrderDetailsPage() {
                 justifyContent: "space-between", 
                 alignItems: "center" 
               }}>
-                <span style={{ color: "#ffffff", fontSize: "16px", fontWeight: "700" }}>الإجمالي</span>
+                <span style={{ color: "#ffffff", fontSize: "16px", fontWeight: "700" }}>الTotal</span>
                 <span style={{ color: "#f59e0b", fontSize: "20px", fontWeight: "800" }}>
                   {total.toFixed(2)} LE
                 </span>
@@ -332,10 +332,10 @@ export default function OrderDetailsPage() {
           <a
             href={`https://wa.me/${order.phone}?text=${encodeURIComponent(
               `مرحباً ${order.customer_name}!\n\n` +
-              `طلبك رقم #${String(order.id).padStart(4, "0")} تم استلامه بنجاح\n` +
-              `الإجمالي: ${total.toFixed(2)} LE\n` +
+              `طلبك Number #${String(order.id).padStart(4, "0")} Done received بنجاح\n` +
+              `الTotal: ${total.toFixed(2)} LE\n` +
               `الحالة: ${statusLabel[order.status] || order.status}\n\n` +
-              `شكراً لتسوقك مع BLANKO! 🛍️`
+              `Thank you لتسوقك EGPع BLANKO! 🛍️`
             )}`}
             target="_blank"
             rel="noopener noreferrer"
@@ -350,7 +350,7 @@ export default function OrderDetailsPage() {
             }}
           >
             <ArrowRight size={16} />
-            تواصل مع العميل عبر واتساب
+            تواصل EGPع العميل عبر واتساب
           </a>
         </div>
       </div>

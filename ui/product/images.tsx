@@ -131,21 +131,21 @@ export default function Images({
           {!product.inStock && (
             <div style={{ position:"absolute", inset:0, background:"rgba(26,26,24,0.4)", display:"flex", alignItems:"center", justifyContent:"center", zIndex:5 }}>
               <span style={{ color:"#faf9f6", fontSize:"0.7rem", letterSpacing:"0.3em", textTransform:"uppercase", border:"1px solid rgba(250,249,246,0.6)", padding:"10px 22px" }}>
-                غير متوفر
+                Out of Stock
               </span>
             </div>
           )}
 
           {/* Zoom controls */}
           <div className="zoom-controls">
-            <button onClick={e=>{e.stopPropagation();zoomIn();}}  className="zoom-btn" title="تكبير"><ZoomIn  size={16} strokeWidth={2}/></button>
+            <button onClick={e=>{e.stopPropagation();zoomIn();}}  className="zoom-btn" title="zoom"><ZoomIn  size={16} strokeWidth={2}/></button>
             <button onClick={e=>{e.stopPropagation();zoomOut();}} className="zoom-btn" title="تصغير"><ZoomOut size={16} strokeWidth={2}/></button>
-            {scale > 1 && <button onClick={e=>{e.stopPropagation();resetZoom();}} className="zoom-btn" title="إعادة ضبط"><RotateCcw size={14} strokeWidth={2}/></button>}
+            {scale > 1 && <button onClick={e=>{e.stopPropagation();resetZoom();}} className="zoom-btn" title="إعادة fit"><RotateCcw size={14} strokeWidth={2}/></button>}
           </div>
 
           {/* Zoom hint */}
           <div className="zoom-hint">
-            {scale > 1 ? `${Math.round(scale * 100)}%` : "انقر مرتين للتكبير"}
+            {scale > 1 ? `${Math.round(scale * 100)}%` : "click twice to zoom"}
           </div>
         </div>
 
@@ -154,7 +154,7 @@ export default function Images({
           <div className="prod-thumbs">
             {product.images.map((img, i) => (
               <button key={i} onClick={() => changeImage(i)} className={`prod-thumb${imgIdx === i ? " active" : ""}`}>
-                <Image width={200} height={200} src={normalizeImageUrl(img)} alt={`عرض ${i + 1}`}
+                <Image width={200} height={200} src={normalizeImageUrl(img)} alt={`view ${i + 1}`}
                   style={{ width:"100%", height:"100%", objectFit:"cover" }} />
               </button>
             ))}

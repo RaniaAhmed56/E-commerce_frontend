@@ -15,7 +15,7 @@ export default function Summary({ cart, subtotal, shippingFee, total, discount =
     <>
       <div className="summary-box">
         <h3 style={{ fontFamily: "var(--font-cormorant,Georgia,serif)", fontSize: "1.35rem", fontWeight: 800, color: "#ffffff", margin: "0 0 20px" }}>
-          ملخص الطلب
+          Order Summary
         </h3>
 
         {/* Cart items */}
@@ -64,7 +64,7 @@ export default function Summary({ cart, subtotal, shippingFee, total, discount =
         {/* Totals */}
         <div style={{ borderTop: "1px solid rgba(255,255,255,0.07)", paddingTop: 16, display: "flex", flexDirection: "column", gap: 11 }}>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-            <span style={{ fontSize: 13, color: "rgba(255,255,255,0.48)", fontWeight: 400 }}>الإجمالي الجزئي</span>
+            <span style={{ fontSize: 13, color: "rgba(255,255,255,0.48)", fontWeight: 400 }}>الTotal Subtotal</span>
             <span style={{ fontSize: 13, fontWeight: 700, color: "rgba(255,255,255,0.6)" }}>{subtotal.toLocaleString("en-US")} LE</span>
           </div>
           {shippingFee > 0 && (
@@ -75,12 +75,12 @@ export default function Summary({ cart, subtotal, shippingFee, total, discount =
           )}
           {discount > 0 && (
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-              <span style={{ fontSize: 13, color: "rgba(255,255,255,0.48)", fontWeight: 400 }}>الخصم</span>
+              <span style={{ fontSize: 13, color: "rgba(255,255,255,0.48)", fontWeight: 400 }}>Discount</span>
               <span style={{ fontSize: 13, fontWeight: 700, color: "#ef4444" }}>-{discount.toLocaleString("en-US")} LE</span>
             </div>
           )}
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", paddingTop: 13, borderTop: "1px solid rgba(255,255,255,0.07)", marginTop: 3 }}>
-            <span style={{ fontSize: 15, fontWeight: 800, color: "#ffffff" }}>الإجمالي الكلي</span>
+            <span style={{ fontSize: 15, fontWeight: 800, color: "#ffffff" }}>الTotal Total</span>
             <span style={{ fontFamily: "var(--font-cormorant,Georgia,serif)", fontSize: "1.55rem", fontWeight: 800, color: "#f59e0b" }}>
               {(subtotal + shippingFee - discount).toLocaleString("en-US")} LE
             </span>
@@ -91,7 +91,7 @@ export default function Summary({ cart, subtotal, shippingFee, total, discount =
         <div style={{ display: "flex", alignItems: "center", gap: 10, marginTop: 16, padding: "11px 14px", background: "rgba(52,211,153,0.07)", border: "1px solid rgba(52,211,153,0.14)", borderRadius: 10 }}>
           <ShieldCheck size={15} style={{ color: "#34d399", flexShrink: 0 }} strokeWidth={2} />
           <p style={{ fontSize: 12, color: "rgba(255,255,255,0.5)", margin: 0, lineHeight: 1.5 }}>
-            دفع آمن ومشفر بالكامل. بياناتك محمية.
+            Secure Payment ومشفر fully. Your data protected.
           </p>
         </div>
       </div>
@@ -108,7 +108,7 @@ export default function Summary({ cart, subtotal, shippingFee, total, discount =
         @media(max-width:900px){
           .summary-box {
             position: static;
-            order: -1; /* يظهر فوق فورم الدفع على التاب/موبايل */
+            order: -1; /* يظهر فوق فورم Checkout on التاب/موبايل */
           }
         }
         @media(max-width:480px){

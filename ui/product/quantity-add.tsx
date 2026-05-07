@@ -38,11 +38,11 @@ export default function QuantityAdd({
           className={`btn-primary qa-cart-btn${!product.inStock ? " disabled" : ""}${added ? " added" : ""}`}
         >
           {added ? (
-            <><Check size={16} />تمت الإضافة</>
+            <><Check size={16} />Added Add</>
           ) : product.inStock ? (
-            <><ShoppingCart size={16} />أضف إلى السلة</>
+            <><ShoppingCart size={16} />Add إلى Cart</>
           ) : (
-            "غير متوفر"
+            "Out of Stock"
           )}
         </button>
 
@@ -66,7 +66,7 @@ export default function QuantityAdd({
           disabled={!product.inStock}
           className={`btn-ghost qa-buy-btn${!product.inStock ? " disabled" : ""}`}
         >
-          شراء الآن <ArrowRight size={16} />
+          Buy Now <ArrowRight size={16} />
         </button>
       </div>
 

@@ -1,45 +1,43 @@
-import { categories } from "@/src/data/products";
 import { ArrowRight } from "lucide-react";
-import Image from "next/image";
 import Link from "next/link";
 
-const catImgs: Record<string,string> = {
-  Women:"https://images.unsplash.com/photo-1581044777550-4cfa60707c03?w=700&q=85",
-  Men:  "https://images.unsplash.com/photo-1490578474895-699cd4e2cf59?w=700&q=85",
-  Kids: "https://images.unsplash.com/photo-1471286174890-9c112ffca5b4?w=700&q=85",
-  Accessories:"https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=700&q=85",
-};
-const catAr:  Record<string,string> = { Women:"نساء", Men:"رجال", Kids:"أطفال", Accessories:"إكسسوارات" };
-const catDesc:Record<string,string> = { Women:"أناقة لكل مناسبة", Men:"أسلوب عصري جريء", Kids:"مرح وألوان", Accessories:"اللمسة الأخيرة" };
+const cats = [
+  { name:"Women",      slug:"Women",      img:"https://images.unsplash.com/photo-1485968579580-b6d095142e6e?w=700&q=85", desc:"Timeless elegance for every occasion",  count:120 },
+  { name:"Men",        slug:"Men",        img:"https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=700&q=85", desc:"Modern cuts, bold statements",          count:85  },
+  { name:"Kids",       slug:"Kids",       img:"https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=700&q=85", desc:"Playful colors, lasting comfort",       count:60  },
+  { name:"Accessories",slug:"Accessories",img:"https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=700&q=85", desc:"The finishing touch to every look",     count:95  },
+];
 
 export default function Categories() {
   return (
-    <section style={{ background:"#0f172a", padding:"80px 0" }}>
+    <section style={{ background:"#0f172a", padding:"88px 0" }}>
       <div style={{ maxWidth:1280, margin:"0 auto", padding:"0 24px" }}>
-        <div style={{ textAlign:"center", marginBottom:52 }}>
-          <p className="section-tag" style={{ justifyContent:"center", marginBottom:14, color:"#f59e0b" }}>استكشفي</p>
-          <h2 style={{ color:"#ffffff", margin:0 }}>تسوقي حسب الفئة</h2>
-          <p style={{ color:"rgba(255,255,255,0.4)", marginTop:12, fontSize:15 }}>اختاري الفئة المناسبة لكِ</p>
+        <div style={{ textAlign:"center", marginBottom:56 }}>
+          <p className="section-tag" style={{ justifyContent:"center", marginBottom:14 }}>Explore</p>
+          <h2 style={{ color:"#ffffff", margin:"0 0 14px", fontFamily:"var(--font-cormorant,Georgia,serif)", fontWeight:800 }}>Shop by Category</h2>
+          <p style={{ fontSize:15, color:"rgba(255,255,255,0.4)", margin:0 }}>Find your style, your way</p>
         </div>
         <div className="cats-grid">
-          {categories.map(cat=>(
-            <Link key={cat.id} href={`/shop?category=${cat.name}`}
-              style={{ position:"relative", display:"block", aspectRatio:"3/4", overflow:"hidden", textDecoration:"none", borderRadius:14 }}
+          {cats.map(cat => (
+            <Link key={cat.name} href={`/shop?category=${cat.slug}`}
+              style={{ position:"relative", display:"block", aspectRatio:"3/4", overflow:"hidden", textDecoration:"none", borderRadius:16 }}
               className="cat-link">
-              <Image width={400} height={550} src={catImgs[cat.name]??catImgs.Women} alt={cat.name}
-                style={{ width:"100%", height:"100%", objectFit:"cover", transition:"transform 0.75s ease, filter 0.5s ease" }}
+              <img src={cat.img} alt={cat.name}
+                style={{ width:"100%", height:"100%", objectFit:"cover", transition:"transform 0.75s ease" }}
                 className="cat-img" />
-              <div style={{ position:"absolute", inset:0, background:"linear-gradient(to top, rgba(15,23,42,0.92) 0%, rgba(15,23,42,0.2) 60%, transparent 100%)" }} />
-              <div style={{ position:"absolute", bottom:0, left:0, right:0, padding:22 }}>
-                <p style={{ fontSize:10, fontWeight:800, letterSpacing:"0.28em", textTransform:"uppercase", color:"#fcd34d", margin:"0 0 6px" }}>
-                  {cat.count} قطعة
+              <div style={{ position:"absolute", inset:0, background:"linear-gradient(to top, rgba(10,14,28,0.95) 0%, rgba(10,14,28,0.15) 55%, transparent 100%)" }} />
+              {/* Hover overlay */}
+              <div className="cat-overlay" style={{ position:"absolute", inset:0, background:"rgba(245,158,11,0.12)", opacity:0, transition:"opacity 0.35s" }} />
+              <div style={{ position:"absolute", bottom:0, left:0, right:0, padding:"24px 22px" }}>
+                <p style={{ fontSize:9, fontWeight:800, letterSpacing:"0.32em", textTransform:"uppercase", color:"#fcd34d", margin:"0 0 7px" }}>
+                  {cat.count} pieces
                 </p>
-                <h3 style={{ fontSize:"1.5rem", fontWeight:800, color:"#ffffff", margin:"0 0 4px", fontFamily:"var(--font-cormorant,Georgia,serif)" }}>
-                  {catAr[cat.name]??cat.name}
+                <h3 style={{ fontSize:"1.6rem", fontWeight:800, color:"#ffffff", margin:"0 0 5px", fontFamily:"var(--font-cormorant,Georgia,serif)" }}>
+                  {cat.name}
                 </h3>
-                <p style={{ fontSize:13, color:"rgba(255,255,255,0.5)", margin:"0 0 10px" }}>{catDesc[cat.name]}</p>
-                <div className="cat-cta" style={{ display:"flex", alignItems:"center", gap:6, fontSize:11, fontWeight:800, letterSpacing:"0.18em", textTransform:"uppercase", color:"#fcd34d", opacity:0, transition:"all 0.35s" }}>
-                  تسوقي الآن <ArrowRight size={13} />
+                <p style={{ fontSize:13, color:"rgba(255,255,255,0.50)", margin:"0 0 14px" }}>{cat.desc}</p>
+                <div style={{ display:"flex", alignItems:"center", gap:7, fontSize:11, fontWeight:700, color:"#f59e0b", letterSpacing:"0.14em", textTransform:"uppercase" }}>
+                  Shop Now <ArrowRight size={13} />
                 </div>
               </div>
             </Link>
@@ -47,11 +45,11 @@ export default function Categories() {
         </div>
       </div>
       <style>{`
-        .cats-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; }
-        .cat-link:hover .cat-img { transform:scale(1.1); filter:brightness(0.8); }
-        .cat-link:hover .cat-cta { opacity:1 !important; transform:translateY(0); }
-        @media(max-width:768px){ .cats-grid{ grid-template-columns:repeat(2,1fr); gap:12px; } }
-        @media(max-width:400px){ .cats-grid{ grid-template-columns:1fr 1fr; gap:10px; } }
+        .cats-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:20px; }
+        .cat-link:hover .cat-img { transform:scale(1.07); }
+        .cat-link:hover .cat-overlay { opacity:1 !important; }
+        @media(max-width:1024px){ .cats-grid{grid-template-columns:repeat(2,1fr);gap:16px} }
+        @media(max-width:560px){ .cats-grid{grid-template-columns:repeat(2,1fr);gap:12px} }
       `}</style>
     </section>
   );

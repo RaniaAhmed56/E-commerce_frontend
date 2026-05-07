@@ -1,7 +1,7 @@
 import { Product } from "@/src/data/products";
 import { Ruler } from "lucide-react";
 
-// دالة لتحويل أي قيمة إلى مصفوفة
+// function to convert any value إلى array
 function ensureArray(value: any): string[] {
   if (!value) return [];
   if (Array.isArray(value)) return value;
@@ -25,9 +25,9 @@ export default function     Sizes({
     return (
         <div className="mb-8">
             <div className="flex justify-between mb-3">
-                <label className="text-[0.62rem] tracking-[0.22em] uppercase text-[#1a1a18]">المقاس</label>
+                <label className="text-[0.62rem] tracking-[0.22em] uppercase text-[#1a1a18]">Size</label>
                 <button className="flex items-center gap-1 text-xs text-[#8a8a7a] hover:text-[#1a1a18] transition-colors">
-                    <Ruler className="w-3 h-3" strokeWidth={1.5} /> دليل المقاسات
+                    <Ruler className="w-3 h-3" strokeWidth={1.5} /> دليل Sizeات
                 </button>
             </div>
             <div className="flex flex-wrap gap-3">

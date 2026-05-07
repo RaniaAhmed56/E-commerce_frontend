@@ -56,8 +56,8 @@ export default function CheckoutPage() {
     <div style={{ background: "#0f172a", minHeight: "calc(100vh - 112px)", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "60px 24px", textAlign: "center" }}>
       <ShoppingBag size={64} style={{ color: "rgba(255,255,255,0.1)", marginBottom: 24 }} strokeWidth={1} />
       <h2 style={{ color: "#fff", margin: "0 0 14px" }}>سلتك فارغة</h2>
-      <p style={{ color: "rgba(255,255,255,0.45)", fontSize: 15, marginBottom: 28 }}>أضيفي منتجات أولًا قبل المتابعة للدفع</p>
-      <Link href="/shop" className="btn-gold" style={{ fontSize: 13 }}>تسوقي الآن</Link>
+      <p style={{ color: "rgba(255,255,255,0.45)", fontSize: 15, marginBottom: 28 }}>أضيفي EGPنتجات أولًا before theEGPتابعة للدفع</p>
+      <Link href="/shop" className="btn-gold" style={{ fontSize: 13 }}>تسوقي theآن</Link>
     </div>
   );
 
@@ -71,30 +71,30 @@ export default function CheckoutPage() {
         </div>
 
         <h1 style={{ fontSize: "clamp(1.8rem,4vw,2.6rem)", fontWeight: 800, color: "#fff", margin: "0 0 14px" }}>
-          تم إرسال طلبك بنجاح! 🎉
+          Order Placed Successfully! 🎉
         </h1>
         <p style={{ fontSize: 15, color: "rgba(255,255,255,0.55)", margin: "0 0 8px" }}>
-          مرحباً {shipping.firstName || "عزيزنا"}، وصلنا طلبك وجاري المراجعة.
+          EGPرحباً {shipping.firstName || "Dear"}، وصلنا طلبك and processing theEGPراجعة.
         </p>
         {orderId && (
           <p style={{ fontSize: 13, color: "#f59e0b", marginBottom: 32 }}>
-            رقم الطلب: <strong>#{String(orderId).padStart(4, "0")}</strong>
+            رقEGP theطلب: <strong>#{String(orderId).padStart(4, "0")}</strong>
           </p>
         )}
 
         {/* Order summary card */}
         <div style={{ background: "#1e293b", border: "1.5px solid rgba(255,255,255,0.08)", borderRadius: 18, padding: "24px", marginBottom: 32, textAlign: "right" }}>
-          <p style={{ fontSize: 12, fontWeight: 800, letterSpacing: "0.18em", textTransform: "uppercase", color: "rgba(255,255,255,0.35)", marginBottom: 16 }}>ملخص الطلب</p>
+          <p style={{ fontSize: 12, fontWeight: 800, letterSpacing: "0.18em", textTransform: "uppercase", color: "rgba(255,255,255,0.35)", marginBottom: 16 }}>Order Summary</p>
           <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 8 }}>
-            <span style={{ fontSize: 13, color: "rgba(255,255,255,0.5)" }}>الإجمالي</span>
-            <span style={{ fontSize: 15, fontWeight: 800, color: "#f59e0b" }}>{total.toLocaleString("ar-EG")} ج.م</span>
+            <span style={{ fontSize: 13, color: "rgba(255,255,255,0.5)" }}>theTotal</span>
+            <span style={{ fontSize: 15, fontWeight: 800, color: "#f59e0b" }}>{total.toLocaleString("ar-EG")} ج.EGP</span>
           </div>
           <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 8 }}>
-            <span style={{ fontSize: 13, color: "rgba(255,255,255,0.5)" }}>المحافظة</span>
+            <span style={{ fontSize: 13, color: "rgba(255,255,255,0.5)" }}>Governorate</span>
             <span style={{ fontSize: 13, color: "#fff" }}>{shipping.city}</span>
           </div>
           <div style={{ display: "flex", justifyContent: "space-between" }}>
-            <span style={{ fontSize: 13, color: "rgba(255,255,255,0.5)" }}>رقم الهاتف</span>
+            <span style={{ fontSize: 13, color: "rgba(255,255,255,0.5)" }}>Phone</span>
             <span style={{ fontSize: 13, color: "#fff" }}>{shipping.phone}</span>
           </div>
         </div>
@@ -102,10 +102,10 @@ export default function CheckoutPage() {
         {/* Actions */}
         <div style={{ display: "flex", gap: 14, justifyContent: "center", flexWrap: "wrap" }}>
           <Link href="/profile" style={{ display: "flex", alignItems: "center", gap: 8, padding: "13px 24px", background: "rgba(245,158,11,0.12)", border: "1.5px solid rgba(245,158,11,0.3)", borderRadius: 12, color: "#f59e0b", textDecoration: "none", fontSize: 13, fontWeight: 700, transition: "all 0.2s" }}>
-            <Package size={16} /> متابعة الطلبات
+            <Package size={16} /> Track Orders
           </Link>
           <Link href="/shop" className="btn-gold" style={{ fontSize: 13 }}>
-            تسوق مجدداً <ArrowRight size={15} />
+            Shop Again <ArrowRight size={15} />
           </Link>
         </div>
       </div>
@@ -120,7 +120,7 @@ export default function CheckoutPage() {
         <div style={{ maxWidth: 1100, margin: "0 auto", padding: "0 24px", display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 12 }}>
           <Link href="/" style={{ fontFamily: "var(--font-cormorant,Georgia,serif)", fontSize: 22, fontWeight: 800, color: "#fff", textDecoration: "none", letterSpacing: "0.3em", textTransform: "uppercase" }}>BLANKO</Link>
           <div style={{ display: "flex", alignItems: "center", gap: 20 }}>
-            {[{ n: 1, l: "معلومات الشحن" }, { n: 2, l: "تأكيد الطلب" }].map((s, i) => (
+            {[{ n: 1, l: "Shipping Info" }, { n: 2, l: "Confirm Order" }].map((s, i) => (
               <div key={s.n} style={{ display: "flex", alignItems: "center", gap: 8 }}>
                 {i > 0 && <div style={{ width: 40, height: 1.5, background: step >= s.n ? "#f59e0b" : "rgba(255,255,255,0.15)", borderRadius: 1 }} />}
                 <div style={{ display: "flex", alignItems: "center", gap: 8, opacity: step >= s.n ? 1 : 0.4 }}>

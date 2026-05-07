@@ -11,19 +11,19 @@ export default function ShopSidebar({ showFilters, clear, priceRange, setPriceRa
     <>
       <div className="sidebar-inner">
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 22, paddingBottom: 14, borderBottom: "1px solid rgba(255,255,255,0.08)" }}>
-          <h3 style={{ color: "#ffffff", fontSize: "1.05rem", margin: 0, fontFamily: "var(--font-cormorant,Georgia,serif)" }}>الفلاتر</h3>
+          <h3 style={{ color: "#ffffff", fontSize: "1.05rem", margin: 0, fontFamily: "var(--font-cormorant,Georgia,serif)" }}>Filters</h3>
           <button
             onClick={clear}
             style={{ fontSize: 12, fontWeight: 800, color: "#f59e0b", background: "none", border: "none", cursor: "pointer", letterSpacing: "0.12em", padding: "4px 8px" }}
           >
-            مسح الكل
+            Clear All
           </button>
         </div>
 
         {/* Price range */}
         <div style={{ marginBottom: 26 }}>
           <h4 style={{ fontSize: 11, fontWeight: 800, color: "rgba(255,255,255,0.42)", letterSpacing: "0.24em", textTransform: "uppercase", marginBottom: 14, marginTop: 0 }}>
-            نطاق السعر
+            Price Range
           </h4>
           <div style={{ display: "flex", flexDirection: "column", gap: 9 }}>
             {([[0, 100], [100, 200], [200, 300], [300, 500]] as [number, number][]).map(([min, max]) => (
@@ -45,7 +45,7 @@ export default function ShopSidebar({ showFilters, clear, priceRange, setPriceRa
         {/* Sizes */}
         <div>
           <h4 style={{ fontSize: 11, fontWeight: 800, color: "rgba(255,255,255,0.42)", letterSpacing: "0.24em", textTransform: "uppercase", marginBottom: 14, marginTop: 0 }}>
-            المقاس
+            Size
           </h4>
           <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
             {allSizes.map(size => {

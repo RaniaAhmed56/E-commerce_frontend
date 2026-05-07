@@ -14,10 +14,10 @@ import { ordersApi, couponsApi, type Order, type ActiveCoupon } from "@/src/lib/
 
 // ── helpers ──────────────────────────────────────────
 const STATUS_MAP: Record<string, { label: string; color: string; bg: string; Icon: any }> = {
-  processing: { label: "قيد المعالجة", color: "#f59e0b", bg: "rgba(245,158,11,0.12)", Icon: Clock },
-  shipping:   { label: "في الطريق",    color: "#3b82f6", bg: "rgba(59,130,246,0.12)", Icon: Truck },
-  delivered:  { label: "تم التسليم",   color: "#10b981", bg: "rgba(16,185,129,0.12)", Icon: CheckCircle },
-  cancelled:  { label: "ملغي",         color: "#ef4444", bg: "rgba(239,68,68,0.12)",  Icon: XCircle },
+  processing: { label: "Processing", color: "#f59e0b", bg: "rgba(245,158,11,0.12)", Icon: Clock },
+  shipping:   { label: "Shipped",    color: "#3b82f6", bg: "rgba(59,130,246,0.12)", Icon: Truck },
+  delivered:  { label: "Delivered",   color: "#10b981", bg: "rgba(16,185,129,0.12)", Icon: CheckCircle },
+  cancelled:  { label: "Cancelled",         color: "#ef4444", bg: "rgba(239,68,68,0.12)",  Icon: XCircle },
 };
 function fmtDate(s: string) {
   return new Date(s).toLocaleDateString("ar-EG", { year: "numeric", month: "short", day: "numeric" });
@@ -39,7 +39,7 @@ function OrdersTab() {
       })
       .catch(err => {
         console.error("Orders error:", err);
-        setError("تعذر تحميل الطلبات — تأكد من تشغيل السيرفر بالكود الجديد");
+        setError("Failed to تحميل الطلبات — تأكد EGPن run السيرفر بالكود الجديد");
       })
       .finally(() => setLoading(false));
   }, []);
@@ -53,7 +53,7 @@ function OrdersTab() {
         <p style={{ fontSize: 14, color: "#f87171", margin: 0, fontWeight: 700 }}>{error}</p>
       </div>
       <p style={{ fontSize: 12, color: "rgba(239,68,68,0.7)", margin: 0 }}>
-        خطوات الإصلاح: استبدل <code>api/views.py</code> بالملف الجديد ثم أعد تشغيل السيرفر
+        خطوات الإصلاح: استبدل <code>api/views.py</code> بالملف الجديد ثم أعد run السيرفر
       </p>
     </div>
   );
@@ -61,10 +61,10 @@ function OrdersTab() {
   if (!orders.length) return (
     <div style={{ textAlign: "center", padding: "56px 24px" }}>
       <ShoppingBag size={48} style={{ color: "rgba(255,255,255,0.12)", margin: "0 auto 16px" }} />
-      <p style={{ fontSize: 16, fontWeight: 700, color: "rgba(255,255,255,0.45)", margin: "0 0 8px" }}>لا توجد طلبات بعد</p>
-      <p style={{ fontSize: 13, color: "rgba(255,255,255,0.25)", margin: "0 0 24px" }}>ابدئي التسوق واحصلي على أول طلب!</p>
-      <Link href="/shop" className="btn-gold" style={{ display: "inline-flex", fontSize: 13 }}>تسوق الآن <ArrowRight size={15} /></Link>
-      <p style={{ fontSize: 10, color: "rgba(255,255,255,0.15)", marginTop: 20 }}>({orders.length} طلبات محملة)</p>
+      <p style={{ fontSize: 16, fontWeight: 700, color: "rgba(255,255,255,0.45)", margin: "0 0 8px" }}>No orders yet بعد</p>
+      <p style={{ fontSize: 13, color: "rgba(255,255,255,0.25)", margin: "0 0 24px" }}>Start التسوق واحصلي على أول طلب!</p>
+      <Link href="/shop" className="btn-gold" style={{ display: "inline-flex", fontSize: 13 }}>Shop Now <ArrowRight size={15} /></Link>
+      <p style={{ fontSize: 10, color: "rgba(255,255,255,0.15)", marginTop: 20 }}>({orders.length} طلبات EGPحملة)</p>
     </div>
   );
 
@@ -103,23 +103,23 @@ function OrdersTab() {
                       {[item.color, item.size].filter(Boolean).join(" · ")} × {item.quantity}
                     </p>
                   </div>
-                  <span style={{ fontSize: 13, fontWeight: 700, color: "#fcd34d", flexShrink: 0 }}>{Number(item.price).toLocaleString("ar-EG")} ج.م</span>
+                  <span style={{ fontSize: 13, fontWeight: 700, color: "#fcd34d", flexShrink: 0 }}>{Number(item.price).toLocaleString("ar-EG")} EGP</span>
                 </div>
               ))}
               {(order.items?.length ?? 0) > 3 && (
-                <p style={{ fontSize: 12, color: "rgba(255,255,255,0.3)", margin: "4px 0 0" }}>+ {order.items.length - 3} منتجات أخرى</p>
+                <p style={{ fontSize: 12, color: "rgba(255,255,255,0.3)", margin: "4px 0 0" }}>+ {order.items.length - 3} EGPنتجات أخرى</p>
               )}
             </div>
             {/* Footer */}
             <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "11px 18px", borderTop: "1px solid rgba(255,255,255,0.06)", background: "rgba(0,0,0,0.12)" }}>
               <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-                <span style={{ fontSize: 11, color: "rgba(255,255,255,0.3)" }}>الإجمالي</span>
-                <span style={{ fontSize: 16, fontWeight: 800, color: "#f59e0b" }}>{Number(order.total).toLocaleString("ar-EG")} ج.م</span>
+                <span style={{ fontSize: 11, color: "rgba(255,255,255,0.3)" }}>الTotal</span>
+                <span style={{ fontSize: 16, fontWeight: 800, color: "#f59e0b" }}>{Number(order.total).toLocaleString("ar-EG")} EGP</span>
               </div>
               <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
                 {Number(order.discount_amount) > 0 && (
                   <span style={{ fontSize: 11, color: "#10b981", background: "rgba(16,185,129,0.1)", padding: "3px 10px", borderRadius: 20 }}>
-                    خصم {Number(order.discount_amount).toLocaleString("ar-EG")} ج.م
+                    خصم {Number(order.discount_amount).toLocaleString("ar-EG")} EGP
                   </span>
                 )}
                 <span style={{ fontSize: 11, color: "rgba(255,255,255,0.28)" }}>{order.payment_display || order.payment_method}</span>
@@ -142,7 +142,7 @@ function CouponsTab() {
   useEffect(() => {
     couponsApi.active()
       .then(setCoupons)
-      .catch(() => setError("تعذر تحميل الكوبونات"))
+      .catch(() => setError("Failed to تحميل Coupons"))
       .finally(() => setLoading(false));
   }, []);
 
@@ -155,7 +155,7 @@ function CouponsTab() {
   if (!coupons.length) return (
     <div style={{ textAlign: "center", padding: "56px 24px" }}>
       <Gift size={48} style={{ color: "rgba(255,255,255,0.12)", margin: "0 auto 16px" }} />
-      <p style={{ fontSize: 16, fontWeight: 700, color: "rgba(255,255,255,0.45)", margin: "0 0 8px" }}>لا توجد كوبونات متاحة</p>
+      <p style={{ fontSize: 16, fontWeight: 700, color: "rgba(255,255,255,0.45)", margin: "0 0 8px" }}>No coupons available EGPتاحة</p>
       <p style={{ fontSize: 13, color: "rgba(255,255,255,0.25)", margin: 0 }}>تابعنا لمعرفة أحدث العروض</p>
     </div>
   );
@@ -170,19 +170,19 @@ function CouponsTab() {
               <Tag size={16} style={{ color: "#f59e0b" }} />
             </div>
             <div>
-              <p style={{ fontSize: 11, fontWeight: 700, color: "rgba(255,255,255,0.35)", letterSpacing: "0.12em", textTransform: "uppercase", margin: 0 }}>كوبون خصم</p>
+              <p style={{ fontSize: 11, fontWeight: 700, color: "rgba(255,255,255,0.35)", letterSpacing: "0.12em", textTransform: "uppercase", margin: 0 }}>Discount Coupon</p>
               <p style={{ fontSize: 22, fontWeight: 900, color: "#f59e0b", margin: "2px 0 0", lineHeight: 1 }}>
-                {c.discount_type === "percent" ? `${c.discount}%` : `${Number(c.discount).toLocaleString("ar-EG")} ج.م`}
+                {c.discount_type === "percent" ? `${c.discount}%` : `${Number(c.discount).toLocaleString("ar-EG")} EGP`}
               </p>
             </div>
           </div>
           <button onClick={() => copy(c.code)} style={{ width: "100%", display: "flex", alignItems: "center", justifyContent: "space-between", padding: "10px 14px", background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 8, cursor: "pointer" }}>
             <span style={{ fontSize: 16, fontWeight: 800, letterSpacing: "0.18em", color: "#fff", fontFamily: "monospace" }}>{c.code}</span>
             <span style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 11, fontWeight: 700, color: copied === c.code ? "#10b981" : "#f59e0b" }}>
-              {copied === c.code ? <><Check size={13} />تم</> : <><Copy size={13} />نسخ</>}
+              {copied === c.code ? <><Check size={13} />Done</> : <><Copy size={13} />Copy</>}
             </span>
           </button>
-          {c.expiry && <p style={{ fontSize: 11, color: "rgba(255,255,255,0.28)", margin: "10px 0 0", textAlign: "center" }}>ينتهي {fmtDate(c.expiry)}</p>}
+          {c.expiry && <p style={{ fontSize: 11, color: "rgba(255,255,255,0.28)", margin: "10px 0 0", textAlign: "center" }}>Expires {fmtDate(c.expiry)}</p>}
         </div>
       ))}
     </div>
@@ -196,9 +196,9 @@ function WishlistTab() {
   if (!wishlist.length) return (
     <div style={{ textAlign: "center", padding: "56px 24px" }}>
       <Heart size={48} style={{ color: "rgba(255,255,255,0.12)", margin: "0 auto 16px" }} />
-      <p style={{ fontSize: 16, fontWeight: 700, color: "rgba(255,255,255,0.45)", margin: "0 0 8px" }}>قائمة المفضلة فارغة</p>
-      <p style={{ fontSize: 13, color: "rgba(255,255,255,0.25)", margin: "0 0 24px" }}>أضف منتجات لقائمة المفضلة من صفحة المنتج</p>
-      <Link href="/shop" className="btn-gold" style={{ display: "inline-flex", fontSize: 13 }}>تصفح المنتجات <ArrowRight size={15} /></Link>
+      <p style={{ fontSize: 16, fontWeight: 700, color: "rgba(255,255,255,0.45)", margin: "0 0 8px" }}>قائمة Wishlist فارغة</p>
+      <p style={{ fontSize: 13, color: "rgba(255,255,255,0.25)", margin: "0 0 24px" }}>أضف EGPنتجات for list Wishlist EGPن صفحة الProduct</p>
+      <Link href="/shop" className="btn-gold" style={{ display: "inline-flex", fontSize: 13 }}>تصفح الProductات <ArrowRight size={15} /></Link>
     </div>
   );
 
@@ -217,7 +217,7 @@ function WishlistTab() {
             </div>
             <div style={{ padding: "10px 12px 12px" }}>
               <p style={{ fontSize: 13, fontWeight: 700, color: "#fff", margin: "0 0 4px", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{item.name}</p>
-              <p style={{ fontSize: 14, fontWeight: 800, color: "#f59e0b", margin: 0 }}>{Number(item.price).toLocaleString("ar-EG")} ج.م</p>
+              <p style={{ fontSize: 14, fontWeight: 800, color: "#f59e0b", margin: 0 }}>{Number(item.price).toLocaleString("ar-EG")} EGP</p>
             </div>
           </Link>
           {/* Remove button */}
@@ -233,10 +233,10 @@ function WishlistTab() {
 
 // ── Main Profile ──────────────────────────────────────
 const TABS = [
-  { id: "info",     label: "البيانات الشخصية", Icon: User    },
-  { id: "orders",   label: "طلباتي",            Icon: Package },
-  { id: "coupons",  label: "الكوبونات",          Icon: Tag     },
-  { id: "wishlist", label: "المفضلة",            Icon: Heart   },
+  { id: "info",     label: "Personal Info", Icon: User    },
+  { id: "orders",   label: "My Orders",            Icon: Package },
+  { id: "coupons",  label: "Coupons",          Icon: Tag     },
+  { id: "wishlist", label: "Wishlist",            Icon: Heart   },
 ];
 
 export default function ProfilePage() {
@@ -247,18 +247,18 @@ export default function ProfilePage() {
   const [saving,  setSaving]  = useState(false);
   const [error,   setError]   = useState("");
   const [form, setForm] = useState({
-    first_name: "", last_name: "", email: "", phone: "", address: "", city: "", country: "مصر",
+    first_name: "", last_name: "", email: "", phone: "", address: "", city: "", country: "Egypt",
   });
 
   useEffect(() => { if (!authLoading && !isAuthenticated) router.push("/login"); }, [authLoading, isAuthenticated, router]);
   useEffect(() => {
-    if (user) setForm({ first_name: user.first_name || "", last_name: user.last_name || "", email: user.email || "", phone: user.phone || "", address: user.address || "", city: user.city || "", country: user.country || "مصر" });
+    if (user) setForm({ first_name: user.first_name || "", last_name: user.last_name || "", email: user.email || "", phone: user.phone || "", address: user.address || "", city: user.city || "", country: user.country || "Egypt" });
   }, [user]);
 
   const handleSave = async (e: React.FormEvent) => {
     e.preventDefault(); setSaving(true); setError("");
     try { await updateUser(form); setSaved(true); setTimeout(() => setSaved(false), 2500); }
-    catch { setError("حدث خطأ عند الحفظ."); }
+    catch { setError("حدث Error عند الSave."); }
     finally { setSaving(false); }
   };
 
@@ -281,7 +281,7 @@ export default function ProfilePage() {
         <div style={{ background: "#1e293b", borderBottom: "1px solid rgba(255,255,255,0.07)" }}>
           <div style={{ maxWidth: 1100, margin: "0 auto", padding: "36px 24px 0" }}>
             <p className="section-tag" style={{ marginBottom: 10 }}>الحساب</p>
-            <h1 style={{ color: "#fff", margin: "0", fontSize: "clamp(1.8rem,4vw,2.8rem)", fontWeight: 700 }}>ملفي الشخصي</h1>
+            <h1 style={{ color: "#fff", margin: "0", fontSize: "clamp(1.8rem,4vw,2.8rem)", fontWeight: 700 }}>My Profile</h1>
             <div style={{ display: "flex", gap: 0, marginTop: 24, overflowX: "auto" }}>
               {TABS.map(t => (
                 <button key={t.id} onClick={() => setActiveTab(t.id)} style={{ display: "flex", alignItems: "center", gap: 8, padding: "12px 20px", fontSize: 13, fontWeight: 700, background: "none", border: "none", cursor: "pointer", borderBottom: activeTab === t.id ? "2.5px solid #f59e0b" : "2.5px solid transparent", color: activeTab === t.id ? "#f59e0b" : "rgba(255,255,255,0.45)", transition: "all 0.2s", whiteSpace: "nowrap" }}>
@@ -332,13 +332,13 @@ export default function ProfilePage() {
                       <h3 style={{ color: "#fff", fontSize: "1.25rem", fontWeight: 700, margin: "0 0 24px" }}>المعلومات الشخصية</h3>
                       <div className="profile-form-grid">
                         {[
-                          { k: "first_name", l: "الاسم الأول",      Icon: User,   full: false },
-                          { k: "last_name",  l: "اسم العائلة",       Icon: User,   full: false },
-                          { k: "email",      l: "البريد الإلكتروني", Icon: Mail,   full: false },
-                          { k: "phone",      l: "رقم الهاتف",        Icon: Phone,  full: false },
-                          { k: "city",       l: "المدينة",           Icon: MapPin, full: false },
-                          { k: "country",    l: "البلد",             Icon: MapPin, full: false },
-                          { k: "address",    l: "العنوان",           Icon: MapPin, full: true  },
+                          { k: "first_name", l: "First Name",      Icon: User,   full: false },
+                          { k: "last_name",  l: "Last Name",       Icon: User,   full: false },
+                          { k: "email",      l: "Email", Icon: Mail,   full: false },
+                          { k: "phone",      l: "Phone",        Icon: Phone,  full: false },
+                          { k: "city",       l: "City",           Icon: MapPin, full: false },
+                          { k: "country",    l: "Country",             Icon: MapPin, full: false },
+                          { k: "address",    l: "Address",           Icon: MapPin, full: true  },
                         ].map(f => (
                           <div key={f.k} style={{ gridColumn: f.full ? "span 2" : "auto" }} className={f.full ? "full-col" : ""}>
                             <L c={f.l} />
@@ -350,27 +350,27 @@ export default function ProfilePage() {
                         ))}
                       </div>
                       <button type="submit" disabled={saving} className="btn-gold" style={{ fontSize: 13, marginTop: 24 }}>
-                        {saving ? <><Loader2 size={14} style={{ animation: "spin 1s linear infinite" }} /> جارٍ الحفظ...</> : saved ? <><Check size={14} /> تم الحفظ!</> : "حفظ التغييرات"}
+                        {saving ? <><Loader2 size={14} style={{ animation: "spin 1s linear infinite" }} /> Saving...</> : saved ? <><Check size={14} /> Saved!</> : "Save Changes"}
                       </button>
                     </form>
                   </>
                 )}
 
                 {activeTab === "orders" && (
-                  <><h3 style={{ color: "#fff", fontSize: "1.25rem", fontWeight: 700, margin: "0 0 22px" }}>طلباتي</h3><OrdersTab /></>
+                  <><h3 style={{ color: "#fff", fontSize: "1.25rem", fontWeight: 700, margin: "0 0 22px" }}>My Orders</h3><OrdersTab /></>
                 )}
 
                 {activeTab === "coupons" && (
                   <>
-                    <h3 style={{ color: "#fff", fontSize: "1.25rem", fontWeight: 700, margin: "0 0 6px" }}>الكوبونات المتاحة</h3>
-                    <p style={{ fontSize: 13, color: "rgba(255,255,255,0.35)", margin: "0 0 22px" }}>انسخ الكود واستخدمه عند الدفع</p>
+                    <h3 style={{ color: "#fff", fontSize: "1.25rem", fontWeight: 700, margin: "0 0 6px" }}>Coupons المتاحة</h3>
+                    <p style={{ fontSize: 13, color: "rgba(255,255,255,0.35)", margin: "0 0 22px" }}>اCopy الكود واستخدمه عند Checkout</p>
                     <CouponsTab />
                   </>
                 )}
 
                 {activeTab === "wishlist" && (
                   <>
-                    <h3 style={{ color: "#fff", fontSize: "1.25rem", fontWeight: 700, margin: "0 0 22px" }}>قائمتي المفضلة</h3>
+                    <h3 style={{ color: "#fff", fontSize: "1.25rem", fontWeight: 700, margin: "0 0 22px" }}>قائمتي Wishlist</h3>
                     <WishlistTab />
                   </>
                 )}

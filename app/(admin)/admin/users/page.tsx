@@ -24,16 +24,16 @@ export default function AdminUsers() {
     <>
       <div>
         <div style={{ marginBottom:22 }}>
-          <p className="section-tag" style={{ marginBottom:8 }}>إدارة</p>
-          <h2 style={{ color:"#ffffff", margin:"0 0 4px", fontSize:"clamp(1.4rem,3vw,2rem)" }}>العملاء</h2>
-          <p style={{ color:"rgba(255,255,255,0.38)", fontSize:13, margin:0 }}>{users.length} عميل مسجل</p>
+          <p className="section-tag" style={{ marginBottom:8 }}>Management</p>
+          <h2 style={{ color:"#ffffff", margin:"0 0 4px", fontSize:"clamp(1.4rem,3vw,2rem)" }}>Customers</h2>
+          <p style={{ color:"rgba(255,255,255,0.38)", fontSize:13, margin:0 }}>{users.length} عميل EGPسجل</p>
         </div>
 
         <div className="admin-stats-grid3">
           {[
-            { label:"إجمالي العملاء", value:users.length },
-            { label:"إجمالي الطلبات", value:total_orders },
-            { label:"إجمالي الإنفاق", value:"$"+total_spent.toFixed(0) },
+            { label:"Total Customers", value:users.length },
+            { label:"Total الطلبات", value:total_orders },
+            { label:"Total الspending", value:"$"+total_spent.toFixed(0) },
           ].map(s => (
             <div key={s.label} className="admin-card" style={{ textAlign:"center", padding:18, cursor:"default" }}>
               <p style={{ fontSize:"1.7rem", fontWeight:800, color:"#f59e0b", margin:0, lineHeight:1 }}>{s.value}</p>
@@ -44,7 +44,7 @@ export default function AdminUsers() {
 
         <div style={{ position:"relative", marginBottom:16 }}>
           <Search size={15} style={{ position:"absolute", right:16, top:"50%", transform:"translateY(-50%)", color:"rgba(255,255,255,0.3)" }}/>
-          <input type="text" placeholder="ابحث بالاسم أو البريد..." value={search} onChange={e=>setSearch(e.target.value)}
+          <input type="text" placeholder="اSearch by name أو البريد..." value={search} onChange={e=>setSearch(e.target.value)}
             className="input-field" style={{ paddingRight:44, fontSize:13 }}/>
         </div>
 
@@ -58,7 +58,7 @@ export default function AdminUsers() {
               <table style={{ width:"100%", borderCollapse:"collapse", minWidth:520 }}>
                 <thead>
                   <tr style={{ borderBottom:"1px solid rgba(255,255,255,0.08)", background:"rgba(255,255,255,0.03)" }}>
-                    {["العميل","البريد الإلكتروني","الطلبات","إجمالي الإنفاق","عضو منذ",""].map(h => (
+                    {["العميل","Email","الطلبات","Total الspending","عضو EGPنذ",""].map(h => (
                       <th key={h} style={{ padding:"12px 16px", textAlign:"right", fontSize:10, fontWeight:800, letterSpacing:"0.18em", textTransform:"uppercase", color:"rgba(255,255,255,0.38)", whiteSpace:"nowrap" }}>{h}</th>
                     ))}
                   </tr>

@@ -33,7 +33,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const [loading, setLoading] = useState(false);
   const [lastToken, setLastToken] = useState<string | null>(null);
 
-  // تحميل السلة من الـ server
+  // تحميل Cart EGPن الـ server
   const loadCart = useCallback(async () => {
     try {
       const token = localStorage.getItem("blanko_access");
@@ -72,17 +72,17 @@ export function CartProvider({ children }: { children: ReactNode }) {
     }
   }, []);
 
-  // تحميل السلة عند دخول المستخدم أو تغيير الـ authentication
+  // تحميل Cart عند دخول المستخدم أو change الـ authentication
   useEffect(() => {
     const token = localStorage.getItem("blanko_access");
     
-    // إذا تغيّر الـ token (دخول/خروج)، أعد تحميل السلة
+    // إذا changed الـ token (دخول/خروج)، Reload تحميل Cart
     if (token !== lastToken) {
       setLastToken(token);
       loadCart();
     }
 
-    // استمع إلى تغييرات localStorage من نوافذ أخرى
+    // اسDoneع إلى changeات localStorage EGPن نوافذ أخرى
     const handleStorageChange = (e: StorageEvent) => {
       if (e.key === "blanko_access") {
         loadCart();
@@ -113,7 +113,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
       });
 
       if (res.ok) {
-        await loadCart(); // تحديث السلة من الـ server
+        await loadCart(); // Update Cart EGPن الـ server
       }
     } catch (err) {
       console.error("Failed to add to cart:", err);
@@ -131,7 +131,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
       });
 
       if (res.ok) {
-        await loadCart(); // تحديث السلة من الـ server
+        await loadCart(); // Update Cart EGPن الـ server
       }
     } catch (err) {
       console.error("Failed to remove from cart:", err);
@@ -158,7 +158,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
       });
 
       if (res.ok) {
-        await loadCart(); // تحديث السلة من الـ server
+        await loadCart(); // Update Cart EGPن الـ server
       }
     } catch (err) {
       console.error("Failed to update quantity:", err);

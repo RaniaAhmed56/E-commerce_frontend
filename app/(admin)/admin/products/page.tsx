@@ -6,7 +6,7 @@ import { Plus, Edit, Trash2, Search, Loader2, RefreshCw } from "lucide-react";
 import { productsApi, type Product } from "@/src/lib/api";
 import { normalizeImageUrl } from "@/src/utils/image";
 
-const catAr: Record<string,string> = { Women:"نساء", Men:"رجال", Kids:"أطفال", Accessories:"إكسسوارات" };
+const catAr: Record<string,string> = { Women:"Women", Men:"Men", Kids:"Kids", Accessories:"Accessories" };
 
 export default function AdminProducts() {
   const [products,   setProducts]  = useState<Product[]>([]);
@@ -28,18 +28,18 @@ export default function AdminProducts() {
   useEffect(() => { fetchProducts(); }, [fetchProducts]);
 
   const handleDelete = async (id: number, name: string) => {
-    if (!confirm(`حذف "${name}"؟`)) return;
+    if (!confirm(`Delete "${name}"؟`)) return;
     try {
       await productsApi.delete(id);
       setProducts(prev => prev.filter(p => p.id !== id));
-    } catch { alert("فشل الحذف"); }
+    } catch { alert("Failed الDelete"); }
   };
 
   const stats = [
-    { l:"الكل",   v:products.length,                              c:"#f59e0b" },
-    { l:"متوفر",  v:products.filter(p=>p.in_stock).length,       c:"#34d399" },
+    { l:"All",   v:products.length,                              c:"#f59e0b" },
+    { l:"In Stock",  v:products.filter(p=>p.in_stock).length,       c:"#34d399" },
     { l:"نفذ",    v:products.filter(p=>!p.in_stock).length,      c:"#f87171" },
-    { l:"مميز",   v:products.filter(p=>p.featured).length,       c:"#c084fc" },
+    { l:"Featured",   v:products.filter(p=>p.featured).length,       c:"#c084fc" },
   ];
 
   return (
@@ -47,19 +47,19 @@ export default function AdminProducts() {
       <div>
         <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start", marginBottom:22, flexWrap:"wrap", gap:12 }}>
           <div>
-            <p className="section-tag" style={{ marginBottom:8 }}>إدارة المنتجات</p>
-            <h2 style={{ color:"#ffffff", margin:"0 0 4px", fontSize:"clamp(1.4rem,3vw,2rem)" }}>المنتجات</h2>
-            <p style={{ color:"rgba(255,255,255,0.38)", fontSize:13, margin:0 }}>{products.length} منتج</p>
+            <p className="section-tag" style={{ marginBottom:8 }}>Management الProductات</p>
+            <h2 style={{ color:"#ffffff", margin:"0 0 4px", fontSize:"clamp(1.4rem,3vw,2rem)" }}>الProductات</h2>
+            <p style={{ color:"rgba(255,255,255,0.38)", fontSize:13, margin:0 }}>{products.length} EGPنتج</p>
           </div>
           <div style={{ display:"flex", gap:10 }}>
             <button onClick={fetchProducts}
               style={{ display:"flex", alignItems:"center", gap:7, padding:"10px 16px", background:"rgba(255,255,255,0.07)", border:"1.5px solid rgba(255,255,255,0.12)", borderRadius:50, color:"rgba(255,255,255,0.55)", fontSize:12, fontWeight:700, cursor:"pointer", transition:"all 0.2s" }}
               onMouseEnter={e=>{(e.currentTarget as HTMLButtonElement).style.color="#f59e0b";(e.currentTarget as HTMLButtonElement).style.borderColor="rgba(245,158,11,0.3)"}}
               onMouseLeave={e=>{(e.currentTarget as HTMLButtonElement).style.color="rgba(255,255,255,0.55)";(e.currentTarget as HTMLButtonElement).style.borderColor="rgba(255,255,255,0.12)"}}>
-              <RefreshCw size={13} strokeWidth={2}/> تحديث
+              <RefreshCw size={13} strokeWidth={2}/> Update
             </button>
             <Link href="/admin/products/add" className="btn-admin">
-              <Plus size={15} strokeWidth={2.5}/> إضافة منتج
+              <Plus size={15} strokeWidth={2.5}/> Add EGPنتج
             </Link>
           </div>
         </div>
@@ -78,7 +78,7 @@ export default function AdminProducts() {
         <div className="products-filter-row">
           <div style={{ position:"relative", flex:1, minWidth:180 }}>
             <Search size={14} style={{ position:"absolute", right:15, top:"50%", transform:"translateY(-50%)", color:"rgba(255,255,255,0.28)" }}/>
-            <input type="text" placeholder="ابحث عن منتج..." value={search} onChange={e=>setSearch(e.target.value)}
+            <input type="text" placeholder="Search for EGPنتج..." value={search} onChange={e=>setSearch(e.target.value)}
               className="input-field" style={{ paddingRight:42, fontSize:13 }}/>
           </div>
           <div style={{ display:"flex", gap:7, flexWrap:"wrap" }}>
@@ -89,7 +89,7 @@ export default function AdminProducts() {
                   background: catFilter===c?"#f59e0b":"transparent",
                   color:      catFilter===c?"#0f172a":"rgba(255,255,255,0.48)",
                   borderColor:catFilter===c?"#f59e0b":"rgba(255,255,255,0.14)" }}>
-                {c==="all"?"الكل":catAr[c]??c}
+                {c==="all"?"All":catAr[c]??c}
               </button>
             ))}
           </div>
@@ -106,7 +106,7 @@ export default function AdminProducts() {
               <table style={{ width:"100%", borderCollapse:"collapse", minWidth:540 }}>
                 <thead>
                   <tr style={{ borderBottom:"1px solid rgba(255,255,255,0.08)", background:"rgba(255,255,255,0.03)" }}>
-                    {["المنتج","التصنيف","السعر","الحالة","التسميات","الإجراءات"].map(h => (
+                    {["الProduct","Category","الPrice","الحالة","Labels","Actions"].map(h => (
                       <th key={h} style={{ padding:"12px 16px", textAlign:"right", fontSize:10, fontWeight:800, letterSpacing:"0.18em", textTransform:"uppercase", color:"rgba(255,255,255,0.35)", whiteSpace:"nowrap" }}>{h}</th>
                     ))}
                   </tr>
@@ -135,13 +135,13 @@ export default function AdminProducts() {
                         <span style={{ fontSize:10, fontWeight:800, letterSpacing:"0.14em", textTransform:"uppercase", padding:"4px 11px", borderRadius:50,
                           background: p.in_stock?"rgba(52,211,153,0.12)":"rgba(248,113,113,0.12)",
                           color:      p.in_stock?"#34d399":"#f87171" }}>
-                          {p.in_stock?"✓ متوفر":"✗ نفذ"}
+                          {p.in_stock?"✓ In Stock":"✗ نفذ"}
                         </span>
                       </td>
                       <td style={{ padding:"12px 16px" }}>
                         <div style={{ display:"flex", gap:5, flexWrap:"wrap" }}>
-                          {p.featured && <span style={{ fontSize:9, fontWeight:800, letterSpacing:"0.1em", textTransform:"uppercase", padding:"3px 9px", borderRadius:50, background:"rgba(245,158,11,0.14)", color:"#f59e0b" }}>مميز</span>}
-                          {p.trending && <span style={{ fontSize:9, fontWeight:800, letterSpacing:"0.1em", textTransform:"uppercase", padding:"3px 9px", borderRadius:50, background:"rgba(96,165,250,0.14)", color:"#60a5fa" }}>رائج</span>}
+                          {p.featured && <span style={{ fontSize:9, fontWeight:800, letterSpacing:"0.1em", textTransform:"uppercase", padding:"3px 9px", borderRadius:50, background:"rgba(245,158,11,0.14)", color:"#f59e0b" }}>Featured</span>}
+                          {p.trending && <span style={{ fontSize:9, fontWeight:800, letterSpacing:"0.1em", textTransform:"uppercase", padding:"3px 9px", borderRadius:50, background:"rgba(96,165,250,0.14)", color:"#60a5fa" }}>Trending</span>}
                         </div>
                       </td>
                       <td style={{ padding:"12px 16px" }}>
@@ -163,7 +163,7 @@ export default function AdminProducts() {
                     </tr>
                   ))}
                   {products.length===0 && !loading && (
-                    <tr><td colSpan={6} style={{ padding:"48px 20px", textAlign:"center", color:"rgba(255,255,255,0.28)", fontSize:14 }}>لا توجد منتجات</td></tr>
+                    <tr><td colSpan={6} style={{ padding:"48px 20px", textAlign:"center", color:"rgba(255,255,255,0.28)", fontSize:14 }}>No products found</td></tr>
                   )}
                 </tbody>
               </table>

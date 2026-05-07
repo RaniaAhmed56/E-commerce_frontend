@@ -4,44 +4,44 @@ import Link from "next/link";
 import { Heart, Zap, Award, Target, Eye, Sparkles, ArrowRight, Users, Star, Package, MessageCircle } from "lucide-react";
 
 // const stats = [
-//   { value: "٥٠٠+", label: "منتج فاخر" },
+//   { value: "٥٠٠+", label: "Product فاخر" },
 //   { value: "٥٠ألف", label: "عميل سعيد" },
-//   { value: "٤.٩★", label: "تقييم متوسط" },
+//   { value: "٤.٩★", label: "تقييم EGPتوسط" },
 //   { value: "٢٠٢٢", label: "سنة التأسيس" },
 // ];
 
 const values = [
   {
     Icon: Target,
-    title: "مهمتنا",
-    desc: "توفير أزياء عالية الجودة تجمع بين الأناقة والراحة، مع تجربة تسوق سلسة تفوق التوقعات في كل خطوة.",
+    title: "Our Mission",
+    desc: "To provide premium fashion that unites elegance and comfort, with a seamless shopping experience that exceeds expectations.",
     color: "#f59e0b",
   },
   {
     Icon: Eye,
-    title: "رؤيتنا",
-    desc: "أن نكون الوجهة الأولى للأزياء الراقية في المنطقة، حيث يشعر كل عميل بأنه استثنائي وقيّم حقاً.",
+    title: "Our Vision",
+    desc: "To be the leading destination for luxury fashion in the region, making every customer feel uniquely valued.",
     color: "#60a5fa",
   },
   {
     Icon: Heart,
-    title: "قيمنا",
-    desc: "الجودة قبل الكمية، احترام عملائنا، الابتكار المستمر، والمسؤولية تجاه المجتمع والبيئة دائماً.",
+    title: "Our Values",
+    desc: "Quality over quantity, respect for our clients, continuous innovation, and responsibility toward community and environment.",
     color: "#34d399",
   },
 ];
 
 const whyUs = [
-  { Icon: Package, title: "جودة مضمونة",     desc: "كل قطعة تمر بمعايير صارمة للجودة قبل وصولها إليك." },
-  { Icon: Zap,     title: "توصيل سريع",      desc: "نوصل طلبك خلال 24–48 ساعة في أنحاء الجمهورية." },
-  { Icon: Heart,   title: "خدمة استثنائية",  desc: "فريقنا متاح 7 أيام لمساعدتك بكل ترحيب واهتمام." },
-  { Icon: Award,   title: "تصاميم عصرية",    desc: "نتابع أحدث الاتجاهات العالمية ونختار ما يناسبك." },
+  { Icon: Package, title: "Guaranteed Quality",     desc: "Every piece passes strict quality standards before reaching you." },
+  { Icon: Zap,     title: "Fast Delivery",      desc: "We deliver your order within 24–48 hours across Egypt." },
+  { Icon: Heart,   title: "Exceptional Service",  desc: "Our team is available 7 days a week, always happy to help." },
+  { Icon: Award,   title: "Modern Designs",    desc: "We follow global trends and select only what suits you best." },
 ];
 
 const team = [
   { name: "نور الهدى", role: "المدير الإبداعي",  init: "ن", color: "#f59e0b" },
   { name: "أحمد سمير", role: "مدير العمليات",    init: "أ", color: "#60a5fa" },
-  { name: "دينا مصطفى", role: "مديرة خدمة العملاء", init: "د", color: "#34d399" },
+  { name: "دينا EGPصطفى", role: "مديرة خدمة الcustomers", init: "د", color: "#34d399" },
 ];
 
 export default function AboutPage() {
@@ -58,13 +58,13 @@ export default function AboutPage() {
           <div style={{ position: "relative", maxWidth: 1280, margin: "0 auto", padding: "0 24px", width: "100%", textAlign: "center" }}>
             <div className="about-hero-badge animate-slide-right">
               <Sparkles size={13} style={{ color: "#fcd34d" }} />
-              <span>منذ 2022 — قصة أناقة مستمرة</span>
+              <span>منذ 2022 — قصة أناقة continuous</span>
             </div>
             <h1 className="about-hero-h1 animate-fade-up delay-100">
-              قصتنا
+              Our Story
             </h1>
             <p className="about-hero-sub animate-fade-up delay-200">
-              أكثر من مجرد تجربة تسوق — رحلة أناقة حقيقية مع BLANKO
+              أكثر EGPن EGPجرد تجربة تسوق — رحلة أناقة حقيقية EGPع BLANKO
             </p>
 
             {/* Stats */}
@@ -90,7 +90,7 @@ export default function AboutPage() {
                   <div style={{ position: "absolute", inset: 0, background: "linear-gradient(135deg, rgba(245,158,11,0.15), transparent)", opacity: 0, transition: "opacity 0.5s" }} className="about-img-overlay" />
                 </div>
                 <div className="about-img-badge">
-                  ✓ تصاميم فاخرة
+                  ✓ designs فاخرة
                 </div>
                 {/* Decorative ring */}
                 <div style={{ position: "absolute", top: -16, right: -16, width: 120, height: 120, borderRadius: "50%", border: "2px dashed rgba(245,158,11,0.3)", pointerEvents: "none" }} />
@@ -98,15 +98,15 @@ export default function AboutPage() {
 
               {/* Text */}
               <div>
-                <p className="section-tag" style={{ marginBottom: 16 }}>من نحن</p>
+                <p className="section-tag" style={{ marginBottom: 16 }}>About Us</p>
                 <h2 style={{ fontSize: "clamp(1.8rem,4vw,2.8rem)", fontWeight: 800, color: "#0f172a", lineHeight: 1.2, marginBottom: 24 }}>
                   BLANKO — حيث يلتقي الأسلوب بالجودة
                 </h2>
                 <p style={{ fontSize: 16, color: "#475569", lineHeight: 1.9, marginBottom: 18 }}>
-                  منذ تأسيسنا، آمنا أن الملابس ليست مجرد مظهر خارجي — بل هي تعبير عن هويتك وشخصيتك. في BLANKO، نختار كل قطعة بدقة واهتمام لضمان أنك تحصل على أفضل ما يمكن.
+                  Since our founding، آمنا أن الملابس ليست EGPجرد EGPظهر خارجي — بل هي تعبير عن هويتك and personality. في BLANKO، نختار كل قطعة بدقة واهDoneام لضمان أنك تحصل على أفضل EGPا يمكن.
                 </p>
                 <p style={{ fontSize: 16, color: "#64748b", lineHeight: 1.9, marginBottom: 32 }}>
-                  نحرص على توفير تجربة تسوق سلسة وممتعة، مع خدمة عملاء استثنائية تجعلك تشعر بالقيمة والاهتمام في كل خطوة.
+                  نحرص على توفير تجربة تسوق سلسة وممتعة، EGPع خدمة customers استثنائية تجعلك تشعر بالقيمة والاهDoneام في كل خطوة.
                 </p>
                 <Link href="/shop" className="btn-gold" style={{ display: "inline-flex" }}>
                   استكشف المجموعة <ArrowRight size={16} />
@@ -122,7 +122,7 @@ export default function AboutPage() {
             <div style={{ textAlign: "center", marginBottom: 52 }}>
               <p className="section-tag" style={{ justifyContent: "center", marginBottom: 14 }}>ما يحركنا</p>
               <h2 style={{ fontSize: "clamp(1.8rem,4vw,2.6rem)", fontWeight: 800, color: "#0f172a", margin: 0 }}>
-                رؤيتنا وقيمنا
+                Our Vision وOur Values
               </h2>
             </div>
             <div className="about-values-grid">
@@ -156,7 +156,7 @@ export default function AboutPage() {
             <div style={{ textAlign: "center", marginBottom: 52 }}>
               <p className="section-tag" style={{ justifyContent: "center", marginBottom: 14 }}>لماذا BLANKO</p>
               <h2 style={{ fontSize: "clamp(1.8rem,4vw,2.6rem)", fontWeight: 800, color: "#ffffff", margin: 0 }}>
-                ما يميزنا عن الآخرين
+                EGPا يميزنا عن الLastين
               </h2>
             </div>
             <div className="about-why-grid">
@@ -188,9 +188,9 @@ export default function AboutPage() {
         <section style={{ padding: "72px 0", background: "#ffffff" }}>
           <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 24px" }}>
             <div style={{ textAlign: "center", marginBottom: 48 }}>
-              <p className="section-tag" style={{ justifyContent: "center", marginBottom: 14 }}>فريقنا</p>
+              <p className="section-tag" style={{ justifyContent: "center", marginBottom: 14 }}>Our team</p>
               <h2 style={{ fontSize: "clamp(1.8rem,4vw,2.6rem)", fontWeight: 800, color: "#0f172a", margin: 0 }}>
-                الأشخاص خلف BLANKO
+                الأشخاص behind BLANKO
               </h2>
             </div>
             <div className="about-team-grid">
@@ -215,17 +215,17 @@ export default function AboutPage() {
           <div style={{ maxWidth: 640, margin: "0 auto" }}>
             <p className="section-tag" style={{ justifyContent: "center", marginBottom: 16 }}>ابدأي الآن</p>
             <h2 style={{ fontSize: "clamp(1.8rem,4vw,2.6rem)", fontWeight: 800, color: "#0f172a", marginBottom: 16 }}>
-              جاهزة تبدأي رحلتك معنا؟
+              جاهزة تبدأي رحلتك with us؟
             </h2>
             <p style={{ fontSize: 16, color: "#64748b", marginBottom: 36, lineHeight: 1.8, maxWidth: 480, margin: "0 auto 36px" }}>
-              اكتشفي مجموعتنا الحصرية واستمتعي بتجربة تسوق فريدة لم تختبريها من قبل.
+              اكتشفي EGPجموعتنا الحصرية واسDoneتعي بتجربة تسوق فريدة لم تختبريها EGPن before.
             </p>
             <div style={{ display: "flex", gap: 14, justifyContent: "center", flexWrap: "wrap" }}>
               <Link href="/shop" className="btn-gold">
-                استكشفي المتجر <ArrowRight size={16} />
+                استكشفي Store <ArrowRight size={16} />
               </Link>
               <a href="https://wa.me/201000000000" target="_blank" rel="noopener" className="btn-ghost" style={{ display: "inline-flex" }}>
-                <MessageCircle size={16} /> تواصلي معنا
+                <MessageCircle size={16} /> تواصلي with us
               </a>
             </div>
           </div>

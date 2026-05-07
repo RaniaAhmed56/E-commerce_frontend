@@ -5,11 +5,11 @@ import { adminApi } from "@/src/lib/api";
 
 const DEFAULT: Record<string,string> = {
   store_name:"Blanko Fashion House", store_email:"info@blanko.com",
-  store_phone:"+20 100 000 0000",    store_address:"القاهرة، مصر",
+  store_phone:"+20 100 000 0000",    store_address:"Cairo، Egypt",
   wa_number:"201000000000",          free_shipping_min:"100",
   shipping_fee:"10",                 tax_rate:"10",
   vodafone_num:"010XXXXXXXX",        instapay_id:"blanko@instapay",
-  bank_account:"1234567890123456",   bank_name:"بنك مصر",
+  bank_account:"1234567890123456",   bank_name:"بنك Egypt",
 };
 
 export default function AdminSettings() {
@@ -30,7 +30,7 @@ export default function AdminSettings() {
     try {
       await adminApi.updateSettings(settings);
       setSaved(true); setTimeout(()=>setSaved(false), 2500);
-    } catch { alert("حدث خطأ عند الحفظ"); }
+    } catch { alert("حدث Error عند الSave"); }
     finally  { setSaving(false); }
   };
 
@@ -53,9 +53,9 @@ export default function AdminSettings() {
   return (
     <div>
       <div style={{ marginBottom:22 }}>
-        <p className="section-tag" style={{ marginBottom:8 }}>الإدارة</p>
-        <h2 style={{ color:"#ffffff", margin:"0 0 4px", fontSize:"clamp(1.4rem,3vw,2rem)" }}>إعدادات المتجر</h2>
-        <p style={{ color:"rgba(255,255,255,0.38)", fontSize:13, margin:0 }}>تحكم في كل إعدادات المتجر</p>
+        <p className="section-tag" style={{ marginBottom:8 }}>الManagement</p>
+        <h2 style={{ color:"#ffffff", margin:"0 0 4px", fontSize:"clamp(1.4rem,3vw,2rem)" }}>إعدادات Store</h2>
+        <p style={{ color:"rgba(255,255,255,0.38)", fontSize:13, margin:0 }}>control في كل إعدادات Store</p>
       </div>
 
       <div style={{ display:"flex", flexDirection:"column", gap:16 }}>
@@ -63,13 +63,13 @@ export default function AdminSettings() {
         <div className="admin-card">
           <div style={{ display:"flex", alignItems:"center", gap:10, marginBottom:20 }}>
             <div style={{ width:34, height:34, borderRadius:8, background:"rgba(245,158,11,0.15)", display:"flex", alignItems:"center", justifyContent:"center" }}><Store size={16} style={{ color:"#f59e0b" }} strokeWidth={2}/></div>
-            <h3 style={{ color:"#ffffff", fontSize:"1rem", fontWeight:700, margin:0 }}>معلومات المتجر</h3>
+            <h3 style={{ color:"#ffffff", fontSize:"1rem", fontWeight:700, margin:0 }}>معلومات Store</h3>
           </div>
           <div className="settings-grid">
-            <F label="اسم المتجر"        field="store_name"/>
-            <F label="البريد الإلكتروني" field="store_email" type="email"/>
-            <F label="رقم الهاتف"        field="store_phone"/>
-            <F label="العنوان"            field="store_address"/>
+            <F label="Store Name"        field="store_name"/>
+            <F label="Email" field="store_email" type="email"/>
+            <F label="Phone"        field="store_phone"/>
+            <F label="Address"            field="store_address"/>
           </div>
         </div>
 
@@ -80,9 +80,9 @@ export default function AdminSettings() {
             <h3 style={{ color:"#ffffff", fontSize:"1rem", fontWeight:700, margin:0 }}>واتساب</h3>
           </div>
           <div className="settings-grid">
-            <F label="رقم واتساب المتجر (بدون +)" field="wa_number" placeholder="201000000000"/>
+            <F label="Number واتساب Store (without +)" field="wa_number" placeholder="201000000000"/>
           </div>
-          <p style={{ fontSize:12, color:"rgba(255,255,255,0.28)", marginTop:10 }}>💡 هذا الرقم يُستخدم لطلبات الدفع عند الاستلام</p>
+          <p style={{ fontSize:12, color:"rgba(255,255,255,0.28)", marginTop:10 }}>💡 This الNumber يُستخدم لطلبات Checkout عند الاستلام</p>
         </div>
 
         {/* Shipping */}
@@ -93,7 +93,7 @@ export default function AdminSettings() {
           </div>
           <div className="settings-grid">
             <F label="الحد الأدنى للشحن المجاني ($)" field="free_shipping_min" type="number"/>
-            <F label="رسوم الشحن ($)"                 field="shipping_fee"      type="number"/>
+            <F label="Shipping ($)"                 field="shipping_fee"      type="number"/>
             <F label="نسبة الضريبة (%)"               field="tax_rate"          type="number"/>
           </div>
         </div>
@@ -102,12 +102,12 @@ export default function AdminSettings() {
         <div className="admin-card">
           <div style={{ display:"flex", alignItems:"center", gap:10, marginBottom:20 }}>
             <div style={{ width:34, height:34, borderRadius:8, background:"rgba(192,132,252,0.12)", display:"flex", alignItems:"center", justifyContent:"center" }}><CreditCard size={16} style={{ color:"#c084fc" }} strokeWidth={2}/></div>
-            <h3 style={{ color:"#ffffff", fontSize:"1rem", fontWeight:700, margin:0 }}>بيانات الدفع الأونلاين</h3>
+            <h3 style={{ color:"#ffffff", fontSize:"1rem", fontWeight:700, margin:0 }}>بيانات Checkout الأونلاين</h3>
           </div>
           <div className="settings-grid">
-            <F label="رقم Vodafone Cash" field="vodafone_num"  placeholder="010XXXXXXXX"/>
+            <F label="Number Vodafone Cash" field="vodafone_num"  placeholder="010XXXXXXXX"/>
             <F label="معرف InstaPay"     field="instapay_id"   placeholder="blanko@instapay"/>
-            <F label="رقم الحساب البنكي" field="bank_account"  placeholder="16 رقم"/>
+            <F label="Number الحساب البنكي" field="bank_account"  placeholder="16 Number"/>
             <F label="اسم البنك"         field="bank_name"/>
           </div>
         </div>
@@ -115,9 +115,9 @@ export default function AdminSettings() {
 
       <div style={{ marginTop:22, display:"flex", justifyContent:"flex-end" }}>
         <button onClick={handleSave} disabled={saving} className="btn-admin" style={{ fontSize:13, padding:"13px 32px" }}>
-          {saving ? <><Loader2 size={14} style={{animation:"spin 1s linear infinite"}}/> جارٍ الحفظ...</> :
-           saved  ? <><Check size={14}/> تم الحفظ!</>   :
-                    <><Save size={14}/> حفظ الإعدادات</>}
+          {saving ? <><Loader2 size={14} style={{animation:"spin 1s linear infinite"}}/> Saving...</> :
+           saved  ? <><Check size={14}/> Saved!</>   :
+                    <><Save size={14}/> Save Settings</>}
         </button>
       </div>
 

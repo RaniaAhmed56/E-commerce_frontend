@@ -10,7 +10,7 @@ const SC: Record<string,{bg:string;text:string}> = {
   processing: { bg:"rgba(96,165,250,0.12)",  text:"#60a5fa" },
   cancelled:  { bg:"rgba(248,113,113,0.12)", text:"#f87171" },
 };
-const statusLabel: Record<string,string> = { delivered:"تم التسليم", shipping:"في الطريق", processing:"قيد المعالجة", cancelled:"ملغي" };
+const statusLabel: Record<string,string> = { delivered:"Delivered", shipping:"Shipped", processing:"Processing", cancelled:"Cancelled" };
 
 export default function AdminDashboard() {
   const [stats,   setStats]   = useState<DashboardStats|null>(null);
@@ -55,9 +55,9 @@ export default function AdminDashboard() {
 
   const statCards = stats ? [
     { label:"الإيرادات",  value:`${parseFloat(stats.total_revenue).toLocaleString()} LE`, change:"+12.5%", icon:DollarSign, color:"#f59e0b",  bg:"rgba(245,158,11,0.12)"  },
-    { label:"الطلبات",    value:stats.total_orders.toLocaleString(),                    change:"+8.2%",  icon:ShoppingBag,color:"#60a5fa",  bg:"rgba(96,165,250,0.12)"  },
-    { label:"المنتجات",   value:stats.total_products.toLocaleString(),                  change:"+3.1%",  icon:Package,    color:"#34d399",  bg:"rgba(52,211,153,0.12)"  },
-    { label:"العملاء",    value:stats.total_users.toLocaleString(),                     change:"+15.3%", icon:Users,      color:"#c084fc",  bg:"rgba(192,132,252,0.12)" },
+    { label:"Orders",    value:stats.total_orders.toLocaleString(),                    change:"+8.2%",  icon:ShoppingBag,color:"#60a5fa",  bg:"rgba(96,165,250,0.12)"  },
+    { label:"Products",   value:stats.total_products.toLocaleString(),                  change:"+3.1%",  icon:Package,    color:"#34d399",  bg:"rgba(52,211,153,0.12)"  },
+    { label:"Customers",    value:stats.total_users.toLocaleString(),                     change:"+15.3%", icon:Users,      color:"#c084fc",  bg:"rgba(192,132,252,0.12)" },
   ] : [];
 
   if (loading) return (
@@ -71,9 +71,9 @@ export default function AdminDashboard() {
     <>
       <div>
         <div style={{ marginBottom:22 }}>
-          <p className="section-tag" style={{ marginBottom:8 }}>نظرة عامة</p>
-          <h2 style={{ color:"#ffffff", margin:"0 0 4px", fontSize:"clamp(1.4rem,3vw,2rem)" }}>لوحة التحكم</h2>
-          <p style={{ color:"rgba(255,255,255,0.38)", fontSize:13, margin:0 }}>آخر تحديث: الآن</p>
+          <p className="section-tag" style={{ marginBottom:8 }}>Overview</p>
+          <h2 style={{ color:"#ffffff", margin:"0 0 4px", fontSize:"clamp(1.4rem,3vw,2rem)" }}>Dashboard</h2>
+          <p style={{ color:"rgba(255,255,255,0.38)", fontSize:13, margin:0 }}>Last Update: الآن</p>
         </div>
 
         {/* Stats */}
@@ -98,9 +98,9 @@ export default function AdminDashboard() {
           {/* Recent orders */}
           <div className="admin-card" style={{ padding:"20px 0", overflow:"hidden" }}>
             <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:16, padding:"0 20px" }}>
-              <h3 style={{ color:"#ffffff", fontSize:"1.1rem", fontWeight:700, margin:0 }}>الطلبات الأخيرة</h3>
+              <h3 style={{ color:"#ffffff", fontSize:"1.1rem", fontWeight:700, margin:0 }}>Orders الأخيرة</h3>
               <Link href="/admin/orders" style={{ display:"flex", alignItems:"center", gap:5, fontSize:11, fontWeight:700, color:"#f59e0b", textDecoration:"none", letterSpacing:"0.1em", textTransform:"uppercase" }}>
-                عرض الكل <ArrowRight size={12}/>
+                View All <ArrowRight size={12}/>
               </Link>
             </div>
             <div style={{ overflowX:"auto" }}>
@@ -128,14 +128,14 @@ export default function AdminDashboard() {
 
           {/* Quick actions */}
           <div className="admin-card" style={{ padding:"20px" }}>
-            <h3 style={{ color:"#ffffff", fontSize:"1.1rem", fontWeight:700, marginBottom:16, marginTop:0 }}>إجراءات سريعة</h3>
+            <h3 style={{ color:"#ffffff", fontSize:"1.1rem", fontWeight:700, marginBottom:16, marginTop:0 }}>Quick Actions</h3>
             <div style={{ display:"flex", flexDirection:"column", gap:8 }}>
               {[
-                { href:"/admin/products/add", l:"إضافة منتج جديد", icon:Plus },
-                { href:"/admin/orders",       l:"إدارة الطلبات",   icon:ShoppingBag, badge: (stats?.by_status?.processing ?? 0) + (stats?.by_status?.shipping ?? 0) },
-                { href:"/admin/shipping-zones", l:"إدارة الشحن",   icon:Truck },
-                { href:"/admin/categories",   l:"التصنيفات",       icon:Tag },
-                { href:"/admin/coupons",      l:"الكوبونات",       icon:Ticket },
+                { href:"/admin/products/add", l:"Add EGPنتج New", icon:Plus },
+                { href:"/admin/orders",       l:"Management Orders",   icon:ShoppingBag, badge: (stats?.by_status?.processing ?? 0) + (stats?.by_status?.shipping ?? 0) },
+                { href:"/admin/shipping-zones", l:"Management Shipping",   icon:Truck },
+                { href:"/admin/categories",   l:"Categoryات",       icon:Tag },
+                { href:"/admin/coupons",      l:"Coupons",       icon:Ticket },
               ].map(a => (
                 <Link key={a.href} href={a.href}
                   style={{ display:"flex", alignItems:"center", justifyContent:"space-between", padding:"11px 14px", borderRadius:10, border:"1.5px solid rgba(255,255,255,0.07)", fontSize:13, fontWeight:600, color:"rgba(255,255,255,0.55)", textDecoration:"none", transition:"all 0.2s", position:"relative" }}
@@ -157,8 +157,8 @@ export default function AdminDashboard() {
             {stats && (
               <div style={{ marginTop:18, paddingTop:16, borderTop:"1px solid rgba(255,255,255,0.07)", display:"grid", gridTemplateColumns:"1fr 1fr", gap:10 }}>
                 {[
-                  { v:stats.by_status.delivered, l:"مكتمل" },
-                  { v:stats.by_status.processing+stats.by_status.shipping, l:"معلق" },
+                  { v:stats.by_status.delivered, l:"Completed" },
+                  { v:stats.by_status.processing+stats.by_status.shipping, l:"Pending" },
                 ].map(s => (
                   <div key={s.l} style={{ textAlign:"center", padding:"12px 8px", background:"rgba(255,255,255,0.04)", borderRadius:10 }}>
                     <p style={{ fontSize:"1.4rem", fontWeight:800, color:"#f59e0b", margin:0, lineHeight:1 }}>{s.v}</p>

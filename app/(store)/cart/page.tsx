@@ -42,7 +42,7 @@ export default function CartPage() {
 
   const applyCoupon = useCallback(async () => {
     if (!couponCode.trim()) {
-      setCouponError("يرجى إدخال كود الخصم");
+      setCouponError("Please enter a coupon code");
       return;
     }
 
@@ -88,11 +88,11 @@ export default function CartPage() {
         setCouponCode("");
         setCouponError("");
       } else {
-        setCouponError("كود الخصم غير صالح");
+        setCouponError("كود Discount غير valid");
       }
     } catch (error) {
       console.error('Coupon error:', error); 
-      setCouponError("حدث خطأ ما. يرجى المحاولة مرة أخرى");
+      setCouponError("حدث Error EGPا. Please المحاولة EGPرة أخرى");
     } finally {
       setIsApplyingCoupon(false);
     }
@@ -110,13 +110,13 @@ export default function CartPage() {
       <div style={{ width: 72, height: 72, border: "1.5px solid #e2e8f0", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 24, background: "#f8fafc" }}>
         <ShoppingBag style={{ color: "#94a3b8" }} strokeWidth={1.5} size={28} />
       </div>
-      <p className="section-tag" style={{ justifyContent: "center", marginBottom: 12 }}>سلة التسوق</p>
+      <p className="section-tag" style={{ justifyContent: "center", marginBottom: 12 }}>Shopping Cart</p>
       <h1 style={{ fontSize: "clamp(1.8rem,4vw,2.8rem)", fontWeight: 700, color: "#0f172a", marginBottom: 10 }}>لا يوجد شيء هنا بعد</h1>
       <p style={{ color: "#64748b", fontSize: 14, marginBottom: 32, maxWidth: 280, lineHeight: 1.7 }}>
         اكتشف تشكيلاتنا المختارة واعثر على أسلوبك المثالي.
       </p>
       <Link href="/shop" className="btn-gold">
-        استكشف المتجر <ArrowRight size={16} />
+        استكشف Store <ArrowRight size={16} />
       </Link>
     </div>
   );
@@ -128,10 +128,10 @@ export default function CartPage() {
         <div style={{ maxWidth: 1280, margin: "0 auto", padding: "0 24px" }}>
           <p className="section-tag" style={{ marginBottom: 8 }}>تشكيلتك</p>
           <h1 style={{ fontSize: "clamp(1.8rem,4vw,2.8rem)", fontWeight: 700, color: "#0f172a", margin: "0 0 4px" }}>
-            سلة التسوق
+            Shopping Cart
           </h1>
           <p style={{ fontSize: 14, color: "#64748b", margin: 0 }}>
-            {cart.length} منتج{cart.length !== 1 ? "ات" : ""}
+            {cart.length} fromتج{cart.length !== 1 ? "ات" : ""}
           </p>
         </div>
       </div>
@@ -222,7 +222,7 @@ export default function CartPage() {
           <div>
             <div className="cart-summary-box">
               <h2 style={{ fontSize: "1.2rem", fontWeight: 700, color: "#0f172a", margin: "0 0 22px" }}>
-                معلومات الطلب
+                EGPعلومات الطلب
               </h2>
 
               {/* Coupon */}
@@ -230,7 +230,7 @@ export default function CartPage() {
                 <div>
                   {/* Debug info - remove in production */}
                   <div style={{ fontSize: 11, color: "#64748b", marginBottom: 8 }}>
-                    الكوبونات يتم تحميلها من قاعدة البيانات
+                    Coupons يDone loading from database
                   </div>
                   
                   <div style={{ display: "flex", marginBottom: 22, border: "1.5px solid #e2e8f0", borderRadius: 10, overflow: "hidden" }}>
@@ -238,7 +238,7 @@ export default function CartPage() {
                       <Tag size={14} style={{ color: "#94a3b8" }} strokeWidth={1.5} />
                       <input
                         type="text" 
-                        placeholder="كود الخصم"
+                        placeholder="كود Discount"
                         value={couponCode}
                         onChange={(e) => setCouponCode(e.target.value)}
                         onKeyPress={(e) => e.key === 'Enter' && applyCoupon()}
@@ -264,7 +264,7 @@ export default function CartPage() {
                       onMouseEnter={e => { if (!isApplyingCoupon) (e.currentTarget as HTMLButtonElement).style.background = "#1e293b" }}
                       onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.background = "#0f172a" }}
                     >
-                      {isApplyingCoupon ? "جاري التطبيق..." : "استخدم"}
+                      {isApplyingCoupon ? "Loading الApply..." : "استخدم"}
                     </button>
                   </div>
                   {couponError && (
@@ -320,23 +320,23 @@ export default function CartPage() {
               {/* Totals */}
               <div style={{ display: "flex", flexDirection: "column", gap: 12, marginBottom: 20 }}>
                 {[
-                  { l: "الإجمالي الجزئي", v: `${subtotal.toLocaleString("en-US")} LE`, special: false },
+                  { l: "الTotal Subtotal", v: `${subtotal.toLocaleString("en-US")} LE`, special: false },
                   ...(discountAmount > 0 ? [{ 
-                    l: "الخصم", 
+                    l: "Discount", 
                     v: `-${discountAmount.toLocaleString("en-US")} LE`, 
                     special: false 
                   }] : [])
                 ].map(({ l, v, special }) => (
                   <div key={l} style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                     <span style={{ fontSize: 14, color: "#64748b", fontWeight: 400 }}>{l}</span>
-                    <span className="simple-numbers" style={{ fontSize: 14, fontWeight: 700, color: l === "الخصم" ? "#dc2626" : (special ? "#16a34a" : "#0f172a") }}>{v}</span>
+                    <span className="simple-numbers" style={{ fontSize: 14, fontWeight: 700, color: l === "Discount" ? "#dc2626" : (special ? "#16a34a" : "#0f172a") }}>{v}</span>
                   </div>
                 ))}
               </div>
 
               {/* Total */}
               <div style={{ borderTop: "2px solid #f1f5f9", paddingTop: 16, marginBottom: 24, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                <span style={{ fontSize: 16, fontWeight: 700, color: "#0f172a" }}>الإجمالي</span>
+                <span style={{ fontSize: 16, fontWeight: 700, color: "#0f172a" }}>الTotal</span>
                 <span className="price simple-numbers" style={{ fontSize: "1.5rem", fontWeight: 800, color: "#0f172a" }}>
                   {total.toLocaleString("en-US")} LE
                 </span>
@@ -344,10 +344,10 @@ export default function CartPage() {
 
               {/* Buttons */}
               <Link href="/checkout" className="btn-gold" style={{ width: "100%", display: "flex", marginBottom: 10 }}>
-                أكمل عملية الشراء <ArrowRight size={16} />
+                أكمل عملية Purchase <ArrowRight size={16} />
               </Link>
               <Link href="/shop" className="btn-ghost" style={{ width: "100%", display: "flex" }}>
-                استمر في التسوق
+                اسDoneر في التسوق
               </Link>
 
             </div>

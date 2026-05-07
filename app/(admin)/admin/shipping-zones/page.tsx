@@ -25,7 +25,7 @@ export default function AdminShippingZones() {
       setZones(data);
       setError("");
     } catch (err) {
-      setError("فشل تحميل المحافظات");
+      setError("Failed تحميل المحافظات");
       console.error(err);
     } finally {
       setLoading(false);
@@ -35,7 +35,7 @@ export default function AdminShippingZones() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.governorate.trim() || !formData.fee.trim()) {
-      setError("جميع الحقول مطلوبة");
+      setError("جميع الحقول EGPطلوبة");
       return;
     }
 
@@ -47,14 +47,14 @@ export default function AdminShippingZones() {
           fee: formData.fee,
           enabled: formData.enabled,
         });
-        setSuccess("تم تحديث المحافظة بنجاح");
+        setSuccess("Done Update Governorate بنجاح");
       } else {
         await shippingZonesApi.create({
           governorate: formData.governorate,
           fee: formData.fee,
           enabled: formData.enabled,
         });
-        setSuccess("تم إضافة المحافظة بنجاح");
+        setSuccess("Done Add Governorate بنجاح");
       }
       setFormData({ governorate: "", fee: "", enabled: true });
       setEditingId(null);
@@ -64,7 +64,7 @@ export default function AdminShippingZones() {
       setTimeout(() => setSuccess(""), 3000);
     } catch (err: unknown) {
       const errObj = err as { data?: Record<string, any> };
-      setError(errObj?.data?.governorate?.[0] || errObj?.data?.fee?.[0] || "حدث خطأ");
+      setError(errObj?.data?.governorate?.[0] || errObj?.data?.fee?.[0] || "حدث Error");
       console.error(err);
     } finally {
       setSubmitting(false);
@@ -82,15 +82,15 @@ export default function AdminShippingZones() {
   };
 
   const handleDelete = async (id: number) => {
-    if (!confirm("هل أنت متأكد من حذف هذه المحافظة؟")) return;
+    if (!confirm("هل أنت EGPتأكد EGPن Delete These Governorate؟")) return;
     try {
       await shippingZonesApi.delete(id);
-      setSuccess("تم حذف المحافظة بنجاح");
+      setSuccess("Done Delete Governorate بنجاح");
       await loadZones();
       setError("");
       setTimeout(() => setSuccess(""), 3000);
     } catch (err) {
-      setError("فشل حذف المحافظة");
+      setError("Failed Delete Governorate");
       console.error(err);
     }
   };
@@ -105,9 +105,9 @@ export default function AdminShippingZones() {
   return (
     <div>
       <div style={{ marginBottom: 22 }}>
-        <p className="section-tag" style={{ marginBottom: 8 }}>إدارة الشحن</p>
+        <p className="section-tag" style={{ marginBottom: 8 }}>Management الشحن</p>
         <h2 style={{ color: "#ffffff", margin: "0 0 4px", fontSize: "clamp(1.4rem,3vw,2rem)" }}>المحافظات وأسعار الشحن</h2>
-        <p style={{ color: "rgba(255,255,255,0.38)", fontSize: 13, margin: 0 }}>إدارة مناطق وأسعار الشحن المتاحة</p>
+        <p style={{ color: "rgba(255,255,255,0.38)", fontSize: 13, margin: 0 }}>Management EGPناطق وأسعار الشحن المتاحة</p>
       </div>
 
       {/* Messages */}
@@ -126,18 +126,18 @@ export default function AdminShippingZones() {
       {showForm && (
         <div className="admin-card" style={{ padding: 20, marginBottom: 16 }}>
           <h3 style={{ color: "#ffffff", fontSize: "1rem", fontWeight: 700, marginBottom: 16, marginTop: 0 }}>
-            {editingId ? "تعديل المحافظة" : "إضافة محافظة جديدة"}
+            {editingId ? "Edit Governorate" : "Add EGPحافظة جديدة"}
           </h3>
           <form onSubmit={handleSubmit} style={{ display: "grid", gap: 12 }}>
             <div>
               <label style={{ display: "block", fontSize: 12, fontWeight: 700, color: "rgba(255,255,255,0.6)", marginBottom: 6, textTransform: "uppercase", letterSpacing: "0.05em" }}>
-                اسم المحافظة *
+                اسم Governorate *
               </label>
               <input
                 type="text"
                 value={formData.governorate}
                 onChange={(e) => setFormData({ ...formData, governorate: e.target.value })}
-                placeholder="مثال: القاهرة"
+                placeholder="مثال: Cairo"
                 style={{
                   width: "100%",
                   padding: "8px 12px",
@@ -152,7 +152,7 @@ export default function AdminShippingZones() {
             </div>
             <div>
               <label style={{ display: "block", fontSize: 12, fontWeight: 700, color: "rgba(255,255,255,0.6)", marginBottom: 6, textTransform: "uppercase", letterSpacing: "0.05em" }}>
-                سعر الشحن (ج.م) *
+                Price الشحن (EGP) *
               </label>
               <input
                 type="number"
@@ -179,7 +179,7 @@ export default function AdminShippingZones() {
                 onChange={(e) => setFormData({ ...formData, enabled: e.target.checked })}
                 style={{ cursor: "pointer" }}
               />
-              متاح للطلب
+              EGPتاح للطلب
             </label>
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
               <button
@@ -201,7 +201,7 @@ export default function AdminShippingZones() {
                 }}
               >
                 {submitting ? <Loader2 size={14} style={{ animation: "spin 1s linear infinite" }} /> : <Check size={14} />}
-                {submitting ? "جاري..." : "حفظ"}
+                {submitting ? "Loading..." : "Save"}
               </button>
               <button
                 type="button"
@@ -221,7 +221,7 @@ export default function AdminShippingZones() {
                   gap: 6,
                 }}
               >
-                <X size={14} /> إلغاء
+                <X size={14} /> Cancel
               </button>
             </div>
           </form>
@@ -249,7 +249,7 @@ export default function AdminShippingZones() {
                 gap: 6,
               }}
             >
-              <Plus size={14} /> إضافة محافظة
+              <Plus size={14} /> Add EGPحافظة
             </button>
           )}
         </div>
@@ -257,11 +257,11 @@ export default function AdminShippingZones() {
         {loading ? (
           <div style={{ padding: "40px", textAlign: "center", color: "rgba(255,255,255,0.4)" }}>
             <Loader2 size={24} style={{ marginBottom: 12, animation: "spin 1s linear infinite" }} />
-            جاري التحميل...
+            Loading...
           </div>
         ) : zones.length === 0 ? (
           <div style={{ padding: "40px", textAlign: "center", color: "rgba(255,255,255,0.4)" }}>
-            لا توجد محافظات
+            لا توجد EGPحافظات
           </div>
         ) : (
           <div style={{ overflowX: "auto" }}>
@@ -269,16 +269,16 @@ export default function AdminShippingZones() {
               <thead>
                 <tr style={{ background: "rgba(255,255,255,0.03)", borderBottom: "1px solid rgba(255,255,255,0.05)" }}>
                   <th style={{ padding: "12px 16px", textAlign: "right", fontSize: 12, fontWeight: 700, color: "rgba(255,255,255,0.5)", textTransform: "uppercase", letterSpacing: "0.05em" }}>
-                    المحافظة
+                    Governorate
                   </th>
                   <th style={{ padding: "12px 16px", textAlign: "right", fontSize: 12, fontWeight: 700, color: "rgba(255,255,255,0.5)", textTransform: "uppercase", letterSpacing: "0.05em" }}>
-                    سعر الشحن
+                    Price الشحن
                   </th>
                   <th style={{ padding: "12px 16px", textAlign: "right", fontSize: 12, fontWeight: 700, color: "rgba(255,255,255,0.5)", textTransform: "uppercase", letterSpacing: "0.05em" }}>
                     الحالة
                   </th>
                   <th style={{ padding: "12px 16px", textAlign: "center", fontSize: 12, fontWeight: 700, color: "rgba(255,255,255,0.5)", textTransform: "uppercase", letterSpacing: "0.05em" }}>
-                    الإجراءات
+                    الActions
                   </th>
                 </tr>
               </thead>
@@ -289,7 +289,7 @@ export default function AdminShippingZones() {
                       {zone.governorate}
                     </td>
                     <td style={{ padding: "12px 16px", fontSize: 13, fontWeight: 600, color: "#ffffff" }}>
-                      {zone.fee} ج.م
+                      {zone.fee} EGP
                     </td>
                     <td style={{ padding: "12px 16px" }}>
                       <span
@@ -325,7 +325,7 @@ export default function AdminShippingZones() {
                             fontWeight: 700,
                           }}
                         >
-                          <Edit2 size={12} /> تعديل
+                          <Edit2 size={12} /> Edit
                         </button>
                         <button
                           onClick={() => handleDelete(zone.id)}
@@ -343,7 +343,7 @@ export default function AdminShippingZones() {
                             fontWeight: 700,
                           }}
                         >
-                          <Trash2 size={12} /> حذف
+                          <Trash2 size={12} /> Delete
                         </button>
                       </div>
                     </td>

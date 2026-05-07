@@ -23,12 +23,12 @@ export default function WishlistPage() {
         {/* Header */}
         <div style={{ background:"#ffffff", borderBottom:"1px solid #f1f5f9", padding:"32px 0" }}>
           <div style={{ maxWidth:1280, margin:"0 auto", padding:"0 24px" }}>
-            <p className="section-tag" style={{ marginBottom:8, color:"#d97706" }}>العناصر المحفوظة</p>
+            <p className="section-tag" style={{ marginBottom:8, color:"#d97706" }}>العناصر الsaved</p>
             <h1 style={{ fontSize:"clamp(1.8rem,4vw,2.8rem)", fontWeight:700, color:"#0f172a", margin:"0 0 4px" }}>
-              قائمتي المفضلة
+              قائمتي Wishlist
             </h1>
             <p style={{ fontSize:14, color:"#64748b", margin:0 }}>
-              {wishlist.length} {wishlist.length===1?"عنصر":"عناصر"} محفوظة
+              {wishlist.length} {wishlist.length===1?"عنصر":"عناصر"} saved
             </p>
           </div>
         </div>
@@ -40,12 +40,12 @@ export default function WishlistPage() {
               <div style={{ width:72, height:72, border:"1.5px solid #e2e8f0", borderRadius:"50%", display:"flex", alignItems:"center", justifyContent:"center", margin:"0 auto 22px", background:"#ffffff" }}>
                 <Heart style={{ color:"#94a3b8" }} strokeWidth={1.5} size={28}/>
               </div>
-              <h2 style={{ fontSize:"1.6rem", fontWeight:700, color:"#0f172a", marginBottom:10 }}>لا يوجد عناصر محفوظة بعد</h2>
+              <h2 style={{ fontSize:"1.6rem", fontWeight:700, color:"#0f172a", marginBottom:10 }}>لا يوجد عناصر saved بعد</h2>
               <p style={{ fontSize:14, color:"#64748b", marginBottom:28, maxWidth:300, margin:"0 auto 28px", lineHeight:1.7 }}>
-                احفظي القطع التي تحبينها لتتمكني من مشاهدتها لاحقًا.
+                اSaveي القطع التي تحبينها to be able EGPن EGPشاهدتها later.
               </p>
               <Link href="/shop" className="btn-gold" style={{ fontSize:13 }}>
-                استكشفي المجموعة <ArrowRight size={15}/>
+                Explore المجموعة <ArrowRight size={15}/>
               </Link>
             </div>
           ) : (
@@ -61,7 +61,7 @@ export default function WishlistPage() {
                       <button
                         onClick={() => removeFromWishlist(item.id)}
                         className="wishlist-remove"
-                        title="إزالة من المفضلة"
+                        title="إزالة EGPن Wishlist"
                       >
                         <X size={14} strokeWidth={2}/>
                       </button>
@@ -71,7 +71,7 @@ export default function WishlistPage() {
                         onClick={() => addToCart(item.id, item.name, item.price, item.image, "M", "Black")}
                         className="wishlist-cart-btn"
                       >
-                        <ShoppingCart size={15} strokeWidth={2}/> أضف إلى السلة
+                        <ShoppingCart size={15} strokeWidth={2}/> أضف إلى Cart
                       </button>
                     </div>
 

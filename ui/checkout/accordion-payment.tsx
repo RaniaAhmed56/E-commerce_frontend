@@ -1,7 +1,7 @@
 "use client";
 import { CreditCard, ChevronDown, ChevronUp, Smartphone, Building2, MessageCircle } from "lucide-react";
 
-// ── رقم الواتساب بتاع المحل ──
+// ── Number الWhatsApp بتاع المحل ──
 const STORE_WA = "201000000000";
 
 export default function AccordionPayment({
@@ -35,7 +35,7 @@ export default function AccordionPayment({
 
   const handlePlaceOrder = () => {
     if (payMethod === "deposit") {
-      const msg = `مرحباً، أريد إتمام طلبي والدفع عند الاستلام.\n\nالاسم: ${shippingName}\nالموبايل: ${shippingPhone}\nالمحافظة: ${shippingCity}\nالإجمالي: ${total.toLocaleString("en-US")} LE`;
+      const msg = `مرحباً، أريد إDoneام طلبي وCheckout عند الاستلام.\n\nName: ${shippingName}\nالموبايل: ${shippingPhone}\nGovernorate: ${shippingCity}\nالTotal: ${total.toLocaleString("en-US")} LE`;
       window.open(`https://wa.me/${STORE_WA}?text=${encodeURIComponent(msg)}`, "_blank");
     }
     placeOrder();
@@ -77,14 +77,14 @@ export default function AccordionPayment({
       <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 28 }}>
         <CreditCard size={20} style={{ color: "#0f172a" }} strokeWidth={1.5} />
         <h2 style={{ fontFamily: "var(--font-cormorant,Georgia,serif)", fontSize: "1.5rem", fontWeight: 700, margin: 0, color: "#0f172a" }}>
-          طريقة الدفع
+          طريقة Checkout
         </h2>
       </div>
 
-      {/* ─────────────────── قسم الدفع عند الاستلام ─────────────────── */}
+      {/* ─────────────────── قسم Checkout عند الاستلام ─────────────────── */}
       <div style={{ marginBottom: 8 }}>
         <p style={{ fontSize: 10, fontWeight: 800, letterSpacing: "0.26em", textTransform: "uppercase", color: "#8a8a7a", marginBottom: 10, marginTop: 0 }}>
-          دفع عند الاستلام
+          Payment عند الاستلام
         </p>
 
         <div style={{ border: "1.5px solid", borderRadius: 2, overflow: "hidden", borderColor: payMethod === "deposit" ? "#25D366" : "rgba(0,0,0,0.1)", transition: "border-color 0.2s" }}>
@@ -92,7 +92,7 @@ export default function AccordionPayment({
             <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
               <MessageCircle size={17} style={{ color: "#25D366" }} strokeWidth={1.5} />
               <span style={{ fontSize: 14, fontWeight: payMethod === "deposit" ? 700 : 400, color: "#1a1a18" }}>
-                الدفع عند الاستلام (واتساب)
+                Checkout عند الاستلام (WhatsApp)
               </span>
             </div>
             {payMethod === "deposit" ? <ChevronUp size={16} style={{ color: "#8a8a7a" }} /> : <ChevronDown size={16} style={{ color: "#8a8a7a" }} />}
@@ -102,9 +102,9 @@ export default function AccordionPayment({
               <div style={{ display: "flex", gap: 12, alignItems: "flex-start" }}>
                 <MessageCircle size={16} style={{ color: "#25D366", flexShrink: 0, marginTop: 2 }} strokeWidth={1.5} />
                 <div>
-                  <p style={{ fontSize: 14, fontWeight: 700, color: "#1a1a18", margin: "0 0 5px" }}>التواصل عبر واتساب</p>
+                  <p style={{ fontSize: 14, fontWeight: 700, color: "#1a1a18", margin: "0 0 5px" }}>التواصل عبر WhatsApp</p>
                   <p style={{ fontSize: 13, color: "#8a8a7a", margin: 0, lineHeight: 1.7 }}>
-                    بعد الضغط على "إتمام الطلب" سيتم فتح واتساب للتواصل مع المحل وترتيب الدفع والتسليم.
+                    بعد الضغط على "إDoneام Order" سيDone فتح WhatsApp للتواصل EGPع المحل وترتيب Checkout والتسليم.
                   </p>
                 </div>
               </div>
@@ -113,10 +113,10 @@ export default function AccordionPayment({
         </div>
       </div>
 
-      {/* ─────────────────── قسم الدفع الأونلاين ─────────────────── */}
+      {/* ─────────────────── قسم Checkout الأونلاين ─────────────────── */}
       <div style={{ marginBottom: 28 }}>
         <p style={{ fontSize: 10, fontWeight: 800, letterSpacing: "0.26em", textTransform: "uppercase", color: "#8a8a7a", marginBottom: 10, marginTop: 16 }}>
-          دفع أونلاين
+          Payment أونلاين
         </p>
 
         <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
@@ -132,9 +132,9 @@ export default function AccordionPayment({
             </button>
             {payMethod === "vodafone" && (
               <div style={detailBox}>
-                <p style={{ fontSize: 13, color: "#8a8a7a", margin: "0 0 8px" }}>حوّل المبلغ إلى رقم Vodafone Cash:</p>
+                <p style={{ fontSize: 13, color: "#8a8a7a", margin: "0 0 8px" }}>حوّل المبلغ إلى Number Vodafone Cash:</p>
                 <p style={{ fontSize: 20, fontWeight: 800, color: "#1a1a18", margin: "0 0 6px", letterSpacing: "0.06em" }}>010XXXXXXXX</p>
-                <p style={{ fontSize: 12, color: "#8a8a7a", margin: 0 }}>بعد التحويل أرسل صورة الإيصال على الواتساب لتأكيد طلبك.</p>
+                <p style={{ fontSize: 12, color: "#8a8a7a", margin: 0 }}>بعد الtransfer أرسل Imagesة الإيصال على الWhatsApp لتأكيد طلبك.</p>
               </div>
             )}
           </div>
@@ -152,7 +152,7 @@ export default function AccordionPayment({
               <div style={detailBox}>
                 <p style={{ fontSize: 13, color: "#8a8a7a", margin: "0 0 8px" }}>حوّل عبر InstaPay إلى:</p>
                 <p style={{ fontSize: 20, fontWeight: 800, color: "#1a1a18", margin: "0 0 6px" }}>blanko@instapay</p>
-                <p style={{ fontSize: 12, color: "#8a8a7a", margin: 0 }}>بعد التحويل سيتم مراجعة الدفع وتأكيد الطلب.</p>
+                <p style={{ fontSize: 12, color: "#8a8a7a", margin: 0 }}>بعد الtransfer سيDone EGPراجعة Checkout وConfirm Order.</p>
               </div>
             )}
           </div>
@@ -162,16 +162,16 @@ export default function AccordionPayment({
             <button onClick={() => toggle("bank")} style={{ ...rowStyle(payMethod === "bank") }}>
               <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
                 <Building2 size={17} style={{ color: "#0ea5e9" }} strokeWidth={1.5} />
-                <span style={{ fontSize: 14, fontWeight: payMethod === "bank" ? 700 : 400, color: "#1a1a18" }}>تحويل بنكي</span>
+                <span style={{ fontSize: 14, fontWeight: payMethod === "bank" ? 700 : 400, color: "#1a1a18" }}>Bank Transfer</span>
               </div>
               {payMethod === "bank" ? <ChevronUp size={16} style={{ color: "#8a8a7a" }} /> : <ChevronDown size={16} style={{ color: "#8a8a7a" }} />}
             </button>
             {payMethod === "bank" && (
               <div style={detailBox}>
-                <p style={{ fontSize: 13, color: "#8a8a7a", margin: "0 0 6px" }}>البنك: بنك مصر</p>
+                <p style={{ fontSize: 13, color: "#8a8a7a", margin: "0 0 6px" }}>البنك: بنك Egypt</p>
                 <p style={{ fontSize: 20, fontWeight: 800, color: "#1a1a18", margin: "0 0 6px", letterSpacing: "0.04em" }}>1234567890123456</p>
                 <p style={{ fontSize: 13, color: "#8a8a7a", margin: "0 0 6px" }}>اسم الحساب: Blanko Fashion House</p>
-                <p style={{ fontSize: 12, color: "#8a8a7a", margin: 0 }}>أرسل صورة التحويل على الواتساب لتأكيد الطلب.</p>
+                <p style={{ fontSize: 12, color: "#8a8a7a", margin: 0 }}>أرسل Imagesة الtransfer على الWhatsApp لConfirm Order.</p>
               </div>
             )}
           </div>
@@ -191,15 +191,15 @@ export default function AccordionPayment({
               <div style={{ ...detailBox, display: "flex", flexDirection: "column", gap: 14 }}>
                 <div>
                   <label style={fieldLabel}>اسم صاحب البطاقة</label>
-                  <input value={card.name} onChange={e => setCard({ ...card, name: e.target.value })} placeholder="الاسم كما يظهر على البطاقة" className={inputCls} />
+                  <input value={card.name} onChange={e => setCard({ ...card, name: e.target.value })} placeholder="Name كما يظهر على البطاقة" className={inputCls} />
                 </div>
                 <div>
-                  <label style={fieldLabel}>رقم البطاقة</label>
+                  <label style={fieldLabel}>Number البطاقة</label>
                   <input value={card.number} onChange={e => setCard({ ...card, number: e.target.value })} placeholder="0000 0000 0000 0000" maxLength={19} className={inputCls} />
                 </div>
                 <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
                   <div>
-                    <label style={fieldLabel}>تاريخ الانتهاء</label>
+                    <label style={fieldLabel}>تاريخ Expiry</label>
                     <input value={card.expiry} onChange={e => setCard({ ...card, expiry: e.target.value })} placeholder="MM/YY" maxLength={7} className={inputCls} />
                   </div>
                   <div>
@@ -239,7 +239,7 @@ export default function AccordionPayment({
           onMouseLeave={e => { if (!placing && payMethod) (e.currentTarget as HTMLButtonElement).style.background = "#0f172a"; }}
         >
           {payMethod === "deposit" ? <MessageCircle size={16} strokeWidth={2} /> : null}
-          {placing ? "جاري إتمام الطلب…" : `إتمام الطلب · ${total.toLocaleString("en-US")} LE`}
+          {placing ? "Loading إDoneام Order…" : `إDoneام Order · ${total.toLocaleString("en-US")} LE`}
         </button>
       </div>
 

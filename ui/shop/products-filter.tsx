@@ -10,7 +10,7 @@ export default function ProductsFilter({ sorted, clear, loading = false }: {
     <div style={{ flex:1, display:"flex", alignItems:"center", justifyContent:"center", padding:"80px 20px" }}>
       <div style={{ display:"flex", flexDirection:"column", alignItems:"center", gap:14 }}>
         <Loader2 size={32} style={{ color:"rgba(245,158,11,0.6)", animation:"spin 1s linear infinite" }} />
-        <p style={{ color:"rgba(255,255,255,0.38)", fontSize:14 }}>جارٍ تحميل المنتجات...</p>
+        <p style={{ color:"rgba(255,255,255,0.38)", fontSize:14 }}>Loading الProductات...</p>
       </div>
       <style>{`@keyframes spin { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }`}</style>
     </div>
@@ -21,10 +21,10 @@ export default function ProductsFilter({ sorted, clear, loading = false }: {
       {sorted.length === 0 ? (
         <div style={{ textAlign:"center", padding:"80px 20px" }}>
           <Package size={52} style={{ color:"rgba(255,255,255,0.1)", margin:"0 auto 14px", display:"block" }} strokeWidth={1} />
-          <h3 style={{ color:"#ffffff", marginBottom:8 }}>لا توجد منتجات</h3>
-          <p style={{ fontSize:14, color:"rgba(255,255,255,0.38)", marginBottom:22 }}>جربي تغيير الفلاتر</p>
+          <h3 style={{ color:"#ffffff", marginBottom:8 }}>No products found</h3>
+          <p style={{ fontSize:14, color:"rgba(255,255,255,0.38)", marginBottom:22 }}>جربي Change Filters</p>
           <button onClick={clear} style={{ padding:"11px 26px", background:"transparent", border:"2px solid #f59e0b", color:"#f59e0b", fontSize:12, fontWeight:700, borderRadius:50, cursor:"pointer" }}>
-            مسح الفلاتر
+            Clear Filters
           </button>
         </div>
       ) : (

@@ -34,7 +34,7 @@ export default function ShippingZonesAdmin() {
           [...data].sort((a, b) => a.order - b.order || a.governorate.localeCompare(b.governorate, "ar"))
         )
       )
-      .catch(() => showToast("تعذّر تحميل مناطق الشحن", false))
+      .catch(() => showToast("تعذّر تحميل Shipping Zones", false))
       .finally(() => setLoading(false));
   }, []);
 
@@ -49,10 +49,10 @@ export default function ShippingZonesAdmin() {
     setZones(z => z.map(r => (r.id === zone.id ? updated : r)));
     try {
       await shippingZonesApi.update(zone.id, { enabled: updated.enabled });
-      showToast(`${zone.governorate}: ${updated.enabled ? "تم التفعيل" : "تم الإيقاف"}`, true);
+      showToast(`${zone.governorate}: ${updated.enabled ? "Done التفعيل" : "Done الإيقاف"}`, true);
     } catch {
       setZones(z => z.map(r => (r.id === zone.id ? zone : r))); // revert
-      showToast("حدث خطأ", false);
+      showToast("حدث Error", false);
     }
   };
 
@@ -75,9 +75,9 @@ export default function ShippingZonesAdmin() {
       setZones(z =>
         z.map(r => (r.id === zone.id ? { ...updated, _editing: false } : r))
       );
-      showToast(`✓ تم تحديث سعر شحن ${zone.governorate}`, true);
+      showToast(`✓ Done Update Price شحن ${zone.governorate}`, true);
     } catch {
-      showToast("تعذّر الحفظ", false);
+      showToast("تعذّر الSave", false);
     } finally {
       setSaving(null);
     }
@@ -85,14 +85,14 @@ export default function ShippingZonesAdmin() {
 
   // ── Delete zone ─────────────────────────────────────────────────────────────
   const deleteZone = async (zone: ZoneRow) => {
-    if (!confirm(`هل تريد حذف ${zone.governorate}؟`)) return;
+    if (!confirm(`هل تريد Delete ${zone.governorate}؟`)) return;
     setSaving(zone.id);
     try {
       await shippingZonesApi.delete(zone.id);
       setZones(z => z.filter(r => r.id !== zone.id));
-      showToast(`تم حذف ${zone.governorate}`, true);
+      showToast(`Done Delete ${zone.governorate}`, true);
     } catch {
-      showToast("تعذّر الحذف", false);
+      showToast("تعذّر الDelete", false);
     } finally {
       setSaving(null);
     }
@@ -101,9 +101,9 @@ export default function ShippingZonesAdmin() {
   // ── Add new zone ────────────────────────────────────────────────────────────
   const addZone = async () => {
     setAddErr("");
-    if (!newZone.governorate.trim()) { setAddErr("اكتب اسم المحافظة"); return; }
+    if (!newZone.governorate.trim()) { setAddErr("اكتب اسم Governorate"); return; }
     const fee = parseFloat(newZone.fee);
-    if (isNaN(fee) || fee < 0) { setAddErr("اكتب سعر شحن صحيح"); return; }
+    if (isNaN(fee) || fee < 0) { setAddErr("اكتب Price شحن صحيح"); return; }
     setSaving("new");
     try {
       const created = await shippingZonesApi.create({
@@ -115,9 +115,9 @@ export default function ShippingZonesAdmin() {
       setZones(z => [...z, created]);
       setNewZone({ governorate: "", fee: "", enabled: true });
       setShowAdd(false);
-      showToast(`✓ تمت إضافة ${created.governorate}`, true);
+      showToast(`✓ Doneت Add ${created.governorate}`, true);
     } catch {
-      setAddErr("تعذّرت الإضافة — تأكد أن المحافظة غير موجودة مسبقاً");
+      setAddErr("تعذّرت Add — تأكد أن Governorate غير EGPوجودة EGPسبقاً");
     } finally {
       setSaving(null);
     }
@@ -185,10 +185,10 @@ export default function ShippingZonesAdmin() {
           </div>
           <div>
             <h1 style={{ fontSize: "1.5rem", fontWeight: 800, color: "#0f172a", margin: 0 }}>
-              إدارة الشحن
+              Management الشحن
             </h1>
             <p style={{ fontSize: 13, color: "#64748b", margin: "2px 0 0" }}>
-              {zones.length} محافظة · {zones.filter(z => z.enabled).length} مفعّلة
+              {zones.length} EGPحافظة · {zones.filter(z => z.enabled).length} EGPفعّلة
             </p>
           </div>
         </div>
@@ -198,7 +198,7 @@ export default function ShippingZonesAdmin() {
           style={btnStyle("#fff", "#0f172a")}
         >
           {showAdd ? <X size={14} /> : <Plus size={14} />}
-          {showAdd ? "إلغاء" : "إضافة محافظة"}
+          {showAdd ? "Cancel" : "Add EGPحافظة"}
         </button>
       </div>
 
@@ -209,23 +209,23 @@ export default function ShippingZonesAdmin() {
           padding: "20px 24px", marginBottom: 20,
         }}>
           <h3 style={{ fontSize: 14, fontWeight: 700, color: "#0f172a", margin: "0 0 16px" }}>
-            إضافة محافظة جديدة
+            Add EGPحافظة جديدة
           </h3>
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr auto auto", gap: 12, alignItems: "end" }}>
             <div>
               <label style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", color: "#64748b", display: "block", marginBottom: 6 }}>
-                اسم المحافظة
+                اسم Governorate
               </label>
               <input
                 value={newZone.governorate}
                 onChange={e => setNewZone(n => ({ ...n, governorate: e.target.value }))}
-                placeholder="مثال: القاهرة"
+                placeholder="مثال: Cairo"
                 style={inputStyle}
               />
             </div>
             <div>
               <label style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", color: "#64748b", display: "block", marginBottom: 6 }}>
-                سعر الشحن (ج.م)
+                Price الشحن (EGP)
               </label>
               <input
                 type="number"
@@ -249,7 +249,7 @@ export default function ShippingZonesAdmin() {
               style={{ ...btnStyle("#fff", "#d97706"), padding: "8px 16px", height: 40, marginTop: 22 }}
             >
               {saving === "new" ? <Loader2 size={14} style={{ animation: "spin 1s linear infinite" }} /> : <Plus size={14} />}
-              إضافة
+              Add
             </button>
           </div>
           {addErr && (
@@ -262,7 +262,7 @@ export default function ShippingZonesAdmin() {
       {loading && (
         <div style={{ textAlign: "center", padding: 60, color: "#94a3b8" }}>
           <Loader2 size={32} style={{ animation: "spin 1s linear infinite" }} />
-          <p style={{ marginTop: 12 }}>جارٍ التحميل...</p>
+          <p style={{ marginTop: 12 }}>Loading...</p>
         </div>
       )}
 
@@ -302,13 +302,13 @@ export default function ShippingZonesAdmin() {
                     if (e.key === "Escape") cancelEdit(zone.id);
                   }}
                 />
-                <span style={{ fontSize: 12, color: "#64748b" }}>ج.م</span>
+                <span style={{ fontSize: 12, color: "#64748b" }}>EGP</span>
               </div>
             ) : (
               <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
                 <Package size={14} style={{ color: "#d97706" }} />
                 <span style={{ fontSize: 15, fontWeight: 700, color: "#d97706" }}>
-                  {parseFloat(zone.fee).toFixed(0)} ج.م
+                  {parseFloat(zone.fee).toFixed(0)} EGP
                 </span>
               </div>
             )}
@@ -339,26 +339,26 @@ export default function ShippingZonesAdmin() {
                   onClick={() => saveFee(zone)}
                   disabled={saving === zone.id}
                   style={btnStyle("#fff", "#059669")}
-                  title="حفظ"
+                  title="Save"
                 >
                   {saving === zone.id
                     ? <Loader2 size={14} style={{ animation: "spin 1s linear infinite" }} />
                     : <Save size={14} />}
                 </button>
-                <button onClick={() => cancelEdit(zone.id)} style={btnStyle("#64748b", "#e2e8f0")} title="إلغاء">
+                <button onClick={() => cancelEdit(zone.id)} style={btnStyle("#64748b", "#e2e8f0")} title="Cancel">
                   <X size={14} />
                 </button>
               </>
             ) : (
               <>
-                <button onClick={() => startEdit(zone.id)} style={btnStyle("#0f172a", "#f1f5f9")} title="تعديل السعر">
+                <button onClick={() => startEdit(zone.id)} style={btnStyle("#0f172a", "#f1f5f9")} title="Edit الPrice">
                   <Pencil size={14} />
                 </button>
                 <button
                   onClick={() => deleteZone(zone)}
                   disabled={saving === zone.id}
                   style={btnStyle("#dc2626", "#fee2e2")}
-                  title="حذف"
+                  title="Remove"
                 >
                   {saving === zone.id
                     ? <Loader2 size={14} style={{ animation: "spin 1s linear infinite" }} />
@@ -373,7 +373,7 @@ export default function ShippingZonesAdmin() {
       {!loading && zones.length === 0 && (
         <div style={{ textAlign: "center", padding: 60, color: "#94a3b8" }}>
           <Truck size={40} style={{ marginBottom: 12, opacity: 0.3 }} />
-          <p>لا توجد مناطق شحن بعد. اضغط "إضافة محافظة" للبدء.</p>
+          <p>لا توجد EGPناطق شحن بعد. اضغط "Add EGPحافظة" للبدء.</p>
         </div>
       )}
 
@@ -385,11 +385,11 @@ export default function ShippingZonesAdmin() {
           display: "flex", gap: 32, flexWrap: "wrap",
         }}>
           {[
-            { label: "إجمالي المحافظات", val: zones.length },
+            { label: "Total المحافظات", val: zones.length },
             { label: "مفعّلة",           val: zones.filter(z => z.enabled).length, color: "#059669" },
             { label: "موقوفة",           val: zones.filter(z => !z.enabled).length, color: "#94a3b8" },
-            { label: "أقل سعر شحن",      val: Math.min(...zones.map(z => parseFloat(z.fee))) + " ج.م" },
-            { label: "أعلى سعر شحن",     val: Math.max(...zones.map(z => parseFloat(z.fee))) + " ج.م" },
+            { label: "أقل Price شحن",      val: Math.min(...zones.map(z => parseFloat(z.fee))) + " EGP" },
+            { label: "أعلى Price شحن",     val: Math.max(...zones.map(z => parseFloat(z.fee))) + " EGP" },
           ].map(item => (
             <div key={item.label}>
               <p style={{ fontSize: 11, color: "#94a3b8", margin: "0 0 3px", fontWeight: 600, letterSpacing: "0.1em" }}>

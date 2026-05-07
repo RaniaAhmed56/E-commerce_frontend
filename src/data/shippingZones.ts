@@ -1,10 +1,10 @@
 /**
  * BLANKO — Shipping Zones
  * ─────────────────────────────────────────────────────────────────────────────
- * الـ zones دي بتيجي من الـ backend عن طريق /api/shipping-zones/
- * الأدمين بيتحكم فيها من Django Admin مباشرةً.
+ * الـ zones دي بتيجي EGPن الـ backend عن طريق /api/shipping-zones/
+ * الأدمين بيcontrol فيها EGPن Django Admin EGPباشرةً.
  *
- * الـ static array دي fallback لو الـ backend مش شغال.
+ * الـ static array دي fallback لو الـ backend EGPش شغال.
  * ─────────────────────────────────────────────────────────────────────────────
  */
 
@@ -20,7 +20,7 @@ export interface ShippingZone {
 
 // ── Static fallback ──────────────────────────────────────────────────────────
 export const SHIPPING_ZONES_FALLBACK: ShippingZone[] = [
-  { governorate: "القاهرة",       fee: 50,  enabled: true },
+  { governorate: "Cairo",       fee: 50,  enabled: true },
   { governorate: "الجيزة",        fee: 60,  enabled: true },
   { governorate: "الإسكندرية",    fee: 70,  enabled: true },
   { governorate: "القليوبية",     fee: 65,  enabled: true },

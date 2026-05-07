@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
-import { Cormorant_Garamond, Tajawal } from "next/font/google";
+import { Cormorant_Garamond, Inter } from "next/font/google";
 import "./globals.css";
 import { WishlistProvider } from "@/src/context/WishlistContext";
 import { AuthProvider } from "@/src/context/AuthContext";
 import { CartProvider } from "@/src/context/CartContext";
 
-// Cormorant — للنصوص الإنجليزية الكبيرة (BLANKO, headings)
+// Cormorant Garamond — luxury display font for headlines & branding
 const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700"],
@@ -14,23 +14,22 @@ const cormorant = Cormorant_Garamond({
   display: "swap",
 });
 
-// Tajawal — أفخم فونت عربي على Google Fonts، مثالي للموضة والفاشون
-// خط نظيف وعصري مع شخصية عربية قوية
-const tajawal = Tajawal({
-  subsets: ["arabic", "latin"],
-  weight: ["200", "300", "400", "500", "700", "800", "900"],
-  variable: "--font-tajawal",
+// Inter — clean, modern body font
+const inter = Inter({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700", "800", "900"],
+  variable: "--font-inter",
   display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "BLANKO — بلانكو للأزياء",
-  description: "أزياء راقية للشخص المميز.",
+  title: "BLANKO — Fashion House",
+  description: "Curated luxury fashion for the modern individual.",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="ar" dir="rtl" data-scroll-behavior="smooth" className={`${cormorant.variable} ${tajawal.variable}`}>
+    <html lang="en" dir="ltr" className={`${cormorant.variable} ${inter.variable}`}>
       <body>
         <AuthProvider>
           <CartProvider>

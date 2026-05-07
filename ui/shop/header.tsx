@@ -2,7 +2,7 @@
 import { SlidersHorizontal } from "lucide-react";
 
 const cats = ["", "Women", "Men", "Kids", "Accessories"];
-const catAr: Record<string, string> = { "": "الكل", Women: "نساء", Men: "رجال", Kids: "أطفال", Accessories: "إكسسوارات" };
+const catAr: Record<string, string> = { "": "All", Women: "Women", Men: "Men", Kids: "Kids", Accessories: "Accessories" };
 
 export default function ShopHeader({ selectedCategory, setSelectedCategory, sorted, showFilters, setShowFilters, sortBy, setSortBy }: any) {
   return (
@@ -11,10 +11,10 @@ export default function ShopHeader({ selectedCategory, setSelectedCategory, sort
         <div style={{ maxWidth: 1280, margin: "0 auto", padding: "0 24px" }}>
           {/* Title */}
           <div style={{ marginBottom: 20 }}>
-            <p className="section-tag" style={{ marginBottom: 8 }}>تشكيلتنا الكاملة</p>
-            <h1 style={{ color: "#ffffff", margin: "0 0 5px", fontSize: "clamp(1.6rem, 4vw, 2.4rem)" }}>المتجر</h1>
+            <p className="section-tag" style={{ marginBottom: 8 }}>Our Collection</p>
+            <h1 style={{ color: "#ffffff", margin: "0 0 5px", fontSize: "clamp(1.6rem, 4vw, 2.4rem)" }}>The Store</h1>
             <p style={{ fontSize: 14, color: "rgba(255,255,255,0.42)", margin: 0 }}>
-              <span style={{ fontWeight: 800, color: "#f59e0b" }}>{sorted.length}</span> منتج متاح
+              <span style={{ fontWeight: 800, color: "#f59e0b" }}>{sorted.length}</span> products available
             </p>
           </div>
 
@@ -36,7 +36,7 @@ export default function ShopHeader({ selectedCategory, setSelectedCategory, sort
                     whiteSpace: "nowrap",
                   }}
                 >
-                  {catAr[cat] ?? cat}
+                  {cat === "" ? "All" : cat}
                 </button>
               ))}
             </div>
@@ -49,8 +49,8 @@ export default function ShopHeader({ selectedCategory, setSelectedCategory, sort
                 style={{ padding: "9px 14px", fontSize: 13, fontWeight: 600, color: "#ffffff", background: "rgba(255,255,255,0.08)", border: "1.5px solid rgba(255,255,255,0.14)", borderRadius: 8, cursor: "pointer", outline: "none" }}
               >
                 <option value="newest" style={{ background: "#1e293b" }}>الأحدث أولًا</option>
-                <option value="price-low" style={{ background: "#1e293b" }}>السعر: من الأقل</option>
-                <option value="price-high" style={{ background: "#1e293b" }}>السعر: من الأعلى</option>
+                <option value="price-low" style={{ background: "#1e293b" }}>الPrice: EGPن الأقل</option>
+                <option value="price-high" style={{ background: "#1e293b" }}>الPrice: EGPن الأعلى</option>
                 <option value="popularity" style={{ background: "#1e293b" }}>الأكثر شعبية</option>
               </select>
 
@@ -66,7 +66,7 @@ export default function ShopHeader({ selectedCategory, setSelectedCategory, sort
                   borderRadius: 8, cursor: "pointer",
                 }}
               >
-                <SlidersHorizontal size={14} /> الفلاتر
+                <SlidersHorizontal size={14} /> Filters
               </button>
             </div>
           </div>
@@ -86,7 +86,7 @@ export default function ShopHeader({ selectedCategory, setSelectedCategory, sort
           gap: 8px;
           flex-wrap: wrap;
         }
-        /* على ديسكتوب إخفاء زر الفلاتر */
+        /* على ديسكتوب إخفاء زر Filters */
         @media(min-width:769px){
           .shop-filter-btn { display: none !important; }
         }

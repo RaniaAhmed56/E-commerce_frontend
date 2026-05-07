@@ -86,7 +86,7 @@ export default function ProductDetailPage() {
       const gallery = Array.isArray(product.images) ? product.images.filter(Boolean) : [];
       const main = product.image || "";
       if (gallery.length > 0) {
-        gallery.forEach((src, i) => list.push({ src, label: i === 0 ? "الرئيسية" : `صورة ${i + 1}` }));
+        gallery.forEach((src, i) => list.push({ src, label: i === 0 ? "الرئيسية" : `Imagesة ${i + 1}` }));
       } else if (main) {
         list.push({ src: main, label: "الرئيسية" });
       }
@@ -112,13 +112,13 @@ export default function ProductDetailPage() {
   };
   const handleAddToCart = async () => {
     if (!product) return;
-    if (hasVariants && (!selectedVariant || !selectedSize)) { alert("اختر اللون والمقاس أولاً"); return; }
+    if (hasVariants && (!selectedVariant || !selectedSize)) { alert("اختر Color وSize أولاً"); return; }
     await addToCart(product.id, product.name, priceNum, product.image, selectedSize, selectedVariant?.color ?? "", qty);
     setAdded(true); setTimeout(() => setAdded(false), 2200);
   };
   const handleBuyNow = async () => {
     if (!product) return;
-    if (hasVariants && (!selectedVariant || !selectedSize)) { alert("اختر اللون والمقاس أولاً"); return; }
+    if (hasVariants && (!selectedVariant || !selectedSize)) { alert("اختر Color وSize أولاً"); return; }
     await addToCart(product.id, product.name, priceNum, product.image, selectedSize, selectedVariant?.color ?? "", qty);
     router.push("/checkout");
   };
@@ -128,7 +128,7 @@ export default function ProductDetailPage() {
     <div style={{ minHeight: "70vh", display: "flex", alignItems: "center", justifyContent: "center" }}>
       <div style={{ textAlign: "center" }}>
         <div style={{ width: 42, height: 42, border: "3px solid #f59e0b", borderTopColor: "transparent", borderRadius: "50%", margin: "0 auto 16px", animation: "spin .9s linear infinite" }} />
-        <p style={{ color: "#94a3b8", fontSize: 14 }}>جارٍ تحميل المنتج...</p>
+        <p style={{ color: "#94a3b8", fontSize: 14 }}>Loading تحميل الProduct...</p>
       </div>
       <style>{`@keyframes spin{to{transform:rotate(360deg)}}`}</style>
     </div>
@@ -136,7 +136,7 @@ export default function ProductDetailPage() {
   if (!product) return (
     <div style={{ minHeight: "70vh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "40px 24px", textAlign: "center" }}>
       <Package size={64} style={{ color: "#e2e8f0", marginBottom: 20 }} strokeWidth={1} />
-      <h1 style={{ fontSize: "2rem", fontWeight: 800, color: "#0f172a", marginBottom: 14 }}>المنتج غير موجود</h1>
+      <h1 style={{ fontSize: "2rem", fontWeight: 800, color: "#0f172a", marginBottom: 14 }}>الProduct غير EGPوجود</h1>
       <Link href="/shop" style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "12px 28px", background: "#0f172a", color: "#fff", borderRadius: 12, textDecoration: "none", fontWeight: 700 }}>
         العودة للمتجر <ArrowRight size={16} />
       </Link>
@@ -149,7 +149,7 @@ export default function ProductDetailPage() {
       {/* Breadcrumb */}
       <div style={{ background: "#f8fafc", borderBottom: "1px solid #f1f5f9", padding: "11px 0" }}>
         <div style={{ maxWidth: 1280, margin: "0 auto", padding: "0 24px", display: "flex", alignItems: "center", gap: 6, flexWrap: "wrap" }}>
-          {[{ href: "/", l: "الرئيسية" }, { href: "/shop", l: "المتجر" }, { href: `/shop?category=${product.category_name}`, l: product.category_name || "منتجات" }, { href: "#", l: product.name }]
+          {[{ href: "/", l: "الرئيسية" }, { href: "/shop", l: "Store" }, { href: `/shop?category=${product.category_name}`, l: product.category_name || "Products" }, { href: "#", l: product.name }]
             .map((b, i, arr) => (
               <span key={i} style={{ display: "flex", alignItems: "center", gap: 6 }}>
                 {i < arr.length - 1
@@ -181,7 +181,7 @@ export default function ProductDetailPage() {
               {/* Stock overlay */}
               {!product.inStock && (
                 <div style={{ position: "absolute", inset: 0, background: "rgba(15,23,42,0.55)", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                  <span style={{ color: "#fff", fontSize: 13, letterSpacing: "0.3em", textTransform: "uppercase", border: "1px solid rgba(255,255,255,0.6)", padding: "10px 24px", fontWeight: 700 }}>غير متوفر</span>
+                  <span style={{ color: "#fff", fontSize: 13, letterSpacing: "0.3em", textTransform: "uppercase", border: "1px solid rgba(255,255,255,0.6)", padding: "10px 24px", fontWeight: 700 }}>Out of Stock</span>
                 </div>
               )}
               {/* Active color badge */}
@@ -210,7 +210,7 @@ export default function ProductDetailPage() {
             {imageList.length > 1 && (
               <div>
                 <p style={{ fontSize: 10, fontWeight: 700, color: "#9ca3af", letterSpacing: "0.18em", textTransform: "uppercase", marginBottom: 10 }}>
-                  {hasVariants ? "صور الألوان — اضغط للتبديل" : "معرض الصور"}
+                  {hasVariants ? "Images الألوان — اضغط للتبديل" : "معرض الImages"}
                 </p>
                 <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
                   {imageList.map((img, i) => {
@@ -269,7 +269,7 @@ export default function ProductDetailPage() {
 
             {/* Price */}
             <p style={{ fontFamily: "var(--font-cormorant,Georgia,serif)", fontSize: "2.2rem", fontWeight: 800, color: "#0f172a", margin: "0 0 20px" }}>
-              {priceNum.toLocaleString("ar-EG")} ج.م
+              {priceNum.toLocaleString("ar-EG")} EGP
             </p>
 
             {/* Description */}
@@ -286,7 +286,7 @@ export default function ProductDetailPage() {
                 {/* Color selector */}
                 <div style={{ marginBottom: 20 }}>
                   <p style={{ fontSize: 11, fontWeight: 800, letterSpacing: "0.22em", textTransform: "uppercase", color: "#64748b", margin: "0 0 12px" }}>
-                    اللون
+                    Color
                     {selectedVariant && (
                       <span style={{ color: "#d97706", marginRight: 10, fontWeight: 900, textTransform: "none", letterSpacing: 0 }}>
                         — {selectedVariant.color}
@@ -307,7 +307,7 @@ export default function ProductDetailPage() {
                       <img src={selectedVariant.image} alt={selectedVariant.color} style={{ width: 44, height: 44, borderRadius: 8, objectFit: "cover", border: "2px solid #e2e8f0" }} />
                       <div>
                         <p style={{ fontSize: 13, fontWeight: 700, color: "#0f172a", margin: "0 0 2px" }}>{selectedVariant.color}</p>
-                        <p style={{ fontSize: 11, color: "#94a3b8", margin: 0 }}>{availSizes.length} مقاس متاح — {availSizes.reduce((s, x) => s + x.quantity, 0)} قطعة</p>
+                        <p style={{ fontSize: 11, color: "#94a3b8", margin: 0 }}>{availSizes.length} EGPقاس EGPتاح — {availSizes.reduce((s, x) => s + x.quantity, 0)} قطعة</p>
                       </div>
                     </div>
                   )}
@@ -316,11 +316,11 @@ export default function ProductDetailPage() {
                 {/* Size selector */}
                 <div>
                   <p style={{ fontSize: 11, fontWeight: 800, letterSpacing: "0.22em", textTransform: "uppercase", color: "#64748b", margin: "0 0 12px" }}>
-                    المقاس
+                    Size
                     {selectedSize && <span style={{ color: "#d97706", marginRight: 10, fontWeight: 900, textTransform: "none", letterSpacing: 0 }}>— {selectedSize}</span>}
                   </p>
                   {availSizes.length === 0
-                    ? <p style={{ fontSize: 13, color: "#ef4444", fontWeight: 600, margin: 0 }}>هذا اللون غير متوفر حالياً</p>
+                    ? <p style={{ fontSize: 13, color: "#ef4444", fontWeight: 600, margin: 0 }}>This Color Out of Stock حالياً</p>
                     : (
                       <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
                         {availSizes.map(s => (
@@ -343,7 +343,7 @@ export default function ProductDetailPage() {
             {!hasVariants && Array.isArray(product.sizes) && (product.sizes as string[]).length > 0 && (
               <div style={{ marginBottom: 24 }}>
                 <p style={{ fontSize: 11, fontWeight: 800, letterSpacing: "0.22em", textTransform: "uppercase", color: "#64748b", margin: "0 0 12px" }}>
-                  المقاس {selectedSize && <span style={{ color: "#d97706", marginRight: 8 }}>— {selectedSize}</span>}
+                  Size {selectedSize && <span style={{ color: "#d97706", marginRight: 8 }}>— {selectedSize}</span>}
                 </p>
                 <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
                   {(product.sizes as string[]).map(s => (
@@ -373,7 +373,7 @@ export default function ProductDetailPage() {
               {/* Add to cart */}
               <button onClick={handleAddToCart} disabled={!product.inStock}
                 style={{ flex: 1, height: 54, display: "flex", alignItems: "center", justifyContent: "center", gap: 10, fontSize: 14, fontWeight: 800, borderRadius: 14, border: "none", cursor: product.inStock ? "pointer" : "not-allowed", transition: "all .25s", background: added ? "#10b981" : product.inStock ? "#0f172a" : "#e2e8f0", color: product.inStock ? "#fff" : "#9ca3af", boxShadow: added || !product.inStock ? "none" : "0 6px 20px rgba(15,23,42,0.22)" }}>
-                {added ? <><Check size={17} />تمت الإضافة!</> : <><ShoppingCart size={17} />أضف إلى السلة</>}
+                {added ? <><Check size={17} />Doneت Add!</> : <><ShoppingCart size={17} />Add to Cart</>}
               </button>
               {/* Wishlist */}
               <button onClick={() => inWishlist ? removeFromWishlist(product.id) : addToWishlist({ id: product.id, name: product.name, price: priceNum, image: product.image })}
@@ -387,15 +387,15 @@ export default function ProductDetailPage() {
               style={{ width: "100%", height: 52, display: "flex", alignItems: "center", justifyContent: "center", gap: 10, fontSize: 14, fontWeight: 700, borderRadius: 14, border: "2px solid #0f172a", cursor: product.inStock ? "pointer" : "not-allowed", background: "#fff", color: "#0f172a", transition: "all .25s", marginBottom: 26 }}
               onMouseEnter={e => { if (product.inStock) { const b = e.currentTarget as HTMLButtonElement; b.style.background = "#0f172a"; b.style.color = "#fff"; }}}
               onMouseLeave={e => { const b = e.currentTarget as HTMLButtonElement; b.style.background = "#fff"; b.style.color = "#0f172a"; }}>
-              شراء الآن <ArrowRight size={16} />
+              Buy Now <ArrowRight size={16} />
             </button>
 
             {/* Guarantees */}
             <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 10 }}>
               {[
-                { Icon: RefreshCw, t: "إرجاع مجاني", d: "خلال 30 يوماً" },
-                { Icon: Truck,     t: "توصيل سريع",  d: "24-48 ساعة" },
-                { Icon: Lock,      t: "دفع آمن",     d: "100% محمي" },
+                { Icon: RefreshCw, t: "Free Returns", d: "خلال 30 يوماً" },
+                { Icon: Truck,     t: "Fast Delivery",  d: "24-48 ساعة" },
+                { Icon: Lock,      t: "Secure Payment",     d: "100% EGPحمي" },
               ].map(({ Icon, t, d }) => (
                 <div key={t} style={{ textAlign: "center", padding: "14px 8px", background: "#f8fafc", borderRadius: 12, border: "1px solid #f1f5f9" }}>
                   <Icon size={18} style={{ color: "#d97706", margin: "0 auto 6px", display: "block" }} strokeWidth={1.8} />
@@ -415,10 +415,10 @@ export default function ProductDetailPage() {
             <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", marginBottom: 36, flexWrap: "wrap", gap: 12 }}>
               <div>
                 <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.28em", textTransform: "uppercase", color: "#d97706", margin: "0 0 8px" }}>قد يعجبك أيضًا</p>
-                <h2 style={{ color: "#0f172a", margin: 0, fontSize: "clamp(1.5rem,3vw,2.2rem)", fontWeight: 800 }}>منتجات مشابهة</h2>
+                <h2 style={{ color: "#0f172a", margin: 0, fontSize: "clamp(1.5rem,3vw,2.2rem)", fontWeight: 800 }}>Products EGPشابهة</h2>
               </div>
               <Link href="/shop" style={{ fontSize: 12, fontWeight: 700, color: "#0f172a", textDecoration: "none", display: "flex", alignItems: "center", gap: 6, borderBottom: "2px solid #f59e0b", paddingBottom: 3 }}>
-                عرض الكل <ArrowRight size={14} />
+                View All <ArrowRight size={14} />
               </Link>
             </div>
             <div className="products-grid-4">

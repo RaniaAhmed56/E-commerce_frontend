@@ -18,8 +18,8 @@ export function Footer() {
                   <MessageCircle size={20} style={{ color: "#ffffff" }} strokeWidth={2} />
                 </div>
                 <div>
-                  <p style={{ fontSize: 15, fontWeight: 800, color: "#ffffff", margin: "0 0 3px" }}>تواصلي معنا عبر واتساب</p>
-                  <p style={{ fontSize: 12, color: "rgba(255,255,255,0.4)", margin: 0 }}>نرد خلال دقائق · من 9 صباحًا حتى 12 منتصف الليل</p>
+                  <p style={{ fontSize: 15, fontWeight: 800, color: "#ffffff", margin: "0 0 3px" }}>Chat with Us on WhatsApp</p>
+                  <p style={{ fontSize: 12, color: "rgba(255,255,255,0.4)", margin: 0 }}>We reply within minutes · 9AM to midnight</p>
                 </div>
               </div>
               <a
@@ -28,7 +28,7 @@ export function Footer() {
                 onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.transform = "translateY(-2px)"; (e.currentTarget as HTMLAnchorElement).style.boxShadow = "0 8px 24px rgba(37,211,102,0.4)"; }}
                 onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.transform = ""; (e.currentTarget as HTMLAnchorElement).style.boxShadow = ""; }}
               >
-                <MessageCircle size={15} strokeWidth={2} /> ابدئي المحادثة
+                <MessageCircle size={15} strokeWidth={2} /> Start Chat
               </a>
             </div>
           </div>
@@ -45,7 +45,7 @@ export function Footer() {
                 <div style={{ fontSize: 9, fontWeight: 800, letterSpacing: "0.38em", textTransform: "uppercase", color: "#f59e0b", marginTop: 3 }}>Fashion House</div>
               </div>
               <p style={{ fontSize: 13, color: "rgba(255,255,255,0.38)", lineHeight: 1.8, marginBottom: 20, maxWidth: 230 }}>
-                أزياء راقية للشخص المميز. مصنوعة بعناية، تُرتدى بثقة في كل مناسبة.
+                Luxury Fashion للشخص Featured. EGPصنوعة بعناية، تُرتدى بثقة في كل EGPناسبة.
               </p>
               <div style={{ display: "flex", gap: 10, marginBottom: 18 }}>
                 {[
@@ -63,7 +63,7 @@ export function Footer() {
                 ))}
               </div>
               <div style={{ display: "flex", flexDirection: "column", gap: 7 }}>
-                {[{ Icon: MapPin, text: "القاهرة، مصر" }, { Icon: Phone, text: "+20 100 000 0000" }].map(({ Icon, text }) => (
+                {[{ Icon: MapPin, text: "Cairo, Egypt" }, { Icon: Phone, text: "+20 100 000 0000" }].map(({ Icon, text }) => (
                   <div key={text} style={{ display: "flex", alignItems: "center", gap: 9, fontSize: 13, color: "rgba(255,255,255,0.3)" }}>
                     <Icon size={12} style={{ flexShrink: 0, color: "rgba(245,158,11,0.6)" }} />
                     {text}
@@ -74,9 +74,9 @@ export function Footer() {
 
             {/* Links */}
             {[
-              { title: "التشكيلات", items: [["نساء", "/shop?category=Women"], ["رجال", "/shop?category=Men"], ["أطفال", "/shop?category=Kids"], ["إكسسوارات", "/shop?category=Accessories"], ["كل المنتجات", "/shop"]] },
-              { title: "حسابي", items: [["ملفي الشخصي", "/profile"], ["طلباتي", "/orders"], ["المفضلة", "/wishlist"], ["تسجيل الدخول", "/login"], ["إنشاء حساب", "/register"]] },
-              { title: "مساعدة", items: [["الشحن والإرجاع", "#"], ["دليل المقاسات", "#"], ["الأسئلة الشائعة", "#"], ["سياسة الخصوصية", "/privacy"], ["تواصل معنا", "/contact-us"]] },
+              { title: "التشكيلات", items: [["Women", "/shop?category=Women"], ["Men", "/shop?category=Men"], ["Kids", "/shop?category=Kids"], ["Accessories", "/shop?category=Accessories"], ["كل الProductات", "/shop"]] },
+              { title: "حسابي", items: [["My Profile", "/profile"], ["My Orders", "/orders"], ["Wishlist", "/wishlist"], ["Sign In", "/login"], ["Create Account", "/register"]] },
+              { title: "مساعدة", items: [["الشحن والإرجاع", "#"], ["دليل Sizeات", "#"], ["FAQ", "#"], ["Privacy Policy", "/privacy"], ["Contact", "/contact-us"]] },
             ].map(section => (
               <div key={section.title}>
                 <h4 style={{ fontSize: 10, fontWeight: 800, letterSpacing: "0.32em", textTransform: "uppercase", color: "#f59e0b", marginBottom: 18, marginTop: 0 }}>
@@ -104,7 +104,7 @@ export function Footer() {
         <div style={{ borderTop: "1px solid rgba(255,255,255,0.05)", padding: "16px 0" }}>
           <div style={{ maxWidth: 1280, margin: "0 auto", padding: "0 24px" }} className="footer-bottom">
             <p style={{ fontSize: 12, color: "rgba(255,255,255,0.2)", margin: 0 }}>
-              © 2026 Blanko Fashion House. جميع الحقوق محفوظة.
+              © 2026 Blanko Fashion House. All rights reserved.
             </p>
             <div style={{ display: "flex", gap: 14, flexWrap: "wrap" }}>
               {["Visa", "Mastercard", "Fawry", "Vodafone Cash"].map(m => (

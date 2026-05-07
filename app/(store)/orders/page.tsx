@@ -40,9 +40,9 @@ export default function OrdersPage() {
   );
 
   const stats = [
-    { v: orders.filter(o=>o.status==="delivered").length,  l:"مكتملة",     c:"#34d399" },
-    { v: orders.filter(o=>o.status==="shipping").length,   l:"في الطريق",  c:"#fbbf24" },
-    { v: orders.filter(o=>o.status==="processing").length, l:"معلقة",      c:"#60a5fa" },
+    { v: orders.filter(o=>o.status==="delivered").length,  l:"Completed",     c:"#34d399" },
+    { v: orders.filter(o=>o.status==="shipping").length,   l:"Shipped",  c:"#fbbf24" },
+    { v: orders.filter(o=>o.status==="processing").length, l:"Pending",      c:"#60a5fa" },
   ];
 
   return (
@@ -51,10 +51,10 @@ export default function OrdersPage() {
         {/* Header */}
         <div style={{ background:"#1e293b", borderBottom:"1px solid rgba(255,255,255,0.07)" }}>
           <div style={{ maxWidth:860, margin:"0 auto", padding:"36px 24px 28px" }}>
-            <p className="section-tag" style={{ marginBottom:10 }}>حسابي</p>
+            <p className="section-tag" style={{ marginBottom:10 }}>My Account</p>
             <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-end", flexWrap:"wrap", gap:12 }}>
               <div>
-                <h1 style={{ color:"#ffffff", margin:"0 0 4px", fontSize:"clamp(1.7rem,4vw,2.6rem)", fontWeight:700 }}>طلباتي</h1>
+                <h1 style={{ color:"#ffffff", margin:"0 0 4px", fontSize:"clamp(1.7rem,4vw,2.6rem)", fontWeight:700 }}>My Orders</h1>
                 <p style={{ fontSize:14, color:"rgba(255,255,255,0.42)", margin:0 }}>{orders.length} طلبات</p>
               </div>
               <div className="orders-stats">
@@ -74,8 +74,8 @@ export default function OrdersPage() {
           {orders.length === 0 ? (
             <div style={{ textAlign:"center", padding:"60px 20px" }}>
               <ShoppingBag size={48} style={{ color:"rgba(255,255,255,0.1)", margin:"0 auto 14px", display:"block" }} strokeWidth={1} />
-              <h3 style={{ color:"rgba(255,255,255,0.5)", fontWeight:500, marginBottom:20 }}>لا توجد طلبات بعد</h3>
-              <Link href="/shop" className="btn-gold" style={{ fontSize:12 }}>تسوقي الآن</Link>
+              <h3 style={{ color:"rgba(255,255,255,0.5)", fontWeight:500, marginBottom:20 }}>No orders yet yet</h3>
+              <Link href="/shop" className="btn-gold" style={{ fontSize:12 }}>Shop الآن</Link>
             </div>
           ) : (
             orders.map(order => {
@@ -97,7 +97,7 @@ export default function OrdersPage() {
                       <span style={{ fontSize:10, fontWeight:800, letterSpacing:"0.14em", textTransform:"uppercase", padding:"4px 12px", borderRadius:50, background:s.bg, color:s.color, border:`1px solid ${s.border}` }}>
                         {order.status_display}
                       </span>
-                      <p style={{ fontSize:16, fontWeight:800, color:"#ffffff", margin:0 }}>{Number(order.total).toLocaleString("ar-EG")} ج.م</p>
+                      <p style={{ fontSize:16, fontWeight:800, color:"#ffffff", margin:0 }}>{Number(order.total).toLocaleString("ar-EG")} EGP</p>
                       <ChevronLeft size={15} style={{ color:"rgba(255,255,255,0.22)" }} />
                     </div>
                   </div>
@@ -113,15 +113,15 @@ export default function OrdersPage() {
                             {item.size} · {item.color}
                           </span>
                         </div>
-                        <span style={{ fontSize:13, fontWeight:700, color:"rgba(255,255,255,0.5)", flexShrink:0 }}>{Number(item.price).toLocaleString("ar-EG")} ج.م</span>
+                        <span style={{ fontSize:13, fontWeight:700, color:"rgba(255,255,255,0.5)", flexShrink:0 }}>{Number(item.price).toLocaleString("ar-EG")} EGP</span>
                       </div>
                     ))}
                   </div>
 
                   <div style={{ borderTop:"1px solid rgba(255,255,255,0.06)", padding:"9px 16px", display:"flex", justifyContent:"space-between", alignItems:"center" }}>
-                    <span style={{ fontSize:12, color:"rgba(255,255,255,0.26)" }}>{order.items?.length} {order.items?.length===1?"منتج":"منتجات"}</span>
+                    <span style={{ fontSize:12, color:"rgba(255,255,255,0.26)" }}>{order.items?.length} {order.items?.length===1?"Product":"Products"}</span>
                     <button style={{ display:"flex", alignItems:"center", gap:5, fontSize:12, fontWeight:700, color:"#f59e0b", background:"none", border:"none", cursor:"pointer" }}>
-                      <Eye size={13}/> تفاصيل الطلب
+                      <Eye size={13}/> Details Order
                     </button>
                   </div>
                 </div>
@@ -132,7 +132,7 @@ export default function OrdersPage() {
             <Link href="/shop" style={{ display:"inline-flex", alignItems:"center", gap:7, fontSize:11, fontWeight:700, color:"rgba(255,255,255,0.35)", textDecoration:"none", letterSpacing:"0.12em", textTransform:"uppercase", padding:"10px 22px", border:"1.5px solid rgba(255,255,255,0.1)", borderRadius:50, transition:"all 0.22s" }}
               onMouseEnter={e=>{(e.currentTarget as HTMLAnchorElement).style.color="#f59e0b";(e.currentTarget as HTMLAnchorElement).style.borderColor="rgba(245,158,11,0.3)"}}
               onMouseLeave={e=>{(e.currentTarget as HTMLAnchorElement).style.color="rgba(255,255,255,0.35)";(e.currentTarget as HTMLAnchorElement).style.borderColor="rgba(255,255,255,0.1)"}}>
-              <ShoppingBag size={13}/> تسوقي الآن
+              <ShoppingBag size={13}/> Shop الآن
             </Link>
           </div>
         </div>

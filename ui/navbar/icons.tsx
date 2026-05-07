@@ -68,10 +68,10 @@ export default function Icons({
           >
             <div style={{ height: "3px", background: "linear-gradient(90deg, #f59e0b, #d97706)" }} />
             {[
-              { href: "/profile", label: "ملفي الشخصي" },
-              { href: "/orders", label: "طلباتي" },
-              { href: "/wishlist", label: "المفضلة" },
-              { href: "/admin", label: "لوحة التحكم" },
+              { href: "/profile", label: "My Profile" },
+              { href: "/orders", label: "My Orders" },
+              { href: "/wishlist", label: "Wishlist" },
+              { href: "/admin", label: "Dashboard" },
             ].map(item => (
               <Link key={item.href} href={item.href} style={{
                 display: "block", padding: "12px 16px",
@@ -95,7 +95,7 @@ export default function Icons({
               onMouseEnter={e => (e.currentTarget.style.backgroundColor = "#fef2f2")}
               onMouseLeave={e => (e.currentTarget.style.backgroundColor = "transparent")}
             >
-              تسجيل الخروج
+              Sign Out
             </button>
           </div>
         </div>

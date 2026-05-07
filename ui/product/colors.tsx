@@ -1,6 +1,6 @@
 import { Product } from "@/src/data/products";
 
-// دالة لتحويل أي قيمة إلى مصفوفة
+// function to convert any value to array
 function ensureArray(value: any): string[] {
   if (!value) return [];
   if (Array.isArray(value)) return value;
@@ -25,7 +25,7 @@ export default function Colors({
     return (
         <div className="mb-5">
             <div className="flex justify-between mb-3">
-                <label className="text-[0.62rem] tracking-[0.22em] uppercase text-[#1a1a18]">اللون</label>
+                <label className="text-[0.62rem] tracking-[0.22em] uppercase text-[#1a1a18]">Color</label>
                 {selectedColor && <span className="text-xs text-[#8a8a7a]">{selectedColor}</span>}
             </div>
                         <div className="flex gap-3">

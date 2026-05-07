@@ -6,11 +6,11 @@ import { useEffect, useState } from "react";
 import { LayoutDashboard, Package, ShoppingCart, Users, Tag, LogOut, ExternalLink, Menu, X, Bell } from "lucide-react";
 
 const navItems = [
-  { href: "/admin",            icon: LayoutDashboard, label: "لوحة التحكم" },
-  { href: "/admin/products",   icon: Package,         label: "المنتجات" },
-  { href: "/admin/orders",     icon: ShoppingCart,    label: "الطلبات" },
-  { href: "/admin/users",      icon: Users,           label: "العملاء" },
-  { href: "/admin/categories", icon: Tag,             label: "التصنيفات" },
+  { href: "/admin",            icon: LayoutDashboard, label: "Dashboard" },
+  { href: "/admin/products",   icon: Package,         label: "Products" },
+  { href: "/admin/orders",     icon: ShoppingCart,    label: "Orders" },
+  { href: "/admin/users",      icon: Users,           label: "Customers" },
+  { href: "/admin/categories", icon: Tag,             label: "Categories" },
 ];
 
 function Sidebar({ pathname, onClose }: { pathname: string; onClose?: () => void }) {
@@ -22,7 +22,7 @@ function Sidebar({ pathname, onClose }: { pathname: string; onClose?: () => void
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
           <div>
             <div style={{ fontFamily: "var(--font-cormorant,Georgia,serif)", fontSize: 20, fontWeight: 800, color: "#ffffff", letterSpacing: "0.3em", textTransform: "uppercase" }}>BLANKO</div>
-            <div style={{ fontSize: 9, fontWeight: 800, letterSpacing: "0.32em", textTransform: "uppercase", color: "#f59e0b", marginTop: 2 }}>لوحة التحكم</div>
+            <div style={{ fontSize: 9, fontWeight: 800, letterSpacing: "0.32em", textTransform: "uppercase", color: "#f59e0b", marginTop: 2 }}>Dashboard</div>
           </div>
           {onClose && (
             <button onClick={onClose} style={{ background: "rgba(255,255,255,0.07)", border: "none", color: "rgba(255,255,255,0.5)", cursor: "pointer", width: 32, height: 32, borderRadius: 8, display: "flex", alignItems: "center", justifyContent: "center" }}>
@@ -53,13 +53,13 @@ function Sidebar({ pathname, onClose }: { pathname: string; onClose?: () => void
         <Link href="/" style={{ display: "flex", alignItems: "center", gap: 13, padding: "11px 14px", fontSize: 13, fontWeight: 700, color: "rgba(255,255,255,0.38)", textDecoration: "none", borderRadius: 10, transition: "all 0.22s" }}
           onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.background = "rgba(255,255,255,0.07)"; (e.currentTarget as HTMLAnchorElement).style.color = "#ffffff"; }}
           onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.background = "transparent"; (e.currentTarget as HTMLAnchorElement).style.color = "rgba(255,255,255,0.38)"; }}>
-          <ExternalLink size={16} strokeWidth={2} /> عرض المتجر
+          <ExternalLink size={16} strokeWidth={2} /> View Store
         </Link>
         <button onClick={() => { logout(); router.push("/login"); }}
           style={{ display: "flex", alignItems: "center", gap: 13, padding: "11px 14px", fontSize: 13, fontWeight: 700, color: "rgba(255,255,255,0.38)", background: "none", border: "none", cursor: "pointer", borderRadius: 10, transition: "all 0.22s", width: "100%", textAlign: "right" }}
           onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.background = "rgba(239,68,68,0.1)"; (e.currentTarget as HTMLButtonElement).style.color = "#f87171"; }}
           onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.background = "transparent"; (e.currentTarget as HTMLButtonElement).style.color = "rgba(255,255,255,0.38)"; }}>
-          <LogOut size={16} strokeWidth={2} /> تسجيل الخروج
+          <LogOut size={16} strokeWidth={2} /> Sign Out
         </button>
       </div>
     </div>
@@ -79,7 +79,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
   if (!isAuthenticated || !isAdmin) return null;
 
-  const currentLabel = navItems.find(n => n.href === pathname || (n.href !== "/admin" && pathname.startsWith(n.href)))?.label ?? "لوحة التحكم";
+  const currentLabel = navItems.find(n => n.href === pathname || (n.href !== "/admin" && pathname.startsWith(n.href)))?.label ?? "Dashboard";
 
   return (
     <>
@@ -108,7 +108,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                 <Menu size={20} />
               </button>
               <div>
-                <p style={{ fontSize: 10, fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", color: "rgba(255,255,255,0.38)", margin: 0 }}>لوحة التحكم</p>
+                <p style={{ fontSize: 10, fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", color: "rgba(255,255,255,0.38)", margin: 0 }}>Dashboard</p>
                 <p style={{ fontSize: 15, fontWeight: 700, color: "#ffffff", margin: 0, lineHeight: 1 }}>{currentLabel}</p>
               </div>
             </div>
@@ -119,7 +119,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
               </button>
               <div style={{ display: "flex", alignItems: "center", gap: 9, padding: "5px 12px", background: "rgba(245,158,11,0.1)", border: "1.5px solid rgba(245,158,11,0.22)", borderRadius: 50 }}>
                 <div style={{ width: 28, height: 28, borderRadius: "50%", background: "linear-gradient(135deg,#f59e0b,#d97706)", display: "flex", alignItems: "center", justifyContent: "center", color: "#0f172a", fontSize: 12, fontWeight: 800 }}>أ</div>
-                <span className="admin-user-label" style={{ fontSize: 13, fontWeight: 700, color: "#fcd34d" }}>المدير</span>
+                <span className="admin-user-label" style={{ fontSize: 13, fontWeight: 700, color: "#fcd34d" }}>Manager</span>
               </div>
             </div>
           </header>
