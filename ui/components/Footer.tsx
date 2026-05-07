@@ -45,7 +45,7 @@ export function Footer() {
                 <div style={{ fontSize: 9, fontWeight: 800, letterSpacing: "0.38em", textTransform: "uppercase", color: "#f59e0b", marginTop: 3 }}>Fashion House</div>
               </div>
               <p style={{ fontSize: 13, color: "rgba(255,255,255,0.38)", lineHeight: 1.8, marginBottom: 20, maxWidth: 230 }}>
-                Luxury Fashion للشخص Featured. EGPصنوعة بعناية، تُرتدى بثقة في كل EGPناسبة.
+                Luxury fashion crafted with care — worn with confidence on every occasion.
               </p>
               <div style={{ display: "flex", gap: 10, marginBottom: 18 }}>
                 {[
@@ -74,9 +74,9 @@ export function Footer() {
 
             {/* Links */}
             {[
-              { title: "التشكيلات", items: [["Women", "/shop?category=Women"], ["Men", "/shop?category=Men"], ["Kids", "/shop?category=Kids"], ["Accessories", "/shop?category=Accessories"], ["كل الProductات", "/shop"]] },
-              { title: "حسابي", items: [["My Profile", "/profile"], ["My Orders", "/orders"], ["Wishlist", "/wishlist"], ["Sign In", "/login"], ["Create Account", "/register"]] },
-              { title: "مساعدة", items: [["الشحن والإرجاع", "#"], ["دليل Sizeات", "#"], ["FAQ", "#"], ["Privacy Policy", "/privacy"], ["Contact", "/contact-us"]] },
+              { title: "Collections", items: [["Women", "/shop?category=Women"], ["Men", "/shop?category=Men"], ["Kids", "/shop?category=Kids"], ["Accessories", "/shop?category=Accessories"], ["All Products", "/shop"]] },
+              { title: "My Account", items: [["My Profile", "/profile"], ["My Orders", "/orders"], ["Wishlist", "/wishlist"], ["Sign In", "/login"], ["Create Account", "/register"]] },
+              { title: "Help", items: [["Shipping & Returns", "#"], ["Size Guide", "#"], ["FAQ", "#"], ["Privacy Policy", "/privacy"], ["Contact", "/contact-us"]] },
             ].map(section => (
               <div key={section.title}>
                 <h4 style={{ fontSize: 10, fontWeight: 800, letterSpacing: "0.32em", textTransform: "uppercase", color: "#f59e0b", marginBottom: 18, marginTop: 0 }}>

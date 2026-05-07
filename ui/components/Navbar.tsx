@@ -86,7 +86,7 @@ export function Navbar() {
                       </>
                     ) : (
                       <>
-                        <Link href="/login"    className="nav-dropdown-link">تسجيل Login</Link>
+                        <Link href="/login"    className="nav-dropdown-link">Login</Link>
                         <Link href="/register" className="nav-dropdown-link" style={{color:"#d97706"}}>Create Account</Link>
                       </>
                     )}
@@ -128,7 +128,7 @@ export function Navbar() {
               </div>
             ) : (
               <div className="nav-mobile-auth">
-                <Link href="/login"    className="nav-mobile-btn-outline">تسجيل Login</Link>
+                <Link href="/login"    className="nav-mobile-btn-outline">Login</Link>
                 <Link href="/register" className="nav-mobile-btn-gold">Create Account</Link>
               </div>
             )}
@@ -171,7 +171,7 @@ export function Navbar() {
         .nav-dropdown { position:absolute; left:0; top:calc(100% + 10px); background:#ffffff; border:2px solid #f1f5f9; border-radius:14px; box-shadow:0 20px 60px rgba(15,23,42,0.13); min-width:210px; overflow:hidden; z-index:300; }
         .nav-dropdown-link { display:block; padding:13px 20px; font-size:13px; font-weight:700; color:#0f172a; text-decoration:none; border-bottom:1px solid #f8fafc; transition:all 0.18s; }
         .nav-dropdown-link:hover { background:#fffbeb; color:#d97706; }
-        .nav-dropdown-logout { display:block; width:100%; text-align:right; padding:13px 20px; font-size:13px; font-weight:700; color:#ef4444; background:none; border:none; cursor:pointer; font-family:var(--font-tajawal,sans-serif); }
+        .nav-dropdown-logout { display:block; width:100%; text-align:left; padding:13px 20px; font-size:13px; font-weight:700; color:#ef4444; background:none; border:none; cursor:pointer; letter-spacing:0.06em; }
         .nav-dropdown-logout:hover { background:#fef2f2; }
 
         /* Search */
@@ -202,7 +202,7 @@ export function Navbar() {
         .nav-mobile-link:hover, .nav-mobile-link.active { color:#d97706; }
 
         .nav-mobile-section { border-top:1px solid #f1f5f9; padding-top:10px; margin-top:4px; }
-        .nav-mobile-logout { display:block; width:100%; text-align:right; padding:13px 0; font-size:15px; font-weight:600; color:#ef4444; background:none; border:none; cursor:pointer; border-top:1px solid #f8fafc; font-family:var(--font-tajawal,sans-serif); }
+        .nav-mobile-logout { display:block; width:100%; text-align:left; padding:13px 0; font-size:15px; font-weight:700; color:#ef4444; background:none; border:none; cursor:pointer; border-top:1px solid #f8fafc; letter-spacing:0.06em; }
 
         .nav-mobile-auth { display:flex; gap:10px; margin-top:16px; border-top:1px solid #f1f5f9; padding-top:16px; }
         .nav-mobile-btn-outline { flex:1; text-align:center; padding:11px 0; font-size:13px; font-weight:700; color:#0f172a; border:2px solid #e2e8f0; border-radius:50px; text-decoration:none; }
