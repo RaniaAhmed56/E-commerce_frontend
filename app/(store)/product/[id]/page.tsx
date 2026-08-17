@@ -267,7 +267,7 @@ export default function ProductDetailPage() {
 
             {/* Price */}
             <p style={{ fontFamily: "var(--font-cormorant,Georgia,serif)", fontSize: "2.2rem", fontWeight: 800, color: "#0f172a", margin: "0 0 20px" }}>
-              {priceNum.toLocaleString("ar-EG")} EGP
+              {priceNum} EGP
             </p>
 
             {/* Description */}
