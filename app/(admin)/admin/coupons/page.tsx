@@ -31,7 +31,7 @@ export default function AdminCoupons() {
   };
 
   const deleteCoupon = async (id:number) => {
-    if (!confirm("Delete This الكوبون؟")) return;
+    if (!confirm("Delete this coupon?")) return;
     try { await couponsApi.delete(id); setCoupons(prev=>prev.filter(c=>c.id!==id)); } catch {}
   };
 
@@ -50,7 +50,7 @@ export default function AdminCoupons() {
       setCoupons(prev=>[c,...prev]);
       setForm({ code:"", discount:"", discount_type:"percent", max_uses:"100", expiry:"" });
       setShowAdd(false);
-    } catch { alert("حدث Error عند Add"); }
+    } catch { alert("An error occurred while adding"); }
     finally { setSaving(false); }
   };
 
@@ -65,29 +65,29 @@ export default function AdminCoupons() {
           <div>
             <p className="section-tag" style={{ marginBottom:8 }}>Management</p>
             <h2 style={{ color:"#ffffff", margin:"0 0 4px", fontSize:"clamp(1.4rem,3vw,2rem)" }}>Coupons</h2>
-            <p style={{ color:"rgba(255,255,255,0.38)", fontSize:13, margin:0 }}>{coupons.length} كوبون</p>
+            <p style={{ color:"rgba(255,255,255,0.38)", fontSize:13, margin:0 }}>{coupons.length} coupons</p>
           </div>
-          <button onClick={()=>setShowAdd(!showAdd)} className="btn-admin"><Plus size={15} strokeWidth={2.5}/> كوبون جديد</button>
+          <button onClick={()=>setShowAdd(!showAdd)} className="btn-admin"><Plus size={15} strokeWidth={2.5}/> New Coupon</button>
         </div>
 
         {showAdd && (
           <div className="admin-card animate-fade-in" style={{ marginBottom:18 }}>
-            <h3 style={{ color:"#ffffff", fontSize:"1.05rem", fontWeight:700, marginBottom:16, marginTop:0 }}>Add Coupon جديد</h3>
+            <h3 style={{ color:"#ffffff", fontSize:"1.05rem", fontWeight:700, marginBottom:16, marginTop:0 }}>Add New Coupon</h3>
             <div className="coupons-form-grid">
-              <div><L c="Coupon Code"/><input type="text" placeholder="مثال: BLANKO20" value={form.code} onChange={e=>setForm({...form,code:e.target.value.toUpperCase()})} className="input-field" style={{fontSize:13}}/></div>
-              <div><L c="قيمة Discount"/><input type="number" placeholder="20" value={form.discount} onChange={e=>setForm({...form,discount:e.target.value})} className="input-field" style={{fontSize:13}}/></div>
-              <div><L c="نوع Discount"/>
+              <div><L c="Coupon Code"/><input type="text" placeholder="e.g.: BLANKO20" value={form.code} onChange={e=>setForm({...form,code:e.target.value.toUpperCase()})} className="input-field" style={{fontSize:13}}/></div>
+              <div><L c="Discount Value"/><input type="number" placeholder="20" value={form.discount} onChange={e=>setForm({...form,discount:e.target.value})} className="input-field" style={{fontSize:13}}/></div>
+              <div><L c="Discount Type"/>
                 <select value={form.discount_type} onChange={e=>setForm({...form,discount_type:e.target.value})} className="input-field" style={{fontSize:13}}>
-                  <option value="percent">نسبة EGPئوية (%)</option>
-                  <option value="fixed">مبلغ ثابت ($)</option>
+                  <option value="percent">Percentage (%)</option>
+                  <option value="fixed">Fixed amount ($)</option>
                 </select>
               </div>
-              <div><L c="الحد الأقصى"/><input type="number" placeholder="100" value={form.max_uses} onChange={e=>setForm({...form,max_uses:e.target.value})} className="input-field" style={{fontSize:13}}/></div>
+              <div><L c="Max uses"/><input type="number" placeholder="100" value={form.max_uses} onChange={e=>setForm({...form,max_uses:e.target.value})} className="input-field" style={{fontSize:13}}/></div>
               <div><L c="Expiry"/><input type="date" value={form.expiry} onChange={e=>setForm({...form,expiry:e.target.value})} className="input-field" style={{fontSize:13}}/></div>
             </div>
             <div style={{ display:"flex", gap:10, marginTop:16, flexWrap:"wrap" }}>
               <button onClick={addCoupon} disabled={saving} className="btn-admin">
-                {saving?<><Loader2 size={13} style={{animation:"spin 1s linear infinite"}}/> Saving...</>:"Save الكوبون"}
+                {saving?<><Loader2 size={13} style={{animation:"spin 1s linear infinite"}}/> Saving...</>:"Save Coupon"}
               </button>
               <button onClick={()=>setShowAdd(false)} className="btn-admin-ghost">Cancel</button>
             </div>
@@ -109,7 +109,7 @@ export default function AdminCoupons() {
                     </div>
                     <div>
                       <p style={{ fontSize:14, fontWeight:800, color:c.active?"#f59e0b":"rgba(255,255,255,0.3)", margin:0, letterSpacing:"0.06em" }}>{c.code}</p>
-                      <p style={{ fontSize:11, color:"rgba(255,255,255,0.3)", margin:0 }}>{c.discount_type==="percent"?`خصم ${c.discount}%`:`خصم $${c.discount}`}</p>
+                      <p style={{ fontSize:11, color:"rgba(255,255,255,0.3)", margin:0 }}>{c.discount_type==="percent"?`Discount ${c.discount}%`:`Discount $${c.discount}`}</p>
                     </div>
                   </div>
                   <button onClick={()=>toggleActive(c)} style={{ width:40, height:22, borderRadius:50, border:"none", cursor:"pointer", position:"relative", transition:"background 0.3s", background:c.active?"#f59e0b":"rgba(255,255,255,0.15)", flexShrink:0 }}>
@@ -118,14 +118,14 @@ export default function AdminCoupons() {
                 </div>
                 <div style={{ marginBottom:12 }}>
                   <div style={{ display:"flex", justifyContent:"space-between", marginBottom:5 }}>
-                    <span style={{ fontSize:11, color:"rgba(255,255,255,0.38)" }}>الاستخدام</span>
+                    <span style={{ fontSize:11, color:"rgba(255,255,255,0.38)" }}>Uses</span>
                     <span style={{ fontSize:11, fontWeight:700, color:"rgba(255,255,255,0.55)" }}>{c.uses} / {c.max_uses}</span>
                   </div>
                   <div style={{ height:4, background:"rgba(255,255,255,0.08)", borderRadius:2, overflow:"hidden" }}>
                     <div style={{ height:"100%", background:c.uses/c.max_uses>0.8?"#f87171":"#f59e0b", borderRadius:2, width:`${Math.min((c.uses/c.max_uses)*100,100)}%`, transition:"width 0.5s" }}/>
                   </div>
                 </div>
-                {c.expiry && <p style={{ fontSize:11, color:"rgba(255,255,255,0.25)", marginBottom:12 }}>Expires: {new Date(c.expiry).toLocaleDateString("ar-EG")}</p>}
+                {c.expiry && <p style={{ fontSize:11, color:"rgba(255,255,255,0.25)", marginBottom:12 }}>Expires: {new Date(c.expiry).toLocaleDateString('en-US')}</p>}
                 <div style={{ display:"flex", gap:8 }}>
                   <button onClick={()=>copyCode(c.id, c.code)}
                     style={{ flex:1, display:"flex", alignItems:"center", justifyContent:"center", gap:5, padding:"7px 0", borderRadius:8, background:"rgba(255,255,255,0.05)", border:"1.5px solid rgba(255,255,255,0.1)", color:"rgba(255,255,255,0.52)", fontSize:11, fontWeight:600, cursor:"pointer", transition:"all 0.2s" }}
@@ -144,7 +144,7 @@ export default function AdminCoupons() {
             ))}
             {coupons.length===0 && (
               <div style={{ gridColumn:"1/-1", textAlign:"center", padding:"40px 20px", color:"rgba(255,255,255,0.3)", fontSize:14 }}>
-                No coupons available بعد
+                No coupons available yet
               </div>
             )}
           </div>

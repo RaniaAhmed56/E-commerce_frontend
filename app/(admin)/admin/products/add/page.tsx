@@ -92,13 +92,13 @@ export default function AdminAddProduct() {
   // ── submit ─────────────────────────────────────────
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!form.name || !form.price) { setError("اسم الProduct والPrice required"); return; }
-    if (!form.image) { setError("Main Image EGPطلوبة"); return; }
+    if (!form.name || !form.price) { setError("Product name and price are required"); return; }
+      if (!form.image) { setError("Main image is required"); return; }
     const validVariants = variants.filter(v => v.color.trim());
-    if (validVariants.length === 0) { setError("أضف لوناً واحداً على الأقل"); return; }
+    if (validVariants.length === 0) { setError("Add at least one color"); return; }
     for (const v of validVariants) {
-      if (v.sizes.length === 0) { setError(`Color "${v.color}" ليس له EGPقاسات`); return; }
-      if (v.sizes.some(s => !s.size.trim())) { setError(`اكتب اسم Size لكل EGPقاس في Color "${v.color}"`); return; }
+        if (v.sizes.length === 0) { setError(`Color "${v.color}" has no sizes`); return; }
+        if (v.sizes.some(s => !s.size.trim())) { setError(`Enter a name for every size in color "${v.color}"`); return; }
     }
     setSaving(true); setError("");
     try {
@@ -133,7 +133,7 @@ export default function AdminAddProduct() {
       router.push("/admin/products");
     } catch (err: unknown) {
       const apiError = err as ApiError;
-      const msg = Object.values(apiError?.data ?? {}).flat().join(" ") || "حدث Error عند Add";
+      const msg = Object.values(apiError?.data ?? {}).flat().join(" ") || "An error occurred while adding";
       setError(String(msg));
     } finally { setSaving(false); }
   };
@@ -145,12 +145,12 @@ export default function AdminAddProduct() {
         <Link href="/admin/products" style={{ fontSize:13, fontWeight:600, color:"rgba(255,255,255,0.42)", textDecoration:"none" }}
           onMouseEnter={e=>(e.currentTarget as HTMLAnchorElement).style.color="#f59e0b"}
           onMouseLeave={e=>(e.currentTarget as HTMLAnchorElement).style.color="rgba(255,255,255,0.42)"}>
-          ← الProductات
+           ← Products
         </Link>
         <span style={{ color:"rgba(255,255,255,0.18)" }}>|</span>
-        <p className="section-tag" style={{ margin:0 }}>Add Product جديد</p>
+        <p className="section-tag" style={{ margin:0 }}>Add New Product</p>
       </div>
-      <h2 style={{ color:"#ffffff", margin:"0 0 24px", fontSize:"clamp(1.4rem,3vw,2rem)" }}>Product جديد</h2>
+      <h2 style={{ color:"#ffffff", margin:"0 0 24px", fontSize:"clamp(1.4rem,3vw,2rem)" }}>Add Product</h2>
 
       {error && (
         <div style={{ display:"flex", alignItems:"center", gap:10, padding:"12px 16px", background:"rgba(239,68,68,0.1)", border:"1px solid rgba(239,68,68,0.25)", borderRadius:10, marginBottom:20 }}>
@@ -166,16 +166,16 @@ export default function AdminAddProduct() {
 
             {/* Basic info */}
             <div className="admin-card">
-              <h3 style={{ color:"#ffffff", fontSize:"1.1rem", fontWeight:700, margin:"0 0 20px" }}>Info الأساسية</h3>
+              <h3 style={{ color:"#ffffff", fontSize:"1.1rem", fontWeight:700, margin:"0 0 20px" }}>Basic Info</h3>
               <div style={{ display:"flex", flexDirection:"column", gap:18 }}>
                 <div>
-                  <L c="اسم الProduct"/>
+                  <L c="Product name"/>
                   <input type="text" required value={form.name} onChange={e=>setForm(p=>({...p,name:e.target.value}))}
-                    placeholder="اكتب اسم الProduct" className="input-field" style={{fontSize:13}}/>
+                    placeholder="Enter product name" className="input-field" style={{fontSize:13}}/>
                 </div>
                 <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:14 }}>
                   <div>
-                    <L c="الPrice (EGP)"/>
+                    <L c="Price (EGP)"/>
                     <input type="number" required step="0.01" min="0" value={form.price}
                       onChange={e=>setForm(p=>({...p,price:e.target.value}))} placeholder="0.00" className="input-field" style={{fontSize:13}}/>
                   </div>
@@ -192,7 +192,7 @@ export default function AdminAddProduct() {
                 <div>
                   <L c="Main Image"/>
                   <label htmlFor="main-img" style={{ display:"flex", alignItems:"center", justifyContent:"center", gap:10, padding:"20px", border:"2px dashed rgba(255,255,255,0.2)", borderRadius:10, cursor:"pointer", background:"rgba(255,255,255,0.05)", fontSize:13, color:"rgba(255,255,255,0.6)" }}>
-                    <ImageIcon size={18}/> اختر Imagesة EGPن device
+                    <ImageIcon size={18}/> Choose image from device
                   </label>
                   <input type="file" accept="image/*" id="main-img" style={{display:"none"}} onChange={handleMainImage}/>
                   {form.imagePreview && (
@@ -204,9 +204,9 @@ export default function AdminAddProduct() {
 
                 {/* Gallery */}
                 <div>
-                  <L c="Additional Images (معرض)"/>
+                  <L c="Additional Images (Gallery)"/>
                   <label htmlFor="gallery-img" style={{ display:"flex", alignItems:"center", justifyContent:"center", gap:10, padding:"20px", border:"2px dashed rgba(255,255,255,0.2)", borderRadius:10, cursor:"pointer", background:"rgba(255,255,255,0.05)", fontSize:13, color:"rgba(255,255,255,0.6)" }}>
-                    <ImageIcon size={18}/> أضف images EGPن device (عديدة)
+                    <ImageIcon size={18}/> Add images from device (multiple)
                   </label>
                   <input type="file" accept="image/*" multiple id="gallery-img" style={{display:"none"}} onChange={handleGallery}/>
                   {form.imagePreviews.length>0 && (
@@ -229,7 +229,7 @@ export default function AdminAddProduct() {
                 <div>
                   <L c="Description"/>
                   <textarea value={form.description} onChange={e=>setForm(p=>({...p,description:e.target.value}))}
-                    rows={3} placeholder="وصف الProduct..." className="input-field" style={{resize:"none",fontSize:13}}/>
+                    rows={3} placeholder="Product description..." className="input-field" style={{resize:"none",fontSize:13}}/>
                 </div>
               </div>
             </div>
@@ -238,12 +238,12 @@ export default function AdminAddProduct() {
             <div className="admin-card">
               <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", marginBottom:20 }}>
                 <div>
-                  <h3 style={{ color:"#ffffff", fontSize:"1.1rem", fontWeight:700, margin:"0 0 4px" }}>المتغيرات (ألوان وSizeات)</h3>
-                  <p style={{ fontSize:12, color:"rgba(255,255,255,0.35)", margin:0 }}>كل لون له Imagesة special وقائمة EGPقاسات بكمياتها</p>
+                  <h3 style={{ color:"#ffffff", fontSize:"1.1rem", fontWeight:700, margin:"0 0 4px" }}>Variants (colors & sizes)</h3>
+                  <p style={{ fontSize:12, color:"rgba(255,255,255,0.35)", margin:0 }}>Each color has a separate image and a list of sizes with quantities</p>
                 </div>
                 <button type="button" onClick={addVariant}
                   style={{ display:"flex", alignItems:"center", gap:7, padding:"8px 16px", background:"rgba(245,158,11,0.12)", border:"1.5px solid rgba(245,158,11,0.3)", borderRadius:10, cursor:"pointer", fontSize:12, fontWeight:700, color:"#f59e0b" }}>
-                  <Plus size={14}/> Add لون
+                  <Plus size={14}/> Add color
                 </button>
               </div>
 
@@ -258,7 +258,7 @@ export default function AdminAddProduct() {
                       <span style={{ flex:1, fontSize:13, fontWeight:700, color: variant.color?"#ffffff":"rgba(255,255,255,0.3)" }}>
                         {variant.color || `Color ${vi+1}`}
                       </span>
-                      <span style={{ fontSize:11, color:"rgba(255,255,255,0.3)" }}>{variant.sizes.length} EGPقاس</span>
+                      <span style={{ fontSize:11, color:"rgba(255,255,255,0.3)" }}>{variant.sizes.length} sizes</span>
                       <button type="button" onClick={()=>updateVariant(vi,{expanded:!variant.expanded})}
                         style={{ background:"none", border:"none", cursor:"pointer", color:"rgba(255,255,255,0.4)", padding:4 }}>
                         {variant.expanded ? <ChevronUp size={16}/> : <ChevronDown size={16}/>}
@@ -275,17 +275,17 @@ export default function AdminAddProduct() {
                       <div style={{ padding:"16px" }}>
                         {/* Color name input */}
                         <div style={{ marginBottom:14 }}>
-                          <L c="اسم Color"/>
+                          <L c="Color name"/>
                           <input type="text" value={variant.color}
                             onChange={e=>updateVariant(vi,{color:e.target.value})}
-                            placeholder="مثال: أسود، أبيض، Navy..."
+                            placeholder="e.g.: Black, White, Navy..."
                             className="input-field" style={{fontSize:13, marginBottom:10}}/>
                           {/* Color hex */}
                           <div style={{ display:"flex", alignItems:"center", gap:10 }}>
                             <input type="color" value={variant.color_hex||"#888888"}
                               onChange={e=>updateVariant(vi,{color_hex:e.target.value})}
                               style={{ width:36, height:36, borderRadius:8, border:"none", cursor:"pointer", background:"none" }}/>
-                            <span style={{ fontSize:12, color:"rgba(255,255,255,0.4)" }}>اختر Color أو اختر EGPن الألوان الجاهزة:</span>
+                            <span style={{ fontSize:12, color:"rgba(255,255,255,0.4)" }}>Choose a color or pick from presets:</span>
                           </div>
                           {/* Preset colors */}
                           <div style={{ display:"flex", flexWrap:"wrap", gap:7, marginTop:10 }}>
@@ -299,9 +299,9 @@ export default function AdminAddProduct() {
 
                         {/* Variant image */}
                         <div style={{ marginBottom:16 }}>
-                          <L c="Imagesة This Color"/>
+                          <L c="Images for this color"/>
                           <label htmlFor={`var-img-${vi}`} style={{ display:"flex", alignItems:"center", gap:10, padding:"12px 16px", border:"1.5px dashed rgba(255,255,255,0.15)", borderRadius:10, cursor:"pointer", background:"rgba(255,255,255,0.04)", fontSize:12, color:"rgba(255,255,255,0.5)" }}>
-                            <ImageIcon size={16}/> اختر Imagesة لThis Color
+                            <ImageIcon size={16}/> Choose image for this color
                           </label>
                           <input type="file" accept="image/*" id={`var-img-${vi}`} style={{display:"none"}} onChange={e=>handleVariantImage(vi,e)}/>
                           {variant.imagePreview && (
@@ -313,9 +313,9 @@ export default function AdminAddProduct() {
                         </div>
 
                         {/* Sizes */}
-                        <div>
+                          <div>
                           <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", marginBottom:10 }}>
-                            <L c="Sizeات والكميات"/>
+                            <L c="Sizes and quantities"/>
                             <div style={{ display:"flex", gap:8 }}>
                               {/* Quick add preset sizes */}
                               {SIZE_PRESETS.map(s=>(
@@ -333,7 +333,7 @@ export default function AdminAddProduct() {
                               <div key={si} style={{ display:"grid", gridTemplateColumns:"1fr 100px 32px", gap:8, alignItems:"center" }}>
                                 <input type="text" value={sz.size}
                                   onChange={e=>updateSize(vi,si,{size:e.target.value})}
-                                  placeholder="Size (مثال: S, M, L, XL...)"
+                                  placeholder="Size (e.g.: S, M, L, XL...)"
                                   className="input-field" style={{fontSize:13, padding:"8px 12px"}}/>
                                 <input type="number" min="0" value={sz.quantity}
                                   onChange={e=>updateSize(vi,si,{quantity:parseInt(e.target.value)||0})}
@@ -347,7 +347,7 @@ export default function AdminAddProduct() {
                             ))}
                             <button type="button" onClick={()=>addSize(vi)}
                               style={{ display:"flex", alignItems:"center", gap:8, padding:"9px 14px", background:"rgba(255,255,255,0.04)", border:"1.5px dashed rgba(255,255,255,0.15)", borderRadius:10, cursor:"pointer", fontSize:12, color:"rgba(255,255,255,0.45)", width:"fit-content" }}>
-                              <Plus size={13}/> Add EGPقاس يدوياً
+                              <Plus size={13}/> Add size manually
                             </button>
                           </div>
                         </div>
@@ -362,12 +362,12 @@ export default function AdminAddProduct() {
           {/* Sidebar */}
           <div style={{ display:"flex", flexDirection:"column", gap:18 }}>
             <div className="admin-card">
-              <h3 style={{ color:"#ffffff", fontSize:"1.1rem", fontWeight:700, margin:"0 0 20px" }}>حالة الProduct</h3>
+              <h3 style={{ color:"#ffffff", fontSize:"1.1rem", fontWeight:700, margin:"0 0 20px" }}>Product status</h3>
               <div style={{ display:"flex", flexDirection:"column", gap:16 }}>
                 {[
-                  { k:"in_stock",  l:"In Stock في Stock", desc:"يظهر for purchase" },
-                  { k:"featured",  l:"Product Featured",         desc:"يظهر في القسم الFeatured" },
-                  { k:"trending",  l:"Trending",              desc:"يظهر في قسم الTrending" },
+                  { k:"in_stock",  l:"In Stock", desc:"Visible for purchase" },
+                  { k:"featured",  l:"Featured", desc:"Shown in Featured section" },
+                  { k:"trending",  l:"Trending", desc:"Shown in Trending section" },
                 ].map(f=>(
                   <div key={f.k} style={{ display:"flex", justifyContent:"space-between", alignItems:"center" }}>
                     <div>
@@ -385,16 +385,16 @@ export default function AdminAddProduct() {
 
             {/* Variants summary */}
             <div className="admin-card">
-              <h3 style={{ color:"#ffffff", fontSize:"1rem", fontWeight:700, margin:"0 0 14px" }}>ملخص المتغيرات</h3>
-              {variants.filter(v=>v.color).length === 0
-                ? <p style={{ fontSize:12, color:"rgba(255,255,255,0.3)", margin:0 }}>لم تضف ألوان بعد</p>
-                : variants.filter(v=>v.color).map((v,i)=>(
+              <h3 style={{ color:"#ffffff", fontSize:"1rem", fontWeight:700, margin:"0 0 14px" }}>Variants summary</h3>
+                {variants.filter(v=>v.color).length === 0
+                  ? <p style={{ fontSize:12, color:"rgba(255,255,255,0.3)", margin:0 }}>No colors added yet</p>
+                  : variants.filter(v=>v.color).map((v,i)=>(
                   <div key={i} style={{ display:"flex", alignItems:"center", gap:10, marginBottom:10 }}>
                     <div style={{ width:16, height:16, borderRadius:"50%", background:v.color_hex||"#888", border:"1px solid rgba(255,255,255,0.2)", flexShrink:0 }}/>
                     <div style={{ flex:1 }}>
                       <p style={{ fontSize:12, fontWeight:700, color:"#fff", margin:"0 0 2px" }}>{v.color}</p>
                       <p style={{ fontSize:11, color:"rgba(255,255,255,0.35)", margin:0 }}>
-                        {v.sizes.length} EGPقاس · Total {v.sizes.reduce((s,x)=>s+Number(x.quantity),0)} قطعة
+                        {v.sizes.length} sizes · Total {v.sizes.reduce((s,x)=>s+Number(x.quantity),0)} items
                       </p>
                     </div>
                   </div>
@@ -403,7 +403,7 @@ export default function AdminAddProduct() {
             </div>
 
             <button type="submit" disabled={saving} className="btn-admin" style={{ width:"100%", justifyContent:"center", fontSize:13, padding:"14px 24px" }}>
-              {saving ? <><Loader2 size={14} style={{animation:"spin 1s linear infinite"}}/> Saving...</> : <><Save size={15} strokeWidth={2}/> Save الProduct</>}
+              {saving ? <><Loader2 size={14} style={{animation:"spin 1s linear infinite"}}/> Saving...</> : <><Save size={15} strokeWidth={2}/> Save Product</>}
             </button>
             <Link href="/admin/products" className="btn-admin-ghost" style={{ textAlign:"center", justifyContent:"center", display:"flex" }}>Cancel</Link>
           </div>

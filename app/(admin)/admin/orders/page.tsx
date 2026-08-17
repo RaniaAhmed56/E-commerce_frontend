@@ -1,8 +1,10 @@
 "use client";
 import { useState, useEffect, useCallback } from "react";
 import { Search, ChevronDown, Loader2, RefreshCw, Eye } from "lucide-react";
+import Image from "next/image";
 import { ordersApi, type Order, type PaginatedResponse } from "@/src/lib/api";
 import Link from "next/link";
+import { normalizeImageUrl } from "@/src/utils/image";
 
 const STATUS_OPTIONS = ["processing","shipping","delivered","cancelled"] as const;
 const statusLabel: Record<string,string> = { processing:"Processing", shipping:"Shipped", delivered:"Delivered", cancelled:"Cancelled" };
@@ -42,15 +44,26 @@ export default function AdminOrders() {
       // Signal dashboard to refresh stats
       localStorage.setItem("last_order_update", Date.now().toString());
       localStorage.setItem("orders_updated", "true");
-    } catch { alert("Failed Update الحالة"); }
+    } catch { alert("Failed Update status"); }
     finally  { setUpdating(null); }
   };
 
   const stats = [
-    { label:"Completedة",       val:orders.filter(o=>o.status==="delivered").length,  c:"#34d399" },
+    { label:"Completed",       val:orders.filter(o=>o.status==="delivered").length,  c:"#34d399" },
     { label:"Shipped",    val:orders.filter(o=>o.status==="shipping").length,   c:"#fbbf24" },
     { label:"Processing", val:orders.filter(o=>o.status==="processing").length, c:"#60a5fa" },
     { label:"Cancelled",         val:orders.filter(o=>o.status==="cancelled").length,  c:"#f87171" },
+  ];
+
+  const headerCols: { h: string; align: React.CSSProperties['textAlign'] }[] = [
+    { h: "Order #", align: "left" },
+    { h: "Customer", align: "left" },
+    { h: "Date", align: "left" },
+    { h: "Items", align: "center" },
+    { h: "Total", align: "right" },
+    { h: "Status", align: "center" },
+    { h: "Details", align: "center" },
+    { h: "Actions", align: "center" },
   ];
 
   return (
@@ -58,9 +71,9 @@ export default function AdminOrders() {
       <div>
         <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start", marginBottom:22, flexWrap:"wrap", gap:12 }}>
           <div>
-            <p className="section-tag" style={{ marginBottom:8 }}>الManagement</p>
-            <h2 style={{ color:"#ffffff", margin:"0 0 4px", fontSize:"clamp(1.4rem,3vw,2rem)" }}>الOrderات</h2>
-            <p style={{ color:"rgba(255,255,255,0.38)", fontSize:13, margin:0 }}>{orders.length} Order</p>
+            <p className="section-tag" style={{ marginBottom:8 }}>Management</p>
+            <h2 style={{ color:"#ffffff", margin:"0 0 4px", fontSize:"clamp(1.4rem,3vw,2rem)" }}>Orders</h2>
+            <p style={{ color:"rgba(255,255,255,0.38)", fontSize:13, margin:0 }}>{orders.length} Orders</p>
           </div>
           <button onClick={fetchOrders} style={{ display:"flex", alignItems:"center", gap:7, padding:"10px 18px", background:"rgba(255,255,255,0.07)", border:"1.5px solid rgba(255,255,255,0.12)", borderRadius:50, color:"rgba(255,255,255,0.55)", fontSize:12, fontWeight:700, cursor:"pointer", transition:"all 0.2s" }}
             onMouseEnter={e=>{(e.currentTarget as HTMLButtonElement).style.color="#f59e0b";(e.currentTarget as HTMLButtonElement).style.borderColor="rgba(245,158,11,0.3)"}}
@@ -84,7 +97,7 @@ export default function AdminOrders() {
         <div className="orders-filter-row">
           <div style={{ position:"relative", flex:1, minWidth:180 }}>
             <Search size={14} style={{ position:"absolute", right:15, top:"50%", transform:"translateY(-50%)", color:"rgba(255,255,255,0.28)" }}/>
-            <input type="text" placeholder="Search by name أو Phone..." value={search}
+            <input type="text" placeholder="Search by name or phone..." value={search}
               onChange={e=>setSearch(e.target.value)}
               className="input-field" style={{ paddingRight:42, fontSize:13 }}/>
           </div>
@@ -113,36 +126,43 @@ export default function AdminOrders() {
               <table style={{ width:"100%", borderCollapse:"collapse", minWidth:600 }}>
                 <thead>
                   <tr style={{ borderBottom:"1px solid rgba(255,255,255,0.08)", background:"rgba(255,255,255,0.03)" }}>
-                    {["Number الOrder","العميل","التاريخ","القطع","الTotal","الحالة","Details","Edit الحالة"].map(h => (
-                      <th key={h} style={{ padding:"12px 16px", textAlign:"right", fontSize:10, fontWeight:800, letterSpacing:"0.18em", textTransform:"uppercase", color:"rgba(255,255,255,0.35)", whiteSpace:"nowrap" }}>{h}</th>
+                    {headerCols.map(col => (
+                      <th key={col.h} style={{ padding: "12px 16px", textAlign: col.align, fontSize: 10, fontWeight: 800, letterSpacing: "0.18em", textTransform: "uppercase", color: "rgba(255,255,255,0.35)", whiteSpace: "nowrap" }}>{col.h}</th>
                     ))}
                   </tr>
                 </thead>
                 <tbody>
                   {orders.map((o, i) => (
                     <tr key={o.id} className="admin-table-row" style={{ borderBottom:i<orders.length-1?"1px solid rgba(255,255,255,0.05)":"none" }}>
-                      <td style={{ padding:"12px 16px", fontSize:13, fontWeight:700, color:"#f59e0b", whiteSpace:"nowrap" }}>
+                      <td style={{ padding:"12px 16px", fontSize:13, fontWeight:700, color:"#f59e0b", whiteSpace:"nowrap", textAlign: "left" }}>
                         #{String(o.id).padStart(4,"0")}
                       </td>
-                      <td style={{ padding:"12px 16px" }}>
+                      <td style={{ padding:"12px 16px", textAlign: "left" }}>
                         <p style={{ fontSize:13, fontWeight:700, color:"#ffffff", margin:0 }}>{o.customer_name}</p>
                         <p style={{ fontSize:11, color:"rgba(255,255,255,0.35)", margin:"2px 0 0" }}>{o.phone}</p>
                       </td>
-                      <td style={{ padding:"12px 16px", fontSize:12, color:"rgba(255,255,255,0.4)", whiteSpace:"nowrap" }}>
-                        {new Date(o.created_at).toLocaleDateString("ar-EG")}
+                      <td style={{ padding:"12px 16px", fontSize:12, color:"rgba(255,255,255,0.4)", whiteSpace:"nowrap", textAlign: "left" }}>
+                        {new Date(o.created_at).toLocaleDateString('en-US')}
                       </td>
                       <td style={{ padding:"12px 16px", fontSize:13, color:"rgba(255,255,255,0.6)", textAlign:"center" }}>
-                        {o.items?.length ?? "–"}
+                        <div style={{ display: "flex", alignItems: "center", gap: 8, justifyContent: "center" }}>
+                          {o.items && o.items.length > 0 ? (
+                            <img src={normalizeImageUrl(o.items[0].image||"")} alt="" style={{ width:44, height:44, objectFit:"cover", borderRadius:8, background:"rgba(255,255,255,0.04)" }} />
+                          ) : (
+                            <div style={{ width:44, height:44, borderRadius:8, background:"rgba(255,255,255,0.03)", display:"flex", alignItems:"center", justifyContent:"center", color:"rgba(255,255,255,0.28)" }}>–</div>
+                          )}
+                          <div style={{ fontSize:13, fontWeight:700 }}>{o.items?.length ?? "–"}</div>
+                        </div>
                       </td>
-                      <td style={{ padding:"12px 16px", fontSize:14, fontWeight:800, color:"#ffffff", whiteSpace:"nowrap" }}>
-                        {parseFloat(o.total).toFixed(2)} LE
+                      <td style={{ padding:"12px 16px", fontSize:14, fontWeight:800, color:"#ffffff", whiteSpace:"nowrap", textAlign: "right" }}>
+                        {Number(isNaN(Number(o.total)) ? 0 : Number(o.total)).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} LE
                       </td>
-                      <td style={{ padding:"12px 16px" }}>
+                      <td style={{ padding:"12px 16px", textAlign: "center" }}>
                         <span style={{ fontSize:9, fontWeight:800, letterSpacing:"0.14em", textTransform:"uppercase", padding:"4px 11px", borderRadius:50, background:SC[o.status]?.bg, color:SC[o.status]?.text, whiteSpace:"nowrap" }}>
                           {o.status_display}
                         </span>
                       </td>
-                      <td style={{ padding:"12px 16px" }}>
+                      <td style={{ padding:"12px 16px", textAlign: "center" }}>
                         <Link href={`/admin/orders/${o.id}`}
                           style={{ display:"flex", alignItems:"center", gap:5, padding:"6px 12px", borderRadius:8, background:"rgba(59,130,246,0.12)", border:"1.5px solid rgba(59,130,246,0.2)", color:"#3b82f6", fontSize:12, fontWeight:600, cursor:"pointer", transition:"all 0.2s", fontFamily:"var(--font-tajawal,sans-serif)", textDecoration:"none" }}
                           onMouseEnter={e=>{const el=e.currentTarget as HTMLAnchorElement;el.style.background="rgba(59,130,246,0.18)";el.style.color="#2563eb"}}
@@ -150,7 +170,7 @@ export default function AdminOrders() {
                           <Eye size={12}/> Details
                         </Link>
                       </td>
-                      <td style={{ padding:"12px 16px" }}>
+                      <td style={{ padding:"12px 16px", textAlign: "center" }}>
                         {updating === o.id ? (
                           <Loader2 size={16} style={{ color:"#f59e0b", animation:"spin 1s linear infinite" }}/>
                         ) : (
@@ -179,7 +199,7 @@ export default function AdminOrders() {
                     </tr>
                   ))}
                   {orders.length===0 && !loading && (
-                    <tr><td colSpan={7} style={{ padding:"48px 20px", textAlign:"center", color:"rgba(255,255,255,0.28)", fontSize:14 }}>No orders yet</td></tr>
+                    <tr><td colSpan={8} style={{ padding:"48px 20px", textAlign:"center", color:"rgba(255,255,255,0.28)", fontSize:14 }}>No orders yet</td></tr>
                   )}
                 </tbody>
               </table>

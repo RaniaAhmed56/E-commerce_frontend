@@ -69,9 +69,9 @@ export default function ProductDetailPage() {
 
     // 1. If variants exist → use variant images as thumbnails
     if (variants.length > 0) {
-      // Main product image first
-      const mainSrc = product.image || "";
-      if (mainSrc) list.push({ src: mainSrc, label: "الرئيسية" });
+    // Main product image first
+    const mainSrc = product.image || "";
+    if (mainSrc) list.push({ src: mainSrc, label: "Main" });
       // Then each variant's image
       variants.forEach((v, vi) => {
         const imgSrc = v.image && v.image.trim() ? v.image : mainSrc;
@@ -84,9 +84,9 @@ export default function ProductDetailPage() {
       const gallery = Array.isArray(product.images) ? product.images.filter(Boolean) : [];
       const main = product.image || "";
       if (gallery.length > 0) {
-        gallery.forEach((src, i) => list.push({ src, label: i === 0 ? "الرئيسية" : `Imagesة ${i + 1}` }));
+        gallery.forEach((src, i) => list.push({ src, label: i === 0 ? "Main" : `Image ${i + 1}` }));
       } else if (main) {
-        list.push({ src: main, label: "الرئيسية" });
+        list.push({ src: main, label: "Main" });
       }
     }
     return list;
@@ -126,7 +126,7 @@ export default function ProductDetailPage() {
     <div style={{ minHeight: "70vh", display: "flex", alignItems: "center", justifyContent: "center" }}>
       <div style={{ textAlign: "center" }}>
         <div style={{ width: 42, height: 42, border: "3px solid #f59e0b", borderTopColor: "transparent", borderRadius: "50%", margin: "0 auto 16px", animation: "spin .9s linear infinite" }} />
-        <p style={{ color: "#94a3b8", fontSize: 14 }}>Loading تحميل الProduct...</p>
+        <p style={{ color: "#94a3b8", fontSize: 14 }}>Loading product...</p>
       </div>
       <style>{`@keyframes spin{to{transform:rotate(360deg)}}`}</style>
     </div>
@@ -134,7 +134,7 @@ export default function ProductDetailPage() {
   if (!product) return (
     <div style={{ minHeight: "70vh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "40px 24px", textAlign: "center" }}>
       <Package size={64} style={{ color: "#e2e8f0", marginBottom: 20 }} strokeWidth={1} />
-      <h1 style={{ fontSize: "2rem", fontWeight: 800, color: "#0f172a", marginBottom: 14 }}>الProduct غير EGPوجود</h1>
+      <h1 style={{ fontSize: "2rem", fontWeight: 800, color: "#0f172a", marginBottom: 14 }}>Product not found</h1>
       <Link href="/shop" style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "12px 28px", background: "#0f172a", color: "#fff", borderRadius: 12, textDecoration: "none", fontWeight: 700 }}>
         العودة للمتجر <ArrowRight size={16} />
       </Link>
@@ -147,7 +147,7 @@ export default function ProductDetailPage() {
       {/* Breadcrumb */}
       <div style={{ background: "#f8fafc", borderBottom: "1px solid #f1f5f9", padding: "11px 0" }}>
         <div style={{ maxWidth: 1280, margin: "0 auto", padding: "0 24px", display: "flex", alignItems: "center", gap: 6, flexWrap: "wrap" }}>
-          {[{ href: "/", l: "الرئيسية" }, { href: "/shop", l: "Store" }, { href: `/shop?category=${product.category_name}`, l: product.category_name || "Products" }, { href: "#", l: product.name }]
+          {[{ href: "/", l: "Home" }, { href: "/shop", l: "Store" }, { href: `/shop?category=${product.category_name}`, l: product.category_name || "Products" }, { href: "#", l: product.name }]
             .map((b, i, arr) => (
               <span key={i} style={{ display: "flex", alignItems: "center", gap: 6 }}>
                 {i < arr.length - 1
@@ -208,7 +208,7 @@ export default function ProductDetailPage() {
             {imageList.length > 1 && (
               <div>
                 <p style={{ fontSize: 10, fontWeight: 700, color: "#9ca3af", letterSpacing: "0.18em", textTransform: "uppercase", marginBottom: 10 }}>
-                  {hasVariants ? "Images الألوان — اضغط للتبديل" : "معرض الImages"}
+                  {hasVariants ? "Variant images — click to switch" : "Image gallery"}
                 </p>
                 <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
                   {imageList.map((img, i) => {
@@ -305,7 +305,7 @@ export default function ProductDetailPage() {
                       <img src={selectedVariant.image} alt={selectedVariant.color} style={{ width: 44, height: 44, borderRadius: 8, objectFit: "cover", border: "2px solid #e2e8f0" }} />
                       <div>
                         <p style={{ fontSize: 13, fontWeight: 700, color: "#0f172a", margin: "0 0 2px" }}>{selectedVariant.color}</p>
-                        <p style={{ fontSize: 11, color: "#94a3b8", margin: 0 }}>{availSizes.length} EGPقاس EGPتاح — {availSizes.reduce((s, x) => s + x.quantity, 0)} قطعة</p>
+                        <p style={{ fontSize: 11, color: "#94a3b8", margin: 0 }}>{availSizes.length} sizes available — {availSizes.reduce((s, x) => s + x.quantity, 0)} items</p>
                       </div>
                     </div>
                   )}
@@ -318,7 +318,7 @@ export default function ProductDetailPage() {
                     {selectedSize && <span style={{ color: "#d97706", marginRight: 10, fontWeight: 900, textTransform: "none", letterSpacing: 0 }}>— {selectedSize}</span>}
                   </p>
                   {availSizes.length === 0
-                    ? <p style={{ fontSize: 13, color: "#ef4444", fontWeight: 600, margin: 0 }}>This Color Out of Stock حالياً</p>
+                    ? <p style={{ fontSize: 13, color: "#ef4444", fontWeight: 600, margin: 0 }}>This color is currently out of stock</p>
                     : (
                       <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
                         {availSizes.map(s => (
@@ -369,9 +369,9 @@ export default function ProductDetailPage() {
                 </button>
               </div>
               {/* Add to cart */}
-              <button onClick={handleAddToCart} disabled={!product.inStock}
+                <button onClick={handleAddToCart} disabled={!product.inStock}
                 style={{ flex: 1, height: 54, display: "flex", alignItems: "center", justifyContent: "center", gap: 10, fontSize: 14, fontWeight: 800, borderRadius: 14, border: "none", cursor: product.inStock ? "pointer" : "not-allowed", transition: "all .25s", background: added ? "#10b981" : product.inStock ? "#0f172a" : "#e2e8f0", color: product.inStock ? "#fff" : "#9ca3af", boxShadow: added || !product.inStock ? "none" : "0 6px 20px rgba(15,23,42,0.22)" }}>
-                {added ? <><Check size={17} />Doneت Add!</> : <><ShoppingCart size={17} />Add to Cart</>}
+                {added ? <><Check size={17} />Added!</> : <><ShoppingCart size={17} />Add to Cart</>}
               </button>
               {/* Wishlist */}
               <button onClick={() => inWishlist ? removeFromWishlist(product.id) : addToWishlist({ id: product.id, name: product.name, price: priceNum, image: product.image })}
@@ -391,9 +391,9 @@ export default function ProductDetailPage() {
             {/* Guarantees */}
             <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 10 }}>
               {[
-                { Icon: RefreshCw, t: "Free Returns", d: "خلال 30 يوماً" },
-                { Icon: Truck,     t: "Fast Delivery",  d: "24-48 ساعة" },
-                { Icon: Lock,      t: "Secure Payment",     d: "100% EGPحمي" },
+                { Icon: RefreshCw, t: "Free Returns", d: "Within 30 days" },
+                { Icon: Truck,     t: "Fast Delivery",  d: "24-48 hours" },
+                { Icon: Lock,      t: "Secure Payment",     d: "100% secure" },
               ].map(({ Icon, t, d }) => (
                 <div key={t} style={{ textAlign: "center", padding: "14px 8px", background: "#f8fafc", borderRadius: 12, border: "1px solid #f1f5f9" }}>
                   <Icon size={18} style={{ color: "#d97706", margin: "0 auto 6px", display: "block" }} strokeWidth={1.8} />
@@ -412,8 +412,8 @@ export default function ProductDetailPage() {
           <div style={{ maxWidth: 1280, margin: "0 auto", padding: "0 24px" }}>
             <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", marginBottom: 36, flexWrap: "wrap", gap: 12 }}>
               <div>
-                <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.28em", textTransform: "uppercase", color: "#d97706", margin: "0 0 8px" }}>قد يعجبك أيضًا</p>
-                <h2 style={{ color: "#0f172a", margin: 0, fontSize: "clamp(1.5rem,3vw,2.2rem)", fontWeight: 800 }}>Products EGPشابهة</h2>
+                <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.28em", textTransform: "uppercase", color: "#d97706", margin: "0 0 8px" }}>You may also like</p>
+                <h2 style={{ color: "#0f172a", margin: 0, fontSize: "clamp(1.5rem,3vw,2.2rem)", fontWeight: 800 }}>Related products</h2>
               </div>
               <Link href="/shop" style={{ fontSize: 12, fontWeight: 700, color: "#0f172a", textDecoration: "none", display: "flex", alignItems: "center", gap: 6, borderBottom: "2px solid #f59e0b", paddingBottom: 3 }}>
                 View All <ArrowRight size={14} />

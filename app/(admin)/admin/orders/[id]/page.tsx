@@ -56,9 +56,9 @@ export default function OrderDetailsPage() {
   if (!order) {
     return (
       <div style={{ padding: "40px", textAlign: "center" }}>
-        <h2 style={{ color: "#ffffff", marginBottom: "16px" }}>الطلب غير EGPوجود</h2>
+        <h2 style={{ color: "#ffffff", marginBottom: "16px" }}>Order not found</h2>
         <Link href="/admin/orders" className="btn-gold">
-          العودة للطلبات
+          Back to orders
         </Link>
       </div>
     );
@@ -92,14 +92,14 @@ export default function OrderDetailsPage() {
             onMouseLeave={(e) => { e.currentTarget.style.background = "rgba(255,255,255,0.1)"; }}
           >
             <ArrowLeft size={16} />
-            العودة
+            Back
           </Link>
           <div>
             <h1 style={{ color: "#ffffff", fontSize: "24px", fontWeight: "700", margin: 0 }}>
               Order Details #{String(order.id).padStart(4, "0")}
             </h1>
             <p style={{ color: "rgba(255,255,255,0.6)", margin: "4px 0 0" }}>
-              {new Date(order.created_at).toLocaleDateString("ar-EG", { 
+              {new Date(order.created_at).toLocaleString('en-US', { 
                 year: 'numeric', 
                 month: 'long', 
                 day: 'numeric',
@@ -179,9 +179,9 @@ export default function OrderDetailsPage() {
               <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
                 <Package size={16} style={{ color: "rgba(255,255,255,0.4)" }} />
                 <div>
-                  <p style={{ color: "rgba(255,255,255,0.6)", fontSize: "12px", margin: "0 0 2px" }}>طريقة Checkout</p>
+                  <p style={{ color: "rgba(255,255,255,0.6)", fontSize: "12px", margin: "0 0 2px" }}>Payment method</p>
                   <p style={{ color: "#ffffff", fontSize: "14px", fontWeight: "600", margin: 0 }}>
-                    {order.payment_method === "deposit" ? "Checkout عند الاستلام" : 
+                    {order.payment_method === "deposit" ? "Pay on delivery" : 
                      order.payment_method === "vodafone" ? "Vodafone Cash" :
                      order.payment_method === "instapay" ? "InstaPay" :
                      order.payment_method === "bank" ? "Bank Transfer" : order.payment_method}
@@ -195,7 +195,7 @@ export default function OrderDetailsPage() {
           <div className="admin-card">
             <h2 style={{ color: "#ffffff", fontSize: "18px", fontWeight: "700", marginBottom: "20px", display: "flex", alignItems: "center", gap: "8px" }}>
               <Package size={18} />
-              الProductات ({items.length})
+              Products ({items.length})
             </h2>
             <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
               {items.map((item, index) => (
@@ -284,7 +284,7 @@ export default function OrderDetailsPage() {
             
             <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                <span style={{ color: "rgba(255,255,255,0.6)", fontSize: "14px" }}>الTotal الجزئي</span>
+                <span style={{ color: "rgba(255,255,255,0.6)", fontSize: "14px" }}>Subtotal</span>
                 <span style={{ color: "#ffffff", fontSize: "14px", fontWeight: "600" }}>
                   {subtotal.toFixed(2)} LE
                 </span>
@@ -293,7 +293,7 @@ export default function OrderDetailsPage() {
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                 <span style={{ color: "rgba(255,255,255,0.6)", fontSize: "14px" }}>Shipping</span>
                 <span style={{ color: shippingFee === 0 ? "#34d399" : "#ffffff", fontSize: "14px", fontWeight: "600" }}>
-                  {shippingFee === 0 ? "مجاني" : `${shippingFee.toFixed(2)} LE`}
+                  {shippingFee === 0 ? "Free" : `${shippingFee.toFixed(2)} LE`}
                 </span>
               </div>
 
@@ -302,11 +302,11 @@ export default function OrderDetailsPage() {
                   <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
                     <Tag size={14} style={{ color: "#34d399" }} />
                     <span style={{ color: "rgba(255,255,255,0.6)", fontSize: "14px" }}>
-                      خصم الكوبون
+                      Coupon discount
                     </span>
                   </div>
                   <span style={{ color: "#34d399", fontSize: "14px", fontWeight: "600" }}>
-                    {discount > 0 ? `-${discount.toFixed(2)} LE` : "مطبق"}
+                    {discount > 0 ? `-${discount.toFixed(2)} LE` : "Applied"}
                   </span>
                 </div>
               )}
@@ -319,7 +319,7 @@ export default function OrderDetailsPage() {
                 justifyContent: "space-between", 
                 alignItems: "center" 
               }}>
-                <span style={{ color: "#ffffff", fontSize: "16px", fontWeight: "700" }}>الTotal</span>
+                <span style={{ color: "#ffffff", fontSize: "16px", fontWeight: "700" }}>Total</span>
                 <span style={{ color: "#f59e0b", fontSize: "20px", fontWeight: "800" }}>
                   {total.toFixed(2)} LE
                 </span>
@@ -330,11 +330,11 @@ export default function OrderDetailsPage() {
           {/* WhatsApp Button */}
           <a
             href={`https://wa.me/${order.phone}?text=${encodeURIComponent(
-              `مرحباً ${order.customer_name}!\n\n` +
-              `طلبك Number #${String(order.id).padStart(4, "0")} Done received بنجاح\n` +
-              `الTotal: ${total.toFixed(2)} LE\n` +
-              `الحالة: ${statusLabel[order.status] || order.status}\n\n` +
-              `Thank you لتسوقك EGPع BLANKO! 🛍️`
+              `Hello ${order.customer_name}!\n\n` +
+              `Your order #${String(order.id).padStart(4, "0")} has been received.\n` +
+              `Total: ${total.toFixed(2)} LE\n` +
+              `Status: ${statusLabel[order.status] || order.status}\n\n` +
+              `Thank you for shopping with BLANKO! 🛍️`
             )}`}
             target="_blank"
             rel="noopener noreferrer"
@@ -349,7 +349,7 @@ export default function OrderDetailsPage() {
             }}
           >
             <ArrowRight size={16} />
-            تواصل EGPع العميل عبر واتساب
+            Contact customer via WhatsApp
           </a>
         </div>
       </div>

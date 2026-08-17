@@ -3,8 +3,46 @@ import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Plus, Edit, Trash2, Search, Loader2, RefreshCw } from "lucide-react";
-import { productsApi, type Product, type PaginatedResponse } from "@/src/lib/api";
+import { productsApi, variantsApi, type Product, type PaginatedResponse } from "@/src/lib/api";
 import { normalizeImageUrl } from "@/src/utils/image";
+
+function RowThumb({ product }: { product: Product }) {
+  const [src, setSrc] = useState<string | null>(null);
+
+  useEffect(() => {
+    let mounted = true;
+    const pick = async () => {
+      // 1) product.image
+      if (product.image && product.image.trim()) {
+        if (mounted) setSrc(normalizeImageUrl(product.image));
+        return;
+      }
+      // 2) product.images[0]
+      if (Array.isArray(product.images) && product.images.length > 0 && product.images[0]) {
+        if (mounted) setSrc(normalizeImageUrl(product.images[0]));
+        return;
+      }
+      // 3) try variants API to get first color image
+      try {
+        const v = await variantsApi.getByProduct(product.id).catch(() => []);
+        if (!mounted) return;
+        if (Array.isArray(v) && v.length > 0 && v[0].image) {
+          setSrc(normalizeImageUrl(v[0].image));
+          return;
+        }
+      } catch {
+        // ignore
+      }
+      if (mounted) setSrc(null);
+    };
+    pick();
+    return () => { mounted = false; };
+  }, [product]);
+
+  if (!src) return null;
+  // eslint-disable-next-line @next/next/no-img-element
+  return <img src={src} alt={product.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />;
+}
 
 const catAr: Record<string,string> = { Women:"Women", Men:"Men", Kids:"Kids", Accessories:"Accessories" };
 
@@ -28,18 +66,27 @@ export default function AdminProducts() {
   useEffect(() => { fetchProducts(); }, [fetchProducts]);
 
   const handleDelete = async (id: number, name: string) => {
-    if (!confirm(`Delete "${name}"؟`)) return;
+    if (!confirm(`Delete "${name}"?`)) return;
     try {
       await productsApi.delete(id);
       setProducts(prev => prev.filter(p => p.id !== id));
-    } catch { alert("Failed الDelete"); }
+    } catch { alert("Failed to delete"); }
   };
 
   const stats = [
     { l:"All",   v:products.length,                              c:"#f59e0b" },
     { l:"In Stock",  v:products.filter(p=>p.in_stock).length,       c:"#34d399" },
-    { l:"نفذ",    v:products.filter(p=>!p.in_stock).length,      c:"#f87171" },
+    { l:"Out of Stock",    v:products.filter(p=>!p.in_stock).length,      c:"#f87171" },
     { l:"Featured",   v:products.filter(p=>p.featured).length,       c:"#c084fc" },
+  ];
+
+  const headerCols: { h: string; align: React.CSSProperties['textAlign'] }[] = [
+    { h: "Product", align: "left" },
+    { h: "Category", align: "left" },
+    { h: "Price", align: "right" },
+    { h: "Status", align: "center" },
+    { h: "Labels", align: "center" },
+    { h: "Actions", align: "center" },
   ];
 
   return (
@@ -47,9 +94,9 @@ export default function AdminProducts() {
       <div>
         <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start", marginBottom:22, flexWrap:"wrap", gap:12 }}>
           <div>
-            <p className="section-tag" style={{ marginBottom:8 }}>Management الProductات</p>
-            <h2 style={{ color:"#ffffff", margin:"0 0 4px", fontSize:"clamp(1.4rem,3vw,2rem)" }}>الProductات</h2>
-            <p style={{ color:"rgba(255,255,255,0.38)", fontSize:13, margin:0 }}>{products.length} EGPنتج</p>
+            <p className="section-tag" style={{ marginBottom:8 }}>Product Management</p>
+            <h2 style={{ color:"#ffffff", margin:"0 0 4px", fontSize:"clamp(1.4rem,3vw,2rem)" }}>Products</h2>
+            <p style={{ color:"rgba(255,255,255,0.38)", fontSize:13, margin:0 }}>{products.length} products</p>
           </div>
           <div style={{ display:"flex", gap:10 }}>
             <button onClick={fetchProducts}
@@ -59,7 +106,7 @@ export default function AdminProducts() {
               <RefreshCw size={13} strokeWidth={2}/> Update
             </button>
             <Link href="/admin/products/add" className="btn-admin">
-              <Plus size={15} strokeWidth={2.5}/> Add EGPنتج
+              <Plus size={15} strokeWidth={2.5}/> Add Product
             </Link>
           </div>
         </div>
@@ -76,9 +123,9 @@ export default function AdminProducts() {
 
         {/* Search + filter */}
         <div className="products-filter-row">
-          <div style={{ position:"relative", flex:1, minWidth:180 }}>
+            <div style={{ position:"relative", flex:1, minWidth:180 }}>
             <Search size={14} style={{ position:"absolute", right:15, top:"50%", transform:"translateY(-50%)", color:"rgba(255,255,255,0.28)" }}/>
-            <input type="text" placeholder="Search for EGPنتج..." value={search} onChange={e=>setSearch(e.target.value)}
+            <input type="text" placeholder="Search for product..." value={search} onChange={e=>setSearch(e.target.value)}
               className="input-field" style={{ paddingRight:42, fontSize:13 }}/>
           </div>
           <div style={{ display:"flex", gap:7, flexWrap:"wrap" }}>
@@ -106,8 +153,8 @@ export default function AdminProducts() {
               <table style={{ width:"100%", borderCollapse:"collapse", minWidth:540 }}>
                 <thead>
                   <tr style={{ borderBottom:"1px solid rgba(255,255,255,0.08)", background:"rgba(255,255,255,0.03)" }}>
-                    {["الProduct","Category","الPrice","الحالة","Labels","Actions"].map(h => (
-                      <th key={h} style={{ padding:"12px 16px", textAlign:"right", fontSize:10, fontWeight:800, letterSpacing:"0.18em", textTransform:"uppercase", color:"rgba(255,255,255,0.35)", whiteSpace:"nowrap" }}>{h}</th>
+                    {headerCols.map(col => (
+                      <th key={col.h} style={{ padding: "12px 16px", textAlign: col.align, fontSize: 10, fontWeight: 800, letterSpacing: "0.18em", textTransform: "uppercase", color: "rgba(255,255,255,0.35)", whiteSpace: "nowrap" }}>{col.h}</th>
                     ))}
                   </tr>
                 </thead>
@@ -117,7 +164,7 @@ export default function AdminProducts() {
                       <td style={{ padding:"12px 16px" }}>
                         <div style={{ display:"flex", alignItems:"center", gap:12 }}>
                           <div style={{ position:"relative", width:42, height:52, borderRadius:8, overflow:"hidden", flexShrink:0, background:"rgba(255,255,255,0.07)" }}>
-                            {p.image && <Image fill src={normalizeImageUrl(p.image)} alt={p.name} sizes="64px" style={{ objectFit:"cover" }}/>}
+                            <RowThumb product={p} />
                           </div>
                           <div>
                             <p style={{ fontSize:13, fontWeight:700, color:"#ffffff", margin:0, maxWidth:180, overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }}>{p.name}</p>
@@ -128,14 +175,14 @@ export default function AdminProducts() {
                       <td style={{ padding:"12px 16px", fontSize:13, fontWeight:600, color:"rgba(255,255,255,0.55)" }}>
                         {catAr[p.category_name]??p.category_name}
                       </td>
-                      <td style={{ padding:"12px 16px", fontSize:14, fontWeight:800, color:"#f59e0b" }}>
+                      <td style={{ padding:"12px 16px", fontSize:14, fontWeight:800, color:"#f59e0b", textAlign: "right" }}>
                         LE {parseFloat(String(p.price)).toFixed(2)}
                       </td>
-                      <td style={{ padding:"12px 16px" }}>
+                      <td style={{ padding:"12px 16px", textAlign: "center" }}>
                         <span style={{ fontSize:10, fontWeight:800, letterSpacing:"0.14em", textTransform:"uppercase", padding:"4px 11px", borderRadius:50,
                           background: p.in_stock?"rgba(52,211,153,0.12)":"rgba(248,113,113,0.12)",
                           color:      p.in_stock?"#34d399":"#f87171" }}>
-                          {p.in_stock?"✓ In Stock":"✗ نفذ"}
+                          {p.in_stock?"✓ In Stock":"✗ Out of Stock"}
                         </span>
                       </td>
                       <td style={{ padding:"12px 16px" }}>

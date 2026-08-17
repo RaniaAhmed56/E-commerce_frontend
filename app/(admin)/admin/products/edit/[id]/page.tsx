@@ -67,7 +67,7 @@ export default function AdminEditProduct() {
       if ((vrs as ProductVariant[]).length > 0) {
         setVariants((vrs as ProductVariant[]).map(v=>newVariant(v)));
       }
-    }).catch(()=>setError("Failed to تحميل الProduct"))
+    }).catch(()=>setError("Failed to load product"))
       .finally(()=>setLoading(false));
   }, [id]);
 
@@ -85,12 +85,12 @@ export default function AdminEditProduct() {
 
   const handleSubmit = async (e:React.FormEvent) => {
     e.preventDefault();
-    if (!form.name||!form.price){setError("اسم الProduct والPrice required");return;}
+    if (!form.name||!form.price){setError("Product name and price are required");return;}
     const validV = variants.filter(v=>v.color.trim());
-    if (validV.length===0){setError("أضف لوناً واحداً على minimum");return;}
+    if (validV.length===0){setError("Add at least one color");return;}
     for (const v of validV) {
-      if (v.sizes.length===0){setError(`Color "${v.color}" ليس له EGPقاسات`);return;}
-      if (v.sizes.some(s=>!s.size.trim())){setError(`اكتب اسم Size لكل EGPقاس في "${v.color}"`);return;}
+      if (v.sizes.length===0){setError(`Color "${v.color}" has no sizes`);return;}
+      if (v.sizes.some(s=>!s.size.trim())){setError(`Enter a name for every size in "${v.color}"`);return;}
     }
     setSaving(true); setError("");
     try {
@@ -111,7 +111,7 @@ export default function AdminEditProduct() {
       setSaved(true); setTimeout(()=>setSaved(false),2500);
     } catch(err:unknown){
       const apiError = err as ApiError;
-      const msg = Object.values(apiError?.data??{}).flat().join(" ")||"حدث Error عند الSave";
+      const msg = Object.values(apiError?.data??{}).flat().join(" ")||"An error occurred while saving";
       setError(String(msg));
     } finally { setSaving(false); }
   };
@@ -125,8 +125,8 @@ export default function AdminEditProduct() {
   if (!product) return (
     <div style={{textAlign:"center",padding:"60px 24px"}}>
       <Package size={48} style={{color:"rgba(255,255,255,0.1)",margin:"0 auto 16px"}}/>
-      <p style={{color:"rgba(255,255,255,0.4)",fontSize:14}}>الProduct غير EGPوجود</p>
-      <Link href="/admin/products" className="btn-admin" style={{display:"inline-flex",marginTop:16}}>← العودة</Link>
+      <p style={{color:"rgba(255,255,255,0.4)",fontSize:14}}>Product not found</p>
+      <Link href="/admin/products" className="btn-admin" style={{display:"inline-flex",marginTop:16}}>← Back</Link>
     </div>
   );
 
@@ -136,10 +136,10 @@ export default function AdminEditProduct() {
         <Link href="/admin/products" style={{fontSize:13,fontWeight:600,color:"rgba(255,255,255,0.42)",textDecoration:"none"}}
           onMouseEnter={e=>(e.currentTarget as HTMLAnchorElement).style.color="#f59e0b"}
           onMouseLeave={e=>(e.currentTarget as HTMLAnchorElement).style.color="rgba(255,255,255,0.42)"}>
-          ← الProductات
+          ← Products
         </Link>
         <span style={{color:"rgba(255,255,255,0.18)"}}>|</span>
-        <p className="section-tag" style={{margin:0}}>Edit الProduct</p>
+        <p className="section-tag" style={{margin:0}}>Edit Product</p>
       </div>
       <h2 style={{color:"#ffffff",margin:"0 0 24px",fontSize:"clamp(1.4rem,3vw,2rem)"}}>{product.name}</h2>
 
@@ -151,7 +151,7 @@ export default function AdminEditProduct() {
       )}
       {saved && (
         <div style={{display:"flex",alignItems:"center",gap:10,padding:"12px 16px",background:"rgba(16,185,129,0.1)",border:"1px solid rgba(16,185,129,0.25)",borderRadius:10,marginBottom:20}}>
-          <p style={{fontSize:13,color:"#34d399",margin:0}}>✅ Done Save الEditات بنجاح</p>
+          <p style={{fontSize:13,color:"#34d399",margin:0}}>✅ Edits saved successfully</p>
         </div>
       )}
 
@@ -160,15 +160,15 @@ export default function AdminEditProduct() {
           <div style={{display:"flex",flexDirection:"column",gap:18}}>
             {/* Basic info */}
             <div className="admin-card">
-              <h3 style={{color:"#ffffff",fontSize:"1.1rem",fontWeight:700,margin:"0 0 20px"}}>المعلومات الأساسية</h3>
+              <h3 style={{color:"#ffffff",fontSize:"1.1rem",fontWeight:700,margin:"0 0 20px"}}>Basic info</h3>
               <div style={{display:"flex",flexDirection:"column",gap:18}}>
                 <div>
-                  <L c="اسم الProduct"/>
+                  <L c="Product name"/>
                   <input type="text" required value={form.name} onChange={e=>setForm(p=>({...p,name:e.target.value}))} className="input-field" style={{fontSize:13}}/>
                 </div>
                 <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:14}}>
                   <div>
-                    <L c="الPrice (EGP)"/>
+                    <L c="Price (EGP)"/>
                     <input type="number" required step="0.01" min="0" value={form.price} onChange={e=>setForm(p=>({...p,price:e.target.value}))} className="input-field" style={{fontSize:13}}/>
                   </div>
                   <div>
@@ -194,13 +194,13 @@ export default function AdminEditProduct() {
 
             {/* Variants */}
             <div className="admin-card">
-              <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",marginBottom:20}}>
+                <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",marginBottom:20}}>
                 <div>
-                  <h3 style={{color:"#ffffff",fontSize:"1.1rem",fontWeight:700,margin:"0 0 4px"}}>المتغيرات (ألوان وSizeات)</h3>
-                  <p style={{fontSize:12,color:"rgba(255,255,255,0.35)",margin:0}}>كل لون له Imagesة special وقائمة EGPقاسات بكمياتها</p>
+                  <h3 style={{color:"#ffffff",fontSize:"1.1rem",fontWeight:700,margin:"0 0 4px"}}>Variants (colors & sizes)</h3>
+                  <p style={{fontSize:12,color:"rgba(255,255,255,0.35)",margin:0}}>Each color has a separate image and a list of sizes with quantities</p>
                 </div>
                 <button type="button" onClick={addVariant} style={{display:"flex",alignItems:"center",gap:7,padding:"8px 16px",background:"rgba(245,158,11,0.12)",border:"1.5px solid rgba(245,158,11,0.3)",borderRadius:10,cursor:"pointer",fontSize:12,fontWeight:700,color:"#f59e0b"}}>
-                  <Plus size={14}/> Add لون
+                  <Plus size={14}/> Add color
                 </button>
               </div>
               <div style={{display:"flex",flexDirection:"column",gap:16}}>
@@ -209,7 +209,7 @@ export default function AdminEditProduct() {
                     <div style={{display:"flex",alignItems:"center",gap:12,padding:"12px 16px",background:"rgba(255,255,255,0.04)",borderBottom:variant.expanded?"1px solid rgba(255,255,255,0.07)":"none"}}>
                       <div style={{width:28,height:28,borderRadius:"50%",background:variant.color_hex||"#555",border:"2px solid rgba(255,255,255,0.2)",flexShrink:0}}/>
                       <span style={{flex:1,fontSize:13,fontWeight:700,color:variant.color?"#ffffff":"rgba(255,255,255,0.3)"}}>{variant.color||`Color ${vi+1}`}</span>
-                      <span style={{fontSize:11,color:"rgba(255,255,255,0.3)"}}>{variant.sizes.length} EGPقاس</span>
+                      <span style={{fontSize:11,color:"rgba(255,255,255,0.3)"}}>{variant.sizes.length} sizes</span>
                       <button type="button" onClick={()=>updateVariant(vi,{expanded:!variant.expanded})} style={{background:"none",border:"none",cursor:"pointer",color:"rgba(255,255,255,0.4)",padding:4}}>
                         {variant.expanded?<ChevronUp size={16}/>:<ChevronDown size={16}/>}
                       </button>
@@ -222,11 +222,11 @@ export default function AdminEditProduct() {
                     {variant.expanded && (
                       <div style={{padding:"16px"}}>
                         <div style={{marginBottom:14}}>
-                          <L c="اسم Color"/>
-                          <input type="text" value={variant.color} onChange={e=>updateVariant(vi,{color:e.target.value})} placeholder="مثال: أسود، أبيض، Navy..." className="input-field" style={{fontSize:13,marginBottom:10}}/>
-                          <div style={{display:"flex",alignItems:"center",gap:10}}>
+                          <L c="Color name"/>
+                          <input type="text" value={variant.color} onChange={e=>updateVariant(vi,{color:e.target.value})} placeholder="e.g.: Black, White, Navy..." className="input-field" style={{fontSize:13,marginBottom:10}}/>
+                            <div style={{display:"flex",alignItems:"center",gap:10}}>
                             <input type="color" value={variant.color_hex||"#888888"} onChange={e=>updateVariant(vi,{color_hex:e.target.value})} style={{width:36,height:36,borderRadius:8,border:"none",cursor:"pointer"}}/>
-                            <span style={{fontSize:12,color:"rgba(255,255,255,0.4)"}}>أو اختر EGPن الألوان الجاهزة:</span>
+                            <span style={{fontSize:12,color:"rgba(255,255,255,0.4)"}}>or pick from presets:</span>
                           </div>
                           <div style={{display:"flex",flexWrap:"wrap",gap:7,marginTop:10}}>
                             {COLOR_PRESETS.map(cp=>(
@@ -236,19 +236,19 @@ export default function AdminEditProduct() {
                           </div>
                         </div>
                         <div style={{marginBottom:16}}>
-                          <L c="Imagesة This Color"/>
+                          <L c="Images for this color"/>
                           {(variant.imagePreview||variant.imageUrl) && (
                             // eslint-disable-next-line @next/next/no-img-element
                             <img src={variant.imagePreview||variant.imageUrl} alt="" style={{width:80,height:80,objectFit:"cover",borderRadius:8,border:"2px solid rgba(245,158,11,0.3)",marginBottom:8,display:"block"}}/>
                           )}
                           <label htmlFor={`var-img-${vi}`} style={{display:"flex",alignItems:"center",gap:10,padding:"10px 14px",border:"1.5px dashed rgba(255,255,255,0.15)",borderRadius:10,cursor:"pointer",background:"rgba(255,255,255,0.04)",fontSize:12,color:"rgba(255,255,255,0.5)"}}>
-                            <ImageIcon size={16}/> {variant.imagePreview||variant.imageUrl?"Change Image":"اختر Imagesة لThis Color"}
+                            <ImageIcon size={16}/> {variant.imagePreview||variant.imageUrl?"Change Image":"Choose image for this color"}
                           </label>
                           <input type="file" accept="image/*" id={`var-img-${vi}`} style={{display:"none"}} onChange={e=>{const f=e.target.files?.[0];if(f)updateVariant(vi,{imageFile:f,imagePreview:URL.createObjectURL(f)});}}/>
                         </div>
                         <div>
                           <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",marginBottom:10}}>
-                            <L c="Sizeات والكميات"/>
+                            <L c="Sizes and quantities"/>
                             <div style={{display:"flex",gap:6,flexWrap:"wrap"}}>
                               {SIZE_PRESETS.map(s=>(
                                 <button key={s} type="button"
@@ -270,7 +270,7 @@ export default function AdminEditProduct() {
                               </div>
                             ))}
                             <button type="button" onClick={()=>addSize(vi)} style={{display:"flex",alignItems:"center",gap:8,padding:"9px 14px",background:"rgba(255,255,255,0.04)",border:"1.5px dashed rgba(255,255,255,0.15)",borderRadius:10,cursor:"pointer",fontSize:12,color:"rgba(255,255,255,0.45)",width:"fit-content"}}>
-                              <Plus size={13}/> Add EGPقاس
+                              <Plus size={13}/> Add size
                             </button>
                           </div>
                         </div>
@@ -285,9 +285,9 @@ export default function AdminEditProduct() {
           {/* Sidebar */}
           <div style={{display:"flex",flexDirection:"column",gap:18}}>
             <div className="admin-card">
-              <h3 style={{color:"#ffffff",fontSize:"1.1rem",fontWeight:700,margin:"0 0 20px"}}>حالة الProduct</h3>
+              <h3 style={{color:"#ffffff",fontSize:"1.1rem",fontWeight:700,margin:"0 0 20px"}}>Product status</h3>
               <div style={{display:"flex",flexDirection:"column",gap:16}}>
-                {[{k:"in_stock",l:"In Stock",desc:"يظهر للشراء"},{k:"featured",l:"Featured",desc:"يظهر في الFeatured"},{k:"trending",l:"Trending",desc:"يظهر في الTrending"}].map(f=>(
+                {[{k:"in_stock",l:"In Stock",desc:"Visible for purchase"},{k:"featured",l:"Featured",desc:"Shown in Featured section"},{k:"trending",l:"Trending",desc:"Shown in Trending section"}].map(f=>(
                   <div key={f.k} style={{display:"flex",justifyContent:"space-between",alignItems:"center"}}>
                     <div>
                       <p style={{fontSize:13,fontWeight:700,color:"#fff",margin:0}}>{f.l}</p>
@@ -302,19 +302,19 @@ export default function AdminEditProduct() {
               </div>
             </div>
             <div className="admin-card">
-              <h3 style={{color:"#ffffff",fontSize:"1rem",fontWeight:700,margin:"0 0 14px"}}>ملخص الألوان</h3>
+              <h3 style={{color:"#ffffff",fontSize:"1rem",fontWeight:700,margin:"0 0 14px"}}>Variants summary</h3>
               {variants.filter(v=>v.color).map((v,i)=>(
                 <div key={i} style={{display:"flex",alignItems:"center",gap:10,marginBottom:10}}>
                   <div style={{width:16,height:16,borderRadius:"50%",background:v.color_hex||"#888",border:"1px solid rgba(255,255,255,0.2)",flexShrink:0}}/>
                   <div style={{flex:1}}>
                     <p style={{fontSize:12,fontWeight:700,color:"#fff",margin:"0 0 2px"}}>{v.color}</p>
-                    <p style={{fontSize:11,color:"rgba(255,255,255,0.35)",margin:0}}>{v.sizes.length} EGPقاس · {v.sizes.reduce((s,x)=>s+Number(x.quantity),0)} قطعة</p>
+                    <p style={{fontSize:11,color:"rgba(255,255,255,0.35)",margin:0}}>{v.sizes.length} sizes · {v.sizes.reduce((s,x)=>s+Number(x.quantity),0)} items</p>
                   </div>
                 </div>
               ))}
             </div>
             <button type="submit" disabled={saving} className="btn-admin" style={{width:"100%",justifyContent:"center",fontSize:13,padding:"14px 24px"}}>
-              {saving?<><Loader2 size={14} style={{animation:"spin 1s linear infinite"}}/> Saving...</>:<><Save size={15}/> Save الEditات</>}
+              {saving?<><Loader2 size={14} style={{animation:"spin 1s linear infinite"}}/> Saving...</>:<><Save size={15}/> Save edits</>}
             </button>
             <Link href="/admin/products" className="btn-admin-ghost" style={{textAlign:"center",justifyContent:"center",display:"flex"}}>Cancel</Link>
           </div>

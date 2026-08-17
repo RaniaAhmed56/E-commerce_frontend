@@ -28,7 +28,8 @@ export function ProductCard({ product }: { product: Product }) {
   const router  = useRouter();
   const inWish  = isInWishlist(product.id);
   const price   = typeof product.price === "string" ? parseFloat(product.price) : product.price;
-  const imgSrc  = normalizeImageUrl(product.image);
+  const rawImg = product.image || (Array.isArray((product as any).images) && (product as any).images[0]) || "";
+  const imgSrc  = normalizeImageUrl(rawImg);
   const colors  = toArr(product.colors);
   const sizes   = toArr(product.sizes);
 

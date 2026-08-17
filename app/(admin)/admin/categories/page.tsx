@@ -35,7 +35,7 @@ export default function AdminCategories() {
       const errObj = err as { data?: Record<string, string[] | string> };
       const vals = Object.values(errObj?.data ?? {}) as Array<string[] | string>;
       const flatVals = vals.reduce<string[]>((acc, v) => acc.concat(Array.isArray(v) ? v : [String(v)]), []);
-      alert(flatVals.join(" ") || "حدث Error");
+      alert(flatVals.join(" ") || "An error occurred");
     } finally { setSaving(false); }
   };
 
@@ -45,16 +45,16 @@ export default function AdminCategories() {
       const updated = await categoriesApi.update(id, { name:editName });
       setCategories(prev=>prev.map(c=>c.id===id?{...c,name:updated.name}:c));
       setEditingId(null);
-    } catch { alert("حدث Error"); }
+    } catch { alert("An error occurred"); }
     finally { setSaving(false); }
   };
 
   const deleteCategory = async (id:number, name:string) => {
-    if (!confirm(`Delete تصنيف "${name}"؟`)) return;
+    if (!confirm(`Delete category "${name}"?`)) return;
     try {
       await categoriesApi.delete(id);
       setCategories(prev=>prev.filter(c=>c.id!==id));
-    } catch { alert("لا يمكن Delete Category — قد يحتوي على EGPنتجات"); }
+    } catch { alert("Cannot delete category — it may contain products."); }
   };
 
   return (
@@ -63,8 +63,8 @@ export default function AdminCategories() {
         <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start", marginBottom:22, flexWrap:"wrap", gap:12 }}>
           <div>
             <p className="section-tag" style={{ marginBottom:8 }}>Management</p>
-            <h2 style={{ color:"#ffffff", margin:"0 0 4px", fontSize:"clamp(1.4rem,3vw,2rem)" }}>Categoryات</h2>
-            <p style={{ color:"rgba(255,255,255,0.38)", fontSize:13, margin:0 }}>{categories.length} تصنيف</p>
+            <h2 style={{ color:"#ffffff", margin:"0 0 4px", fontSize:"clamp(1.4rem,3vw,2rem)" }}>Categories</h2>
+            <p style={{ color:"rgba(255,255,255,0.38)", fontSize:13, margin:0 }}>{categories.length} categories</p>
           </div>
           <button onClick={()=>setShowAdd(!showAdd)} className="btn-admin">
             <Plus size={15} strokeWidth={2.5}/> Add Category
@@ -74,12 +74,12 @@ export default function AdminCategories() {
         {/* Add form */}
         {showAdd && (
           <div className="admin-card animate-fade-in" style={{ marginBottom:18 }}>
-            <h3 style={{ color:"#ffffff", fontSize:"1.05rem", fontWeight:700, marginBottom:16, marginTop:0 }}>Category جديد</h3>
+            <h3 style={{ color:"#ffffff", fontSize:"1.05rem", fontWeight:700, marginBottom:16, marginTop:0 }}>Add Category</h3>
             <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr 1fr", gap:14, marginBottom:16 }}>
               {[
-                { k:"name", l:"Name بالإنجليزية", p:"Women" },
-                { k:"name_ar", l:"Name بالعربية", p:"Women" },
-                { k:"slug", l:"الـ Slug (optional)", p:"women" },
+                { k:"name", l:"Name (English)", p:"Women" },
+                { k:"name_ar", l:"Name (Arabic)", p:"Women" },
+                { k:"slug", l:"Slug (optional)", p:"women" },
               ].map(f => (
                 <div key={f.k}>
                   <label style={{ display:"block", fontSize:10, fontWeight:800, letterSpacing:"0.2em", textTransform:"uppercase" as const, color:"rgba(255,255,255,0.4)", marginBottom:8 }}>{f.l}</label>
@@ -128,7 +128,7 @@ export default function AdminCategories() {
                   <>
                     <h3 style={{ color:"#ffffff", fontSize:"1.2rem", fontWeight:700, margin:"0 0 3px" }}>{cat.name_ar||cat.name}</h3>
                     <p style={{ fontSize:14, color:catColors[i%4], fontWeight:700, margin:"0 0 4px" }}>{cat.name}</p>
-                    <p style={{ fontSize:13, color:"rgba(255,255,255,0.4)", margin:"0 0 16px" }}>{cat.count} EGPنتج</p>
+                    <p style={{ fontSize:13, color:"rgba(255,255,255,0.4)", margin:"0 0 16px" }}>{cat.count} products</p>
                     <div style={{ height:4, background:"rgba(255,255,255,0.07)", borderRadius:2, marginBottom:18, overflow:"hidden" }}>
                       <div style={{ height:"100%", background:catColors[i%4], borderRadius:2, width:`${Math.min((cat.count/20)*100,100)}%`, transition:"width 0.5s" }}/>
                     </div>

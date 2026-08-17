@@ -25,7 +25,7 @@ export default function AdminShippingZones() {
       setZones(data);
       setError("");
     } catch (err) {
-      setError("Failed تحميل المحافظات");
+      setError("Failed to load governorates");
       console.error(err);
     } finally {
       setLoading(false);
@@ -35,7 +35,7 @@ export default function AdminShippingZones() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.governorate.trim() || !formData.fee.trim()) {
-      setError("جميع الحقول EGPطلوبة");
+      setError("All fields are required");
       return;
     }
 
@@ -47,14 +47,14 @@ export default function AdminShippingZones() {
           fee: formData.fee,
           enabled: formData.enabled,
         });
-        setSuccess("Done Update Governorate بنجاح");
+        setSuccess("Governorate updated successfully");
       } else {
         await shippingZonesApi.create({
           governorate: formData.governorate,
           fee: formData.fee,
           enabled: formData.enabled,
         });
-        setSuccess("Done Add Governorate بنجاح");
+        setSuccess("Governorate added successfully");
       }
       setFormData({ governorate: "", fee: "", enabled: true });
       setEditingId(null);
@@ -65,7 +65,7 @@ export default function AdminShippingZones() {
     } catch (err: unknown) {
       const errObj = err as { data?: Record<string, string[] | string> };
       const data = errObj?.data ?? {} as Record<string, string[] | string>;
-      setError((Array.isArray(data.governorate) ? data.governorate[0] : data.governorate) || (Array.isArray(data.fee) ? data.fee[0] : data.fee) || "حدث Error");
+      setError((Array.isArray(data.governorate) ? data.governorate[0] : data.governorate) || (Array.isArray(data.fee) ? data.fee[0] : data.fee) || "An error occurred");
       console.error(err);
     } finally {
       setSubmitting(false);
@@ -83,10 +83,10 @@ export default function AdminShippingZones() {
   };
 
   const handleDelete = async (id: number) => {
-    if (!confirm("هل أنت EGPتأكد EGPن Delete These Governorate؟")) return;
+    if (!confirm("Are you sure you want to delete this governorate?")) return;
     try {
       await shippingZonesApi.delete(id);
-      setSuccess("Done Delete Governorate بنجاح");
+      setSuccess("Governorate deleted successfully");
       await loadZones();
       setError("");
       setTimeout(() => setSuccess(""), 3000);
@@ -106,9 +106,9 @@ export default function AdminShippingZones() {
   return (
     <div>
       <div style={{ marginBottom: 22 }}>
-        <p className="section-tag" style={{ marginBottom: 8 }}>Management الشحن</p>
-        <h2 style={{ color: "#ffffff", margin: "0 0 4px", fontSize: "clamp(1.4rem,3vw,2rem)" }}>المحافظات وأسعار الشحن</h2>
-        <p style={{ color: "rgba(255,255,255,0.38)", fontSize: 13, margin: 0 }}>Management EGPناطق وأسعار الشحن المتاحة</p>
+        <p className="section-tag" style={{ marginBottom: 8 }}>Shipping Management</p>
+        <h2 style={{ color: "#ffffff", margin: "0 0 4px", fontSize: "clamp(1.4rem,3vw,2rem)" }}>Governorates & Shipping Rates</h2>
+        <p style={{ color: "rgba(255,255,255,0.38)", fontSize: 13, margin: 0 }}>Manage available shipping zones and fees</p>
       </div>
 
       {/* Messages */}
@@ -127,18 +127,18 @@ export default function AdminShippingZones() {
       {showForm && (
         <div className="admin-card" style={{ padding: 20, marginBottom: 16 }}>
           <h3 style={{ color: "#ffffff", fontSize: "1rem", fontWeight: 700, marginBottom: 16, marginTop: 0 }}>
-            {editingId ? "Edit Governorate" : "Add EGPحافظة جديدة"}
+            {editingId ? "Edit Governorate" : "Add Governorate"}
           </h3>
           <form onSubmit={handleSubmit} style={{ display: "grid", gap: 12 }}>
             <div>
               <label style={{ display: "block", fontSize: 12, fontWeight: 700, color: "rgba(255,255,255,0.6)", marginBottom: 6, textTransform: "uppercase", letterSpacing: "0.05em" }}>
-                اسم Governorate *
+                Governorate Name *
               </label>
               <input
                 type="text"
                 value={formData.governorate}
                 onChange={(e) => setFormData({ ...formData, governorate: e.target.value })}
-                placeholder="مثال: Cairo"
+                placeholder="e.g.: Cairo"
                 style={{
                   width: "100%",
                   padding: "8px 12px",
@@ -153,14 +153,14 @@ export default function AdminShippingZones() {
             </div>
             <div>
               <label style={{ display: "block", fontSize: 12, fontWeight: 700, color: "rgba(255,255,255,0.6)", marginBottom: 6, textTransform: "uppercase", letterSpacing: "0.05em" }}>
-                Price الشحن (EGP) *
+                Shipping Price (EGP) *
               </label>
               <input
                 type="number"
                 step="0.01"
                 value={formData.fee}
                 onChange={(e) => setFormData({ ...formData, fee: e.target.value })}
-                placeholder="مثال: 50.00"
+                placeholder="e.g.: 50.00"
                 style={{
                   width: "100%",
                   padding: "8px 12px",
@@ -180,7 +180,7 @@ export default function AdminShippingZones() {
                 onChange={(e) => setFormData({ ...formData, enabled: e.target.checked })}
                 style={{ cursor: "pointer" }}
               />
-              EGPتاح للطلب
+              Available for ordering
             </label>
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
               <button
@@ -232,7 +232,7 @@ export default function AdminShippingZones() {
       {/* Zones List */}
       <div className="admin-card" style={{ padding: 0, overflow: "hidden" }}>
         <div style={{ padding: "20px", display: "flex", justifyContent: "space-between", alignItems: "center", borderBottom: "1px solid rgba(255,255,255,0.05)" }}>
-          <h3 style={{ color: "#ffffff", fontSize: "1rem", fontWeight: 700, margin: 0 }}>قائمة المحافظات ({zones.length})</h3>
+          <h3 style={{ color: "#ffffff", fontSize: "1rem", fontWeight: 700, margin: 0 }}>Governorates List ({zones.length})</h3>
           {!showForm && (
             <button
               onClick={() => setShowForm(true)}
@@ -249,8 +249,8 @@ export default function AdminShippingZones() {
                 alignItems: "center",
                 gap: 6,
               }}
-            >
-              <Plus size={14} /> Add EGPحافظة
+              >
+              <Plus size={14} /> Add Governorate
             </button>
           )}
         </div>
@@ -262,37 +262,37 @@ export default function AdminShippingZones() {
           </div>
         ) : zones.length === 0 ? (
           <div style={{ padding: "40px", textAlign: "center", color: "rgba(255,255,255,0.4)" }}>
-            لا توجد EGPحافظات
-          </div>
+              No shipping zones
+            </div>
         ) : (
           <div style={{ overflowX: "auto" }}>
             <table style={{ width: "100%", borderCollapse: "collapse", minWidth: 400 }}>
               <thead>
                 <tr style={{ background: "rgba(255,255,255,0.03)", borderBottom: "1px solid rgba(255,255,255,0.05)" }}>
-                  <th style={{ padding: "12px 16px", textAlign: "right", fontSize: 12, fontWeight: 700, color: "rgba(255,255,255,0.5)", textTransform: "uppercase", letterSpacing: "0.05em" }}>
+                  <th style={{ padding: "12px 16px", textAlign: "left", fontSize: 12, fontWeight: 700, color: "rgba(255,255,255,0.5)", textTransform: "uppercase", letterSpacing: "0.05em" }}>
                     Governorate
                   </th>
                   <th style={{ padding: "12px 16px", textAlign: "right", fontSize: 12, fontWeight: 700, color: "rgba(255,255,255,0.5)", textTransform: "uppercase", letterSpacing: "0.05em" }}>
-                    Price الشحن
-                  </th>
-                  <th style={{ padding: "12px 16px", textAlign: "right", fontSize: 12, fontWeight: 700, color: "rgba(255,255,255,0.5)", textTransform: "uppercase", letterSpacing: "0.05em" }}>
-                    الحالة
+                    Shipping Price
                   </th>
                   <th style={{ padding: "12px 16px", textAlign: "center", fontSize: 12, fontWeight: 700, color: "rgba(255,255,255,0.5)", textTransform: "uppercase", letterSpacing: "0.05em" }}>
-                    الActions
+                    Status
+                  </th>
+                  <th style={{ padding: "12px 16px", textAlign: "center", fontSize: 12, fontWeight: 700, color: "rgba(255,255,255,0.5)", textTransform: "uppercase", letterSpacing: "0.05em" }}>
+                    Actions
                   </th>
                 </tr>
               </thead>
               <tbody>
                 {zones.map((zone) => (
                   <tr key={zone.id} style={{ borderTop: "1px solid rgba(255,255,255,0.05)" }}>
-                    <td style={{ padding: "12px 16px", fontSize: 13, fontWeight: 600, color: "#ffffff" }}>
+                    <td style={{ padding: "12px 16px", fontSize: 13, fontWeight: 600, color: "#ffffff", textAlign: "left" }}>
                       {zone.governorate}
                     </td>
-                    <td style={{ padding: "12px 16px", fontSize: 13, fontWeight: 600, color: "#ffffff" }}>
+                    <td style={{ padding: "12px 16px", fontSize: 13, fontWeight: 600, color: "#ffffff", textAlign: "right" }}>
                       {zone.fee} EGP
                     </td>
-                    <td style={{ padding: "12px 16px" }}>
+                    <td style={{ padding: "12px 16px", textAlign: "center" }}>
                       <span
                         style={{
                           fontSize: 10,
@@ -305,7 +305,7 @@ export default function AdminShippingZones() {
                           color: zone.enabled ? "#34d399" : "#9ca3af",
                         }}
                       >
-                        {zone.enabled ? "متاح" : "معطل"}
+                        {zone.enabled ? "Enabled" : "Disabled"}
                       </span>
                     </td>
                     <td style={{ padding: "12px 16px", textAlign: "center" }}>

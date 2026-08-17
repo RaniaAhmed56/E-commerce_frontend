@@ -26,7 +26,7 @@ export default function AdminDeleteProduct() {
     try {
       await productsApi.delete(Number(id));
       router.push("/admin/products");
-    } catch { alert("Failed الDelete"); setDeleting(false); }
+    } catch { alert("Failed to delete"); setDeleting(false); }
   };
 
   if (loading) return (
@@ -39,21 +39,21 @@ export default function AdminDeleteProduct() {
   if (!product) return (
     <div style={{ display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center", padding:"80px 0", textAlign:"center" }}>
       <Package size={52} style={{ color:"rgba(255,255,255,0.1)", marginBottom:18 }} strokeWidth={1}/>
-      <h3 style={{ color:"#ffffff", marginBottom:16 }}>الProduct غير EGPوجود</h3>
-      <Link href="/admin/products" className="btn-admin">العودة</Link>
+      <h3 style={{ color:"#ffffff", marginBottom:16 }}>Product not found</h3>
+      <Link href="/admin/products" className="btn-admin">Back</Link>
     </div>
   );
 
   return (
     <div>
       <div style={{ display:"flex", alignItems:"center", gap:10, marginBottom:22 }}>
-        <Link href="/admin/products" style={{ fontSize:13, fontWeight:600, color:"rgba(255,255,255,0.42)", textDecoration:"none" }}
+          <Link href="/admin/products" style={{ fontSize:13, fontWeight:600, color:"rgba(255,255,255,0.42)", textDecoration:"none" }}
           onMouseEnter={e=>{(e.currentTarget as HTMLAnchorElement).style.color="#f59e0b"}}
           onMouseLeave={e=>{(e.currentTarget as HTMLAnchorElement).style.color="rgba(255,255,255,0.42)"}}>
-          ← الProductات
+          ← Products
         </Link>
         <span style={{ color:"rgba(255,255,255,0.18)" }}>|</span>
-        <span style={{ fontSize:11, fontWeight:800, letterSpacing:"0.2em", textTransform:"uppercase", color:"#f87171" }}>Remove EGPنتج</span>
+        <span style={{ fontSize:11, fontWeight:800, letterSpacing:"0.2em", textTransform:"uppercase", color:"#f87171" }}>Remove product</span>
       </div>
 
       <div style={{ maxWidth:520, margin:"0 auto" }}>
@@ -64,8 +64,8 @@ export default function AdminDeleteProduct() {
               <AlertTriangle size={20} style={{ color:"#f87171" }} strokeWidth={2}/>
             </div>
             <div>
-              <h2 style={{ color:"#ffffff", fontSize:"1.15rem", fontWeight:700, margin:"0 0 3px" }}>Confirm الDelete</h2>
-              <p style={{ fontSize:13, color:"rgba(255,255,255,0.45)", margin:0 }}>This الإجراء لا يمكن التراجع about it</p>
+              <h2 style={{ color:"#ffffff", fontSize:"1.15rem", fontWeight:700, margin:"0 0 3px" }}>Confirm delete</h2>
+              <p style={{ fontSize:13, color:"rgba(255,255,255,0.45)", margin:0 }}>This action cannot be undone</p>
             </div>
           </div>
 
@@ -85,7 +85,7 @@ export default function AdminDeleteProduct() {
 
           <div style={{ padding:"18px 28px", background:"rgba(0,0,0,0.15)", borderTop:"1px solid rgba(239,68,68,0.12)" }}>
             <p style={{ fontSize:13, color:"rgba(255,255,255,0.5)", margin:"0 0 18px", lineHeight:1.7 }}>
-              سيDone Delete This الProduct نهائيًا EGPن database. لن تDoneكن EGPن استرجاعه لاحقًا.
+              This will permanently delete the product from the database. It cannot be restored later.
             </p>
             <div style={{ display:"flex", gap:10 }}>
               <Link href="/admin/products" className="btn-admin-ghost" style={{ flex:1, justifyContent:"center" }}>
@@ -95,7 +95,7 @@ export default function AdminDeleteProduct() {
                 style={{ flex:1, display:"flex", alignItems:"center", justifyContent:"center", gap:8, padding:"13px 20px", background:"#ef4444", border:"none", borderRadius:50, color:"#ffffff", fontSize:13, fontWeight:700, cursor:"pointer", transition:"all 0.2s", opacity:deleting?0.7:1, fontFamily:"var(--font-tajawal,sans-serif)" }}
                 onMouseEnter={e=>{if(!deleting)(e.currentTarget as HTMLButtonElement).style.background="#dc2626"}}
                 onMouseLeave={e=>{if(!deleting)(e.currentTarget as HTMLButtonElement).style.background="#ef4444"}}>
-                {deleting ? <><Loader2 size={14} style={{animation:"spin 1s linear infinite"}}/> Loading الDelete...</> : <><Trash2 size={14} strokeWidth={2}/> تأكيد الDelete</>}
+                {deleting ? <><Loader2 size={14} style={{animation:"spin 1s linear infinite"}}/> Deleting...</> : <><Trash2 size={14} strokeWidth={2}/> Confirm delete</>}
               </button>
             </div>
           </div>

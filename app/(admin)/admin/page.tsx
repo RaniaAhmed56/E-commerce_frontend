@@ -54,10 +54,10 @@ export default function AdminDashboard() {
   }, []);
 
   const statCards = stats ? [
-    { label:"الإيرادات",  value:`${parseFloat(stats.total_revenue).toLocaleString()} LE`, change:"+12.5%", icon:DollarSign, color:"#f59e0b",  bg:"rgba(245,158,11,0.12)"  },
-    { label:"Orders",    value:stats.total_orders.toLocaleString(),                    change:"+8.2%",  icon:ShoppingBag,color:"#60a5fa",  bg:"rgba(96,165,250,0.12)"  },
-    { label:"Products",   value:stats.total_products.toLocaleString(),                  change:"+3.1%",  icon:Package,    color:"#34d399",  bg:"rgba(52,211,153,0.12)"  },
-    { label:"Customers",    value:stats.total_users.toLocaleString(),                     change:"+15.3%", icon:Users,      color:"#c084fc",  bg:"rgba(192,132,252,0.12)" },
+    { label:"Revenue",  value:`${Number(stats.total_revenue||0).toLocaleString('en-US')} LE`, change:"+12.5%", icon:DollarSign, color:"#f59e0b",  bg:"rgba(245,158,11,0.12)"  },
+    { label:"Orders",    value:stats.total_orders.toLocaleString('en-US'),                    change:"+8.2%",  icon:ShoppingBag,color:"#60a5fa",  bg:"rgba(96,165,250,0.12)"  },
+    { label:"Products",   value:stats.total_products.toLocaleString('en-US'),                  change:"+3.1%",  icon:Package,    color:"#34d399",  bg:"rgba(52,211,153,0.12)"  },
+    { label:"Customers",    value:stats.total_users.toLocaleString('en-US'),                     change:"+15.3%", icon:Users,      color:"#c084fc",  bg:"rgba(192,132,252,0.12)" },
   ] : [];
 
   if (loading) return (
@@ -73,7 +73,7 @@ export default function AdminDashboard() {
         <div style={{ marginBottom:22 }}>
           <p className="section-tag" style={{ marginBottom:8 }}>Overview</p>
           <h2 style={{ color:"#ffffff", margin:"0 0 4px", fontSize:"clamp(1.4rem,3vw,2rem)" }}>Dashboard</h2>
-          <p style={{ color:"rgba(255,255,255,0.38)", fontSize:13, margin:0 }}>Last Update: الآن</p>
+          <p style={{ color:"rgba(255,255,255,0.38)", fontSize:13, margin:0 }}>Last Update: now</p>
         </div>
 
         {/* Stats */}
@@ -98,7 +98,7 @@ export default function AdminDashboard() {
           {/* Recent orders */}
           <div className="admin-card" style={{ padding:"20px 0", overflow:"hidden" }}>
             <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:16, padding:"0 20px" }}>
-              <h3 style={{ color:"#ffffff", fontSize:"1.1rem", fontWeight:700, margin:0 }}>Orders الأخيرة</h3>
+              <h3 style={{ color:"#ffffff", fontSize:"1.1rem", fontWeight:700, margin:0 }}>Recent Orders</h3>
               <Link href="/admin/orders" style={{ display:"flex", alignItems:"center", gap:5, fontSize:11, fontWeight:700, color:"#f59e0b", textDecoration:"none", letterSpacing:"0.1em", textTransform:"uppercase" }}>
                 View All <ArrowRight size={12}/>
               </Link>
@@ -111,7 +111,7 @@ export default function AdminDashboard() {
                       <td style={{ padding:"12px 20px", fontSize:13, fontWeight:700, color:"#f59e0b", whiteSpace:"nowrap" }}>#{String(o.id).padStart(4,"0")}</td>
                       <td style={{ padding:"12px 14px", fontSize:13, fontWeight:600, color:"#ffffff" }}>{o.customer_name}</td>
                       <td style={{ padding:"12px 14px", fontSize:12, color:"rgba(255,255,255,0.38)", whiteSpace:"nowrap" }}>
-                        {new Date(o.created_at).toLocaleDateString("ar-EG")}
+                        {new Date(o.created_at).toLocaleDateString('en-US')}
                       </td>
                       <td style={{ padding:"12px 14px", fontSize:14, fontWeight:800, color:"#ffffff", whiteSpace:"nowrap" }}>${parseFloat(o.total).toFixed(2)}</td>
                       <td style={{ padding:"12px 20px", textAlign:"left" }}>
@@ -130,11 +130,11 @@ export default function AdminDashboard() {
           <div className="admin-card" style={{ padding:"20px" }}>
             <h3 style={{ color:"#ffffff", fontSize:"1.1rem", fontWeight:700, marginBottom:16, marginTop:0 }}>Quick Actions</h3>
             <div style={{ display:"flex", flexDirection:"column", gap:8 }}>
-              {[
-                { href:"/admin/products/add", l:"Add EGPنتج New", icon:Plus },
-                { href:"/admin/orders",       l:"Management Orders",   icon:ShoppingBag, badge: (stats?.by_status?.processing ?? 0) + (stats?.by_status?.shipping ?? 0) },
-                { href:"/admin/shipping-zones", l:"Management Shipping",   icon:Truck },
-                { href:"/admin/categories",   l:"Categoryات",       icon:Tag },
+                {[
+                { href:"/admin/products/add", l:"Add Product", icon:Plus },
+                { href:"/admin/orders",       l:"Manage Orders",   icon:ShoppingBag, badge: (stats?.by_status?.processing ?? 0) + (stats?.by_status?.shipping ?? 0) },
+                { href:"/admin/shipping-zones", l:"Manage Shipping",   icon:Truck },
+                { href:"/admin/categories",   l:"Categories",       icon:Tag },
                 { href:"/admin/coupons",      l:"Coupons",       icon:Ticket },
               ].map(a => (
                 <Link key={a.href} href={a.href}

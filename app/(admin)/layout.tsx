@@ -118,7 +118,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                 <span style={{ position: "absolute", top: 8, right: 8, width: 7, height: 7, borderRadius: "50%", background: "#f59e0b" }} />
               </button>
               <div style={{ display: "flex", alignItems: "center", gap: 9, padding: "5px 12px", background: "rgba(245,158,11,0.1)", border: "1.5px solid rgba(245,158,11,0.22)", borderRadius: 50 }}>
-                <div style={{ width: 28, height: 28, borderRadius: "50%", background: "linear-gradient(135deg,#f59e0b,#d97706)", display: "flex", alignItems: "center", justifyContent: "center", color: "#0f172a", fontSize: 12, fontWeight: 800 }}>أ</div>
+                <div style={{ width: 28, height: 28, borderRadius: "50%", background: "linear-gradient(135deg,#f59e0b,#d97706)", display: "flex", alignItems: "center", justifyContent: "center", color: "#0f172a", fontSize: 12, fontWeight: 800 }}>A</div>
                 <span className="admin-user-label" style={{ fontSize: 13, fontWeight: 700, color: "#fcd34d" }}>Manager</span>
               </div>
             </div>
