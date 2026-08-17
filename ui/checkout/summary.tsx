@@ -3,7 +3,7 @@ import Image from "next/image";
 import { ShieldCheck } from "lucide-react";
 import { normalizeImageUrl } from "@/src/utils/image";
 
-export default function Summary({ cart, subtotal, shippingFee, total, discount = 0, appliedCoupon }: {
+export default function Summary({ cart, subtotal, shippingFee,discount = 0, appliedCoupon }: {
   cart: { name: string; size: string; color: string; price: number; quantity: number; image: string }[];
   subtotal: number;
   shippingFee: number;

@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-import { useParams, useRouter } from "next/navigation";
+import { useParams } from "next/navigation";
 import { ArrowRight, Package, User, Phone, MapPin, CreditCard, Tag, Loader2, ArrowLeft } from "lucide-react";
 import { ordersApi, type Order } from "@/src/lib/api";
 import { normalizeImageUrl } from "@/src/utils/image";
@@ -23,7 +23,6 @@ const statusColors: Record<string,string> = {
 
 export default function OrderDetailsPage() {
   const params = useParams();
-  const router = useRouter();
   const orderId = params.id as string;
 
   const [order, setOrder] = useState<Order | null>(null);

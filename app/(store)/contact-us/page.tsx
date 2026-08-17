@@ -31,10 +31,10 @@ export default function ContactPage() {
         <div style={{ maxWidth:900, margin:"0 auto", textAlign:"center" }}>
           <p className="section-tag" style={{ justifyContent:"center", marginBottom:16 }}>Get in Touch</p>
           <h1 style={{ fontFamily:"var(--font-cormorant,Georgia,serif)", fontSize:"clamp(2.4rem,5vw,4rem)", fontWeight:800, color:"#fff", margin:"0 0 16px", lineHeight:1.05 }}>
-            We'd Love to<br /><span style={{ fontStyle:"italic", color:"#f59e0b" }}>Hear From You.</span>
+            We&apos;d Love to<br /><span style={{ fontStyle:"italic", color:"#f59e0b" }}>Hear From You.</span>
           </h1>
           <p style={{ fontSize:15, color:"rgba(255,255,255,0.45)", margin:0, maxWidth:500, marginInline:"auto" }}>
-            Our team is available 7 days a week. Reach out and we'll respond within a few minutes.
+            Our team is available 7 days a week. Reach out and we&apos;ll respond within a few minutes.
           </p>
         </div>
       </div>
@@ -103,7 +103,7 @@ export default function ContactPage() {
                     <Send size={26} style={{ color:"#34d399" }} />
                   </div>
                   <h3 style={{ fontSize:"1.4rem", fontWeight:800, color:"#fff", margin:"0 0 10px" }}>Message Sent!</h3>
-                  <p style={{ fontSize:14, color:"rgba(255,255,255,0.45)", margin:0 }}>We'll get back to you within 24 hours.</p>
+                  <p style={{ fontSize:14, color:"rgba(255,255,255,0.45)", margin:0 }}>We&apos;ll get back to you within 24 hours.</p>
                 </div>
               ) : (
                 <>

@@ -1,6 +1,5 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
-import { useRouter } from "next/navigation";
 import { useCart } from "@/src/context/CartContext";
 import { ordersApi, couponsApi, type CreateOrderPayload } from "@/src/lib/api";
 import { normalizeImageUrl } from "@/src/utils/image";
@@ -25,8 +24,6 @@ const STORE_WA = process.env.NEXT_PUBLIC_WA_NUMBER ?? "201000000000";
 // لما تاخدي الـ API key EGPن PayBump، حطيه في .env.local:
 // NEXT_PUBLIC_PAYBUMP_API_URL=https://api.paybump.io/v1/payment
 // NEXT_PUBLIC_PAYBUMP_API_KEY=your_key_here
-const PAYBUMP_API_URL = process.env.NEXT_PUBLIC_PAYBUMP_API_URL ?? "https://api.paybump.io/v1/payment";
-const PAYBUMP_API_KEY = process.env.NEXT_PUBLIC_PAYBUMP_API_KEY ?? "YOUR_PAYBUMP_KEY";
 
 // ── بيانات Methods Checkout الأونلاين — الأدمين يعدّل هنا ──────────────────────────
 const ONLINE_ACCOUNTS = {
@@ -59,7 +56,7 @@ export default function PaymentMethod({
   shippingFeeOverride,
 }: Props) {
   const { cart, getCartTotal, clearCart } = useCart();
-  const router = useRouter();
+ 
 
   const [mode,         setMode]         = useState<"deposit" | "online" | "">("");
   const [onlineMethod, setOnlineMethod] = useState<OnlineMethod>("");

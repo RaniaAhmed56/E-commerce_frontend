@@ -19,8 +19,9 @@ export default function LoginPage() {
     try {
       const isAdmin = await login(form.email, form.password);
       router.push(isAdmin ? "/admin" : "/");
-    } catch (err: any) {
-      setError(err?.data?.detail || err?.data?.non_field_errors?.[0] || "Invalid email or password");
+    } catch (err) {
+      const maybe = err as { data?: { detail?: string; non_field_errors?: string[] } } | undefined;
+      setError(maybe?.data?.detail ?? maybe?.data?.non_field_errors?.[0] ?? "Invalid email or password");
     } finally { setLoading(false); }
   };
 
@@ -28,6 +29,7 @@ export default function LoginPage() {
     <div className="auth-wrap">
       {/* Image side */}
       <div className="auth-img-side">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src="https://images.unsplash.com/photo-1445205170230-053b83016050?w=1200&q=90"
           alt="BLANKO Fashion" style={{ position:"absolute", inset:0, width:"100%", height:"100%", objectFit:"cover", objectPosition:"center" }} />
         <div style={{ position:"absolute", inset:0, background:"linear-gradient(135deg,rgba(10,14,28,0.92) 0%,rgba(10,14,28,0.40) 100%)" }} />
@@ -61,7 +63,7 @@ export default function LoginPage() {
           <div style={{ marginBottom:36 }}>
             <h1 style={{ fontFamily:"var(--font-cormorant,Georgia,serif)", fontSize:"2.6rem", fontWeight:800, color:"#ffffff", margin:"0 0 10px", lineHeight:1 }}>Sign In</h1>
             <p style={{ fontSize:14, color:"rgba(255,255,255,0.45)", margin:0 }}>
-              Don't have an account?{" "}
+              Don&apos;t have an account?{" "}
               <Link href="/register" style={{ color:"#f59e0b", fontWeight:700, textDecoration:"none" }}>Create one now</Link>
             </p>
           </div>

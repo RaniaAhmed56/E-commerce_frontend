@@ -77,7 +77,7 @@ export default function AdminDeleteProduct() {
             <div>
               <p style={{ fontSize:16, fontWeight:700, color:"#ffffff", margin:"0 0 5px" }}>{product.name}</p>
               <p style={{ fontSize:14, fontWeight:700, color:"#f59e0b", margin:"0 0 5px" }}>
-                ${parseFloat(product.price as any).toFixed(2)}
+                ${parseFloat(String(product.price)).toFixed(2)}
               </p>
               <p style={{ fontSize:12, color:"rgba(255,255,255,0.38)", margin:0 }}>{product.category_name}</p>
             </div>

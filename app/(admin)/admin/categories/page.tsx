@@ -17,9 +17,9 @@ export default function AdminCategories() {
 
   useEffect(() => {
     categoriesApi.list()
-      .then(data => setCategories(Array.isArray(data)?data:(data as { results: Category[] }).results??))
-      .catch(()=>{})
-      .finally(()=>setLoading(false));
+      .then(data => setCategories(Array.isArray(data) ? data : (data as { results: Category[] }).results ?? []))
+      .catch(() => {})
+      .finally(() => setLoading(false));
   }, []);
 
   const addCategory = async () => {
@@ -32,8 +32,10 @@ export default function AdminCategories() {
       setNewCat({ name:"", name_ar:"", slug:"" });
       setShowAdd(false);
     } catch (err: unknown) {
-      const errObj = err as { data?: Record<string, any> };
-      alert(Object.values(errObj?.data??{}).flat().join(" ")||"حدث Error");
+      const errObj = err as { data?: Record<string, string[] | string> };
+      const vals = Object.values(errObj?.data ?? {}) as Array<string[] | string>;
+      const flatVals = vals.reduce<string[]>((acc, v) => acc.concat(Array.isArray(v) ? v : [String(v)]), []);
+      alert(flatVals.join(" ") || "حدث Error");
     } finally { setSaving(false); }
   };
 

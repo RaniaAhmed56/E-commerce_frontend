@@ -1,7 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { useParams, useRouter } from "next/navigation";
 import {
   Package, Heart, ShoppingCart, Check,
@@ -10,7 +9,6 @@ import {
 } from "lucide-react";
 import { useCart } from "@/src/context/CartContext";
 import { useWishlist } from "@/src/context/WishlistContext";
-import { useAuth } from "@/src/context/AuthContext";
 import { ProductCard } from "@/ui/components/ProductCard";
 import { Product, productsApi, variantsApi, type ProductVariant } from "@/src/lib/api";
 

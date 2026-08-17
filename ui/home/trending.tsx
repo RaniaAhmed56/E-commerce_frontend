@@ -24,7 +24,7 @@ function TrendCard({ product }: { product: any }) {
           : <div className="tc-placeholder"><ShoppingCart size={28} style={{ color:"#475569" }} /></div>
         }
         {/* Trending badge */}
-        <div style={{ position:"absolute", top:10, left:10, z:2 }}>
+        <div style={{ position:"absolute", top:10, left:10, zIndex:2 }}>
           <span style={{ display:"inline-flex", alignItems:"center", gap:5, padding:"4px 10px", background:"rgba(245,158,11,0.92)", borderRadius:50, fontSize:9, fontWeight:900, letterSpacing:"0.14em", textTransform:"uppercase", color:"#0f172a", backdropFilter:"blur(6px)" }}>
             <TrendingUp size={10} strokeWidth={3} /> Trending
           </span>

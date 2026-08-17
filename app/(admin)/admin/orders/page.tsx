@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect, useCallback } from "react";
 import { Search, ChevronDown, Loader2, RefreshCw, Eye } from "lucide-react";
-import { ordersApi, type Order } from "@/src/lib/api";
+import { ordersApi, type Order, type PaginatedResponse } from "@/src/lib/api";
 import Link from "next/link";
 
 const STATUS_OPTIONS = ["processing","shipping","delivered","cancelled"] as const;
@@ -27,7 +27,7 @@ export default function AdminOrders() {
     if (search) params.search = search;
     if (filterStatus !== "all") params.status = filterStatus;
     ordersApi.adminList(params)
-      .then(res => setOrders(Array.isArray(res) ? res : (res as any).results ?? []))
+      .then(res => setOrders(Array.isArray(res) ? res : (res as PaginatedResponse<Order>).results ?? []))
       .catch(()=>{})
       .finally(()=>setLoading(false));
   }, [search, filterStatus]);

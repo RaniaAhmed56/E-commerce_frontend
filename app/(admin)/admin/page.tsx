@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Package, ShoppingBag, Users, DollarSign, TrendingUp, ArrowRight, Plus, Tag, Ticket, Loader2, Truck } from "lucide-react";
-import { ordersApi, type DashboardStats, type Order } from "@/src/lib/api";
+import { ordersApi, type DashboardStats } from "@/src/lib/api";
 
 const SC: Record<string,{bg:string;text:string}> = {
   delivered:  { bg:"rgba(52,211,153,0.12)",  text:"#34d399" },
@@ -106,7 +106,7 @@ export default function AdminDashboard() {
             <div style={{ overflowX:"auto" }}>
               <table style={{ width:"100%", borderCollapse:"collapse", minWidth:400 }}>
                 <tbody>
-                  {(stats?.recent_orders ?? []).map((o, i) => (
+                  {(stats?.recent_orders ?? []).map((o) => (
                     <tr key={o.id} className="admin-table-row" style={{ borderTop:"1px solid rgba(255,255,255,0.05)" }}>
                       <td style={{ padding:"12px 20px", fontSize:13, fontWeight:700, color:"#f59e0b", whiteSpace:"nowrap" }}>#{String(o.id).padStart(4,"0")}</td>
                       <td style={{ padding:"12px 14px", fontSize:13, fontWeight:600, color:"#ffffff" }}>{o.customer_name}</td>

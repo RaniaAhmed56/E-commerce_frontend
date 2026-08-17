@@ -63,8 +63,9 @@ export default function AdminShippingZones() {
       setError("");
       setTimeout(() => setSuccess(""), 3000);
     } catch (err: unknown) {
-      const errObj = err as { data?: Record<string, any> };
-      setError(errObj?.data?.governorate?.[0] || errObj?.data?.fee?.[0] || "حدث Error");
+      const errObj = err as { data?: Record<string, string[] | string> };
+      const data = errObj?.data ?? {} as Record<string, string[] | string>;
+      setError((Array.isArray(data.governorate) ? data.governorate[0] : data.governorate) || (Array.isArray(data.fee) ? data.fee[0] : data.fee) || "حدث Error");
       console.error(err);
     } finally {
       setSubmitting(false);

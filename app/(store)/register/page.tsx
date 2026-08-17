@@ -30,10 +30,12 @@ export default function RegisterPage() {
         password2:  form.confirm,
       });
       router.push("/");
-    } catch (err: any) {
-      const data = err?.data ?? {};
-      const msg  = Object.values(data).flat().join(" ") || "Registration failed. Please try again.";
-      setError(String(msg));
+    } catch (err) {
+      const maybe = err as { data?: Record<string, string[] | string> } | undefined;
+      const vals = Object.values(maybe?.data ?? {}) as Array<string[] | string>;
+      const flatVals = vals.reduce<string[]>((acc, v) => acc.concat(Array.isArray(v) ? v : [String(v)]), []);
+      const msg = flatVals.join(" ") || "Registration failed. Please try again.";
+      setError(msg);
     } finally { setLoading(false); }
   };
 
@@ -43,6 +45,7 @@ export default function RegisterPage() {
     <div className="auth-wrap">
       {/* Image side */}
       <div className="auth-img-side">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=1200&q=90"
           alt="BLANKO" style={{ position:"absolute", inset:0, width:"100%", height:"100%", objectFit:"cover", objectPosition:"center 30%" }} />
         <div style={{ position:"absolute", inset:0, background:"linear-gradient(135deg,rgba(10,14,28,0.90) 0%,rgba(10,14,28,0.35) 100%)" }} />

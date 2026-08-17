@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { useParams, useRouter } from "next/navigation";
+import { useParams} from "next/navigation";
 import { useState, useEffect } from "react";
 import { Save, Loader2, AlertCircle, Package, Plus, Trash2, X, Image as ImageIcon, ChevronDown, ChevronUp } from "lucide-react";
 import { productsApi, variantsApi, type Product, type ProductVariant } from "@/src/lib/api";
@@ -39,7 +39,7 @@ const L = ({c}:{c:string}) => (
 
 export default function AdminEditProduct() {
   const { id } = useParams<{id:string}>();
-  const router  = useRouter();
+  
   const [product, setProduct] = useState<Product|null>(null);
   const [loading, setLoading] = useState(true);
   const [saving,  setSaving]  = useState(false);
@@ -181,6 +181,7 @@ export default function AdminEditProduct() {
                 {form.imagePreview && (
                   <div>
                     <L c="Image Current"/>
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img src={form.imagePreview} alt="" style={{width:"100%",maxHeight:140,objectFit:"contain",borderRadius:8,background:"rgba(0,0,0,0.2)"}}/>
                   </div>
                 )}
@@ -237,6 +238,7 @@ export default function AdminEditProduct() {
                         <div style={{marginBottom:16}}>
                           <L c="Imagesة This Color"/>
                           {(variant.imagePreview||variant.imageUrl) && (
+                            // eslint-disable-next-line @next/next/no-img-element
                             <img src={variant.imagePreview||variant.imageUrl} alt="" style={{width:80,height:80,objectFit:"cover",borderRadius:8,border:"2px solid rgba(245,158,11,0.3)",marginBottom:8,display:"block"}}/>
                           )}
                           <label htmlFor={`var-img-${vi}`} style={{display:"flex",alignItems:"center",gap:10,padding:"10px 14px",border:"1.5px dashed rgba(255,255,255,0.15)",borderRadius:10,cursor:"pointer",background:"rgba(255,255,255,0.04)",fontSize:12,color:"rgba(255,255,255,0.5)"}}>

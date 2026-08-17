@@ -1,7 +1,8 @@
 "use client";
 import { useState, useEffect } from "react";
+import type { ComponentType } from "react";
+import type { LucideProps } from "lucide-react";
 import Link from "next/link";
-import Image from "next/image";
 import { useAuth } from "@/src/context/AuthContext";
 import { useWishlist } from "@/src/context/WishlistContext";
 import { useRouter } from "next/navigation";
@@ -13,7 +14,7 @@ import {
 import { ordersApi, couponsApi, type Order, type ActiveCoupon } from "@/src/lib/api";
 
 // ── helpers ──────────────────────────────────────────
-const STATUS_MAP: Record<string, { label: string; color: string; bg: string; Icon: any }> = {
+const STATUS_MAP: Record<string, { label: string; color: string; bg: string; Icon: ComponentType<LucideProps> }> = {
   processing: { label: "Processing", color: "#f59e0b", bg: "rgba(245,158,11,0.12)", Icon: Clock },
   shipping:   { label: "Shipped",    color: "#3b82f6", bg: "rgba(59,130,246,0.12)", Icon: Truck },
   delivered:  { label: "Delivered",   color: "#10b981", bg: "rgba(16,185,129,0.12)", Icon: CheckCircle },

@@ -1,7 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { Check, ShoppingBag, CheckCircle, ArrowRight, Package, User } from "lucide-react";
 import { useCart } from "@/src/context/CartContext";
 import { useAuth } from "@/src/context/AuthContext";
@@ -9,7 +8,6 @@ import Summary from "@/ui/checkout/summary";
 import Shipping from "@/ui/checkout/shipping";
 
 export default function CheckoutPage() {
-  const router = useRouter();
   const { cart, getCartTotal, clearCart } = useCart();
   const { user, isAuthenticated } = useAuth();
 
@@ -22,9 +20,11 @@ export default function CheckoutPage() {
     firstName: "", lastName: "", email: "", phone: "", address: "", city: "", zip: "",
   });
 
-  // Auto-fill when user data is available
+  // Auto-fill when user data is available — defer the state update to avoid
+  // synchronous setState inside the effect (prevents cascading renders).
   useEffect(() => {
-    if (user) {
+    if (!user) return;
+    const id = setTimeout(() => {
       setShipping(prev => ({
         firstName: prev.firstName || user.first_name || "",
         lastName:  prev.lastName  || user.last_name  || "",
@@ -34,16 +34,23 @@ export default function CheckoutPage() {
         city:      prev.city      || user.city       || "",
         zip:       prev.zip       || "",
       }));
-    }
+    }, 0);
+    return () => clearTimeout(id);
   }, [user]);
 
-  const [appliedCoupon, setAppliedCoupon] = useState<{ code: string; discount: number; type: "fixed" | "percentage" } | null>(null);
+  const [appliedCoupon] = useState<{ code: string; discount: number; type: "fixed" | "percentage" } | null>(() => {
+    try {
+      const saved = typeof window !== "undefined" ? localStorage.getItem("blanko_applied_coupon") : null;
+      return saved ? JSON.parse(saved) : null;
+    } catch {
+      try { if (typeof window !== "undefined") localStorage.removeItem("blanko_applied_coupon"); } catch {}
+      return null;
+    }
+  });
   const [shippingFee, setShippingFee] = useState(0);
 
-  useEffect(() => {
-    const saved = localStorage.getItem("blanko_applied_coupon");
-    if (saved) { try { setAppliedCoupon(JSON.parse(saved)); } catch { localStorage.removeItem("blanko_applied_coupon"); } }
-  }, []);
+  // coupon is restored via the useState initializer to avoid a synchronous
+  // setState call inside an effect.
 
   const subtotal = getCartTotal();
   const discountAmount = appliedCoupon

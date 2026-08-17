@@ -2,8 +2,8 @@
 import Link from "next/link";
 import {
   Heart, Zap, Award, Target, Eye, Sparkles,
-  ArrowRight, Star, Package, MessageCircle, Check,
-  ShieldCheck, TrendingUp, Globe, Users,
+  ArrowRight, Star, MessageCircle, Check,
+  ShieldCheck, TrendingUp, Globe,
 } from "lucide-react";
 
 const stats = [
@@ -54,6 +54,7 @@ export default function AboutPage() {
 
       {/* ── Hero ─────────────────────────────────────── */}
       <section style={{ position:"relative", minHeight:"70vh", display:"flex", alignItems:"center", justifyContent:"center", overflow:"hidden" }}>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src="https://images.unsplash.com/photo-1558769132-cb1aea458c5e?w=1800&q=90"
           alt="BLANKO Fashion House"
           style={{ position:"absolute", inset:0, width:"100%", height:"100%", objectFit:"cover", objectPosition:"center 25%" }} />
@@ -91,7 +92,7 @@ export default function AboutPage() {
           <div>
             <p style={{ fontSize:11, fontWeight:800, letterSpacing:"0.3em", textTransform:"uppercase", color:"#d97706", marginBottom:14 }}>Who We Are</p>
             <h2 style={{ fontFamily:"var(--font-cormorant,Georgia,serif)", fontSize:"clamp(2rem,4vw,3.2rem)", fontWeight:800, color:"#0f172a", margin:"0 0 24px", lineHeight:1.05 }}>
-              Fashion is not just clothing —<br /><span style={{ fontStyle:"italic", color:"#f59e0b" }}>it's identity.</span>
+              Fashion is not just clothing —<br /><span style={{ fontStyle:"italic", color:"#f59e0b" }}>it&apos;s identity.</span>
             </h2>
             <p style={{ fontSize:15, color:"#475569", lineHeight:1.85, marginBottom:18 }}>
               BLANKO was born from a simple belief: every person deserves to dress with intention. We started in Cairo in 2022 with a small, meticulously curated collection — and a big vision to redefine accessible luxury in Egypt.
@@ -117,6 +118,7 @@ export default function AboutPage() {
           </div>
           <div style={{ position:"relative" }}>
             <div style={{ aspectRatio:"4/5", borderRadius:20, overflow:"hidden" }}>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src="https://images.unsplash.com/photo-1483985988355-763728e1935b?w=900&q=90"
                 alt="BLANKO Collection" style={{ width:"100%", height:"100%", objectFit:"cover" }} />
             </div>
@@ -125,7 +127,7 @@ export default function AboutPage() {
               <div style={{ display:"flex", gap:4, marginBottom:8 }}>
                 {[1,2,3,4,5].map(s=><Star key={s} size={13} style={{ color:"#f59e0b", fill:"#f59e0b" }}/>)}
               </div>
-              <p style={{ fontSize:13, color:"#374151", margin:"0 0 8px", fontStyle:"italic", maxWidth:200 }}>"The best fashion experience I've had in Egypt."</p>
+              <p style={{ fontSize:13, color:"#374151", margin:"0 0 8px", fontStyle:"italic", maxWidth:200 }}>&quot;The best fashion experience I&apos;ve had in Egypt.&quot;</p>
               <p style={{ fontSize:11, fontWeight:700, color:"#94a3b8", margin:0, letterSpacing:"0.1em" }}>— VERIFIED CUSTOMER</p>
             </div>
           </div>
@@ -164,7 +166,7 @@ export default function AboutPage() {
             <p style={{ fontSize:15, color:"#64748b", margin:0, maxWidth:500, marginInline:"auto" }}>Six reasons thousands choose BLANKO, again and again</p>
           </div>
           <div style={{ display:"grid", gridTemplateColumns:"repeat(3,1fr)", gap:20 }}>
-            {pillars.map((p,i)=>(
+            {pillars.map((p)=>(
               <div key={p.title} style={{ background:"#fff", border:"1.5px solid #f1f5f9", borderRadius:16, padding:"28px 24px", transition:"all 0.3s" }}
                 onMouseEnter={e=>{const el=e.currentTarget as HTMLElement;el.style.borderColor="#f59e0b44";el.style.transform="translateY(-4px)";el.style.boxShadow="0 16px 40px rgba(0,0,0,0.07)";}}
                 onMouseLeave={e=>{const el=e.currentTarget as HTMLElement;el.style.borderColor="#f1f5f9";el.style.transform="";el.style.boxShadow="";}}>

@@ -1,8 +1,8 @@
 "use client";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState, useRef } from "react";
-import { Save, Loader2, AlertCircle, X, Image as ImageIcon, Plus, Trash2, ChevronDown, ChevronUp, Package } from "lucide-react";
+import { useState} from "react";
+import { Save, Loader2, AlertCircle, X, Image as ImageIcon, Plus, Trash2, ChevronDown, ChevronUp  } from "lucide-react";
 import { variantsApi, productsApi } from "@/src/lib/api";
 
 interface ApiError { data?: Record<string, string[] | string>; status?: number; }
@@ -195,7 +195,11 @@ export default function AdminAddProduct() {
                     <ImageIcon size={18}/> اختر Imagesة EGPن device
                   </label>
                   <input type="file" accept="image/*" id="main-img" style={{display:"none"}} onChange={handleMainImage}/>
-                  {form.imagePreview && <img src={form.imagePreview} alt="preview" style={{ width:"100%", maxHeight:140, objectFit:"contain", borderRadius:8, marginTop:8, background:"rgba(0,0,0,0.2)" }}/>}
+                  {form.imagePreview && (
+                    
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img src={form.imagePreview} alt="preview" style={{ width:"100%", maxHeight:140, objectFit:"contain", borderRadius:8, marginTop:8, background:"rgba(0,0,0,0.2)" }}/>
+                  )}
                 </div>
 
                 {/* Gallery */}
@@ -209,6 +213,8 @@ export default function AdminAddProduct() {
                     <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fill,minmax(72px,1fr))", gap:8, marginTop:8 }}>
                       {form.imagePreviews.map((p,i)=>(
                         <div key={i} style={{ position:"relative", aspectRatio:"1", borderRadius:8, overflow:"hidden" }}>
+                          {/* Preview thumbnails are local URLs — allow `<img>` here */}
+                          {/* eslint-disable-next-line @next/next/no-img-element */}
                           <img src={p} alt="" style={{ width:"100%", height:"100%", objectFit:"cover" }}/>
                           <button type="button" onClick={()=>setForm(prev=>({...prev,images:prev.images.filter((_,j)=>j!==i),imagePreviews:prev.imagePreviews.filter((_,j)=>j!==i)}))}
                             style={{ position:"absolute", top:3, right:3, width:18, height:18, borderRadius:"50%", background:"rgba(239,68,68,0.9)", border:"none", cursor:"pointer", display:"flex", alignItems:"center", justifyContent:"center" }}>
@@ -300,6 +306,7 @@ export default function AdminAddProduct() {
                           <input type="file" accept="image/*" id={`var-img-${vi}`} style={{display:"none"}} onChange={e=>handleVariantImage(vi,e)}/>
                           {variant.imagePreview && (
                             <div style={{ marginTop:8, position:"relative", display:"inline-block" }}>
+                              {/* eslint-disable-next-line @next/next/no-img-element */}
                               <img src={variant.imagePreview} alt="" style={{ width:80, height:80, objectFit:"cover", borderRadius:8, border:"2px solid rgba(245,158,11,0.3)" }}/>
                             </div>
                           )}

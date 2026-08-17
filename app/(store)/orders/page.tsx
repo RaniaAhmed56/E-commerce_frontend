@@ -1,12 +1,14 @@
 "use client";
 import { useEffect, useState } from "react";
+import type { ComponentType } from "react";
+import type { LucideProps } from "lucide-react";
 import Link from "next/link";
 import { Check, Truck, Clock, ShoppingBag, Eye, ChevronLeft, XCircle, Loader2 } from "lucide-react";
 import { ordersApi, type Order } from "@/src/lib/api";
 import { useAuth } from "@/src/context/AuthContext";
 import { useRouter } from "next/navigation";
 
-const statusConfig: Record<string, { color:string; bg:string; border:string; Icon:any }> = {
+const statusConfig: Record<string, { color:string; bg:string; border:string; Icon: ComponentType<LucideProps> }> = {
   delivered:  { color:"#34d399", bg:"rgba(52,211,153,0.1)",  border:"rgba(52,211,153,0.25)",  Icon:Check    },
   shipping:   { color:"#fbbf24", bg:"rgba(251,191,36,0.1)",  border:"rgba(251,191,36,0.25)",  Icon:Truck    },
   processing: { color:"#60a5fa", bg:"rgba(96,165,250,0.1)",  border:"rgba(96,165,250,0.25)",  Icon:Clock    },
@@ -25,12 +27,12 @@ export default function OrdersPage() {
     ordersApi.myOrders()
       .then(data => {
         // Handle both array response and paginated response
-        const list = Array.isArray(data) ? data : (data as any)?.results ?? [];
+        const list = Array.isArray(data) ? data : (data as { results?: Order[] })?.results ?? [];
         setOrders(list);
       })
       .catch(() => {})
       .finally(() => setLoading(false));
-  }, [isAuthenticated, authLoading]);
+  }, [isAuthenticated, authLoading, router]);
 
   if (loading || authLoading) return (
     <div style={{ background:"#0f172a", minHeight:"60vh", display:"flex", alignItems:"center", justifyContent:"center" }}>

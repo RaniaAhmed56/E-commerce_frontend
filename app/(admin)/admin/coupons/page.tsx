@@ -13,9 +13,9 @@ export default function AdminCoupons() {
 
   useEffect(() => {
     couponsApi.list()
-      .then(data => setCoupons(Array.isArray(data)?data:(data as { results: Coupon[] }).results??))
-      .catch(()=>{})
-      .finally(()=>setLoading(false));
+      .then(data => setCoupons(Array.isArray(data) ? data : (data as { results: Coupon[] }).results ?? []))
+      .catch(() => {})
+      .finally(() => setLoading(false));
   }, []);
 
   const copyCode = (id:number, code:string) => {
@@ -41,7 +41,7 @@ export default function AdminCoupons() {
     try {
       const c = await couponsApi.create({
         code: form.code.toUpperCase(),
-        discount: Number(form.discount),
+        discount: String(Number(form.discount)),
         discount_type: form.discount_type as "percent"|"fixed",
         max_uses: Number(form.max_uses)||100,
         active: true,

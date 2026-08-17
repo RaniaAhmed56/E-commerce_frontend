@@ -3,7 +3,7 @@ import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Plus, Edit, Trash2, Search, Loader2, RefreshCw } from "lucide-react";
-import { productsApi, type Product } from "@/src/lib/api";
+import { productsApi, type Product, type PaginatedResponse } from "@/src/lib/api";
 import { normalizeImageUrl } from "@/src/utils/image";
 
 const catAr: Record<string,string> = { Women:"Women", Men:"Men", Kids:"Kids", Accessories:"Accessories" };
@@ -20,11 +20,11 @@ export default function AdminProducts() {
     if (search) params.search = search;
     if (catFilter !== "all") params.category = catFilter;
     productsApi.list(params)
-      .then(res => setProducts(Array.isArray(res)?res:(res as any).results??[]))
+      .then(res => setProducts(Array.isArray(res) ? res : (res as PaginatedResponse<Product>).results ?? []))
       .catch(()=>{})
       .finally(()=>setLoading(false));
   }, [search, catFilter]);
-
+  // eslint-disable-next-line react-hooks/set-state-in-effect
   useEffect(() => { fetchProducts(); }, [fetchProducts]);
 
   const handleDelete = async (id: number, name: string) => {
@@ -129,7 +129,7 @@ export default function AdminProducts() {
                         {catAr[p.category_name]??p.category_name}
                       </td>
                       <td style={{ padding:"12px 16px", fontSize:14, fontWeight:800, color:"#f59e0b" }}>
-                        LE {parseFloat(p.price as any).toFixed(2)}
+                        LE {parseFloat(String(p.price)).toFixed(2)}
                       </td>
                       <td style={{ padding:"12px 16px" }}>
                         <span style={{ fontSize:10, fontWeight:800, letterSpacing:"0.14em", textTransform:"uppercase", padding:"4px 11px", borderRadius:50,
